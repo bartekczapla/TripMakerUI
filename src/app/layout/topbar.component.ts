@@ -4,13 +4,12 @@ import { AppComponentBase } from '@shared/app-component-base';
 @Component({
     templateUrl: './topbar.component.html',
     selector: 'top-bar',
-    encapsulation: ViewEncapsulation.None
+    styleUrls: ['./topbar.component.css']
+   // encapsulation: ViewEncapsulation.None
 })
 export class TopBarComponent extends AppComponentBase {
 
-    constructor(
-        injector: Injector
-    ) {
+    constructor( injector: Injector) {
         super(injector);
     }
 }

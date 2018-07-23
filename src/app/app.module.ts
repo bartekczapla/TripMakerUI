@@ -33,6 +33,12 @@ import { SideBarNavComponent } from '@app/layout/sidebar-nav.component';
 import { SideBarFooterComponent } from '@app/layout/sidebar-footer.component';
 import { RightSideBarComponent } from '@app/layout/right-sidebar.component';
 import { MaterialInput } from '@shared/directives/material-input.directive';
+import { TasksComponent } from './tasks/tasks.component';
+import { FooterComponent } from './layout/footer.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { FormComponent } from './form/form.component';
+import { PlanComponent } from './plan/plan.component';
+
 
 @NgModule({
     declarations: [
@@ -53,7 +59,12 @@ import { MaterialInput } from '@shared/directives/material-input.directive';
         SideBarUserAreaComponent,
         SideBarNavComponent,
         SideBarFooterComponent,
-        RightSideBarComponent
+        RightSideBarComponent,
+        TasksComponent,
+        FooterComponent,
+        DashboardComponent,
+        FormComponent,
+        PlanComponent,
     
     ],
     imports: [
