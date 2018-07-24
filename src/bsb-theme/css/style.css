@@ -1,4 +1,10 @@
-﻿/* Show Fieldset and Legend ==================== */
+﻿/* my styles */
+body {
+  padding-top: 70px;
+}
+
+
+/* Show Fieldset and Legend ==================== */
 .show-fieldset {
     margin: 10px;
     padding: 10px;
@@ -80,7 +86,7 @@ a{cursor: pointer;
   clip: rect(0, 0, 0, 0); }
 
 /* Navbar ====================================== */
-.navbar {
+ /* .navbar {
   font-family: "Roboto", sans-serif;
   -webkit-border-radius: 0;
   -moz-border-radius: 0;
@@ -117,7 +123,7 @@ a{cursor: pointer;
       font-family: 'Material Icons';
       font-size: 26px; }
   .navbar .navbar-collapse.in {
-    overflow: visible; }
+    overflow: visible; }  */
 
 .ls-closed .sidebar {
   margin-left: -300px; }

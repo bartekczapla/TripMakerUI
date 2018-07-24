@@ -1,0 +1,28 @@
+.navbar {
+    /* padding-top: 15px;
+    padding-bottom: 15px; */
+    border-color: inherit;
+    border-radius: 0;
+    margin-bottom: 0;
+    font-size: 14px;
+    position: absolute!important;
+    background-color: whitesmoke;
+    color: black;
+}
+
+.navbar-nav li a {
+ color: black;
+}
+
+.navbar-header a {
+    color: black;
+}
+
+.navbar-nav li a:hover {
+    color:dodgerblue !important;
+}
+
+
+.navbar-header a:hover  {
+    color:dodgerblue !important;
+}
