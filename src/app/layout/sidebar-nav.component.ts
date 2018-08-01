@@ -17,6 +17,7 @@ export class SideBarNavComponent extends AppComponentBase {
         new MenuItem(this.l("Roles"), "Pages.Roles", "local_offer", "/app/roles"),
         new MenuItem(this.l("About"), "", "info", "/app/about"),
         new MenuItem(this.l("Tasks"), "", "info", "/app/tasks"),
+        new MenuItem(this.l("Events"), "Pages.Events", "event", "/app/events"),
 
         new MenuItem(this.l("MultiLevelMenu"), "", "menu", "", [
             new MenuItem("ASP.NET Boilerplate", "", "", "", [

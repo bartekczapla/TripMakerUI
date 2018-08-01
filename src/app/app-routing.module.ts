@@ -10,6 +10,8 @@ import { RolesComponent } from "app/roles/roles.component";
 import { TasksComponent } from "app/tasks/tasks.component";
 import { DashboardComponent } from "app/dashboard/dashboard.component";
 import { FormComponent } from "app/form/form.component";
+import { EventsComponent } from 'app/events/events.component';
+import { EventDetailComponent } from 'app/events/event-detail/event-detail.component';
 
 @NgModule({
     imports: [
@@ -24,6 +26,8 @@ import { FormComponent } from "app/form/form.component";
                     { path: 'users', component: UsersComponent, data: { permission: 'Pages.Users' }, canActivate: [AppRouteGuard] },
                     { path: 'roles', component: RolesComponent, data: { permission: 'Pages.Roles' }, canActivate: [AppRouteGuard] },
                     { path: 'tenants', component: TenantsComponent, data: { permission: 'Pages.Tenants' }, canActivate: [AppRouteGuard] },
+                    { path: 'events', component: EventsComponent, canActivate: [AppRouteGuard] },
+                    { path: 'events/:eventId', component: EventDetailComponent },
                     { path: 'about', component: AboutComponent },
                     { path: 'tasks', component: TasksComponent }
                 ]

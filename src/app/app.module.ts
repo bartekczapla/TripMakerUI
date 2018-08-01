@@ -38,6 +38,8 @@ import { FooterComponent } from './layout/footer.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { FormComponent } from './form/form.component';
 import { PlanComponent } from './plan/plan.component';
+import { EventsComponent } from './events/events.component';
+import { EventDetailComponent } from './events/event-detail/event-detail.component';
 
 
 @NgModule({
@@ -65,6 +67,8 @@ import { PlanComponent } from './plan/plan.component';
         DashboardComponent,
         FormComponent,
         PlanComponent,
+        EventsComponent,
+        EventDetailComponent
     
     ],
     imports: [

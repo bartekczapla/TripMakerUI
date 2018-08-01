@@ -21,7 +21,7 @@ export class HomeComponent extends AppComponentBase implements OnInit {
     }
 
     ngOnInit(){
-        console.log(this.permission.isGranted);
+        console.log(this.permission.isGranted('')) ;
     }
     
 
