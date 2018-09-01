@@ -17,7 +17,10 @@ import { API_BASE_URL } from '@shared/service-proxies/service-proxies';
 import { RootComponent } from './root.component';
 import { AppPreBootstrap } from './AppPreBootstrap';
 import { ModalModule } from 'ngx-bootstrap';
-import { HttpClientModule, HttpResponse } from '@angular/common/http';
+import { HttpClientModule,HttpClient, HttpResponse } from '@angular/common/http';
+import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+
 
 export function appInitializerFactory(injector: Injector) {
   return () => {
@@ -50,6 +53,13 @@ export function getCurrentLanguage(): string {
     return abp.localization.currentLanguage.name;
 }
 
+// export function HttpLoaderFactory(http: HttpClient) {
+//   return new TranslateHttpLoader(http);
+// }
+export function createTranslateLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
+
 @NgModule({
   imports: [
     BrowserModule,
@@ -59,7 +69,14 @@ export function getCurrentLanguage(): string {
     AbpModule,
     ServiceProxyModule,
     RootRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (createTranslateLoader),
+        deps: [HttpClient]
+      }
+    })
   ],
   declarations: [
     RootComponent

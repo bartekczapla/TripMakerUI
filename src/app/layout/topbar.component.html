@@ -41,20 +41,41 @@
             </div>
             <!-- <div class="nav navbar-nav">               -->
                     <ul class='nav navbar-nav'>
+                        
                         <li [routerLinkActive]="['link-active']">
                             <a [routerLink]="['/app/tasks']">
                                 <span class='glyphicon glyphicon-education'></span> Tasks
                             </a>
                         </li>
                         <li [routerLinkActive]="['link-active']">
+                                <a [routerLink]="['/app/events']">
+                                    <span class='glyphicon glyphicon-th-list'></span> Events
+                                </a>
+                            </li>
+                            <li [routerLinkActive]="['link-active']">
+                                    <a [routerLink]="['/app/users']">
+                                        <span class='glyphicon glyphicon-education'></span> Users
+                                    </a>
+                                </li>
+                                <li [routerLinkActive]="['link-active']">
+                                        <a [routerLink]="['/app/roles']">
+                                            <span class='glyphicon glyphicon-education'></span> Roles
+                                        </a>
+                                    </li>
+                        <li [routerLinkActive]="['link-active']">
                             <a [routerLink]="['/app/about']">
                                 <span class='glyphicon glyphicon-th-list'></span> About
                             </a>
                         </li>
                     </ul>
+
+                    <ul class="nav navbar-nav">
+                            <li><a [ngClass]="{'language-active':isPolish}" (click)="setPolish()">Pl</a></li>
+                            <li><a [ngClass]="{'language-active':isEnglish} " (click)="setEnglish()">En</a></li>
+                   </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <!-- <li><a href="javascript:void(0);" class="js-search" data-close="true"><i class="material-icons">search</i></a></li> -->
-                        <topbar-languageswitch></topbar-languageswitch>
+                        <!-- <topbar-languageswitch></topbar-languageswitch> -->
                         <!-- <li class="pull-right"><a href="javascript:void(0);" class="js-right-sidebar" data-close="true"><i class="material-icons">more_vert</i></a></li> -->
                         <li><a><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
                         <li><a><span class="glyphicon glyphicon-log-in"></span> Login</a></li>

@@ -26,3 +26,9 @@
 .navbar-header a:hover  {
     color:dodgerblue !important;
 }
+
+
+.language-active {
+    color: greenyellow;
+    font-weight: bold;
+}

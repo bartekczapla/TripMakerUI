@@ -1,6 +1,7 @@
 import { Component, ViewContainerRef, Injector, OnInit, AfterViewInit } from '@angular/core';
 import { AppConsts } from '@shared/AppConsts';
 import { AppComponentBase } from '@shared/app-component-base';
+import {TranslateService} from '@ngx-translate/core';
 
 // import { SignalRAspNetCoreHelper } from '@shared/helpers/SignalRAspNetCoreHelper';
 
@@ -14,10 +15,10 @@ export class AppComponent extends AppComponentBase implements OnInit, AfterViewI
 
     private viewContainerRef: ViewContainerRef;
 
-    constructor(
-        injector: Injector
-    ) {
+    constructor(injector: Injector, translate: TranslateService) {
         super(injector);
+        translate.setDefaultLang('en');
+        translate.use('en');
     }
 
     ngOnInit(): void {

@@ -23,6 +23,8 @@
     "@angular/platform-browser-dynamic": "^6.0.5",
     "@angular/router": "^6.0.5",
     "@aspnet/signalr": "^1.0.0",
+    "@ngx-translate/core": "^10.0.2",
+    "@ngx-translate/http-loader": "^3.0.1",
     "@types/bootstrap": "^3.3.33",
     "@types/jquery": "^3.2.12",
     "@types/jquery.blockui": "0.0.28",
@@ -58,14 +60,14 @@
     "push.js": "1.0.4",
     "raphael": "^2.2.7",
     "rxjs": "^6.2.0",
+    "rxjs-compat": "^6.0.0-rc.0",
     "simple-line-icons": "^2.4.1",
     "spin.js": "^2.3.2",
     "sweetalert": "^2.0.8",
     "toastr": "^2.1.2",
     "ts-helpers": "^1.1.2",
     "web-animations-js": "^2.3.1",
-    "zone.js": "0.8.26",
-    "rxjs-compat": "^6.0.0-rc.0"
+    "zone.js": "0.8.26"
   },
   "devDependencies": {
     "@angular/cli": "^6.0.8",

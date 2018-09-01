@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { JsonpModule } from '@angular/http';
-import { HttpClientModule, HttpResponse } from '@angular/common/http';
+import { HttpClientModule, HttpClient,HttpResponse } from '@angular/common/http';
 
 import { ModalModule } from 'ngx-bootstrap';
 import { NgxPaginationModule } from 'ngx-pagination';
@@ -40,7 +40,16 @@ import { FormComponent } from './form/form.component';
 import { PlanComponent } from './plan/plan.component';
 import { EventsComponent } from './events/events.component';
 import { EventDetailComponent } from './events/event-detail/event-detail.component';
+import { CreateEventComponent } from './events/create-event/create-event.component';
+import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 
+// export function HttpLoaderFactory(http: HttpClient) {
+//   return new TranslateHttpLoader(http);
+// }
+export function createTranslateLoader(http: HttpClient) {
+    return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+  }
 
 @NgModule({
     declarations: [
@@ -68,7 +77,8 @@ import { EventDetailComponent } from './events/event-detail/event-detail.compone
         FormComponent,
         PlanComponent,
         EventsComponent,
-        EventDetailComponent
+        EventDetailComponent,
+        CreateEventComponent
     
     ],
     imports: [
@@ -81,7 +91,14 @@ import { EventDetailComponent } from './events/event-detail/event-detail.compone
         AppRoutingModule,
         ServiceProxyModule,
         SharedModule,
-        NgxPaginationModule
+        NgxPaginationModule,
+        TranslateModule.forRoot({
+            loader: {
+              provide: TranslateLoader,
+              useFactory: (createTranslateLoader),
+              deps: [HttpClient]
+            }
+          })
     ],
     providers: [
 
