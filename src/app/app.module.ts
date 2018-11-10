@@ -36,13 +36,18 @@ import { MaterialInput } from '@shared/directives/material-input.directive';
 import { TasksComponent } from './tasks/tasks.component';
 import { FooterComponent } from './layout/footer.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { FormComponent } from './form/form.component';
+import { FormComponent } from './plan/form/form.component';
 import { PlanComponent } from './plan/plan.component';
 import { EventsComponent } from './events/events.component';
 import { EventDetailComponent } from './events/event-detail/event-detail.component';
 import { CreateEventComponent } from './events/create-event/create-event.component';
 import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import { LoginComponent } from './account/login/login.component';
+import { RegisterComponent } from './account/register/register.component';
+import { LoginService } from 'account/login/login.service';
+import { AngularMaterialModule } from '@shared/modules/angular-material.module';
+import { ScheduleComponent } from './plan/schedule/schedule.component';
 
 // export function HttpLoaderFactory(http: HttpClient) {
 //   return new TranslateHttpLoader(http);
@@ -78,7 +83,10 @@ export function createTranslateLoader(http: HttpClient) {
         PlanComponent,
         EventsComponent,
         EventDetailComponent,
-        CreateEventComponent
+        CreateEventComponent,
+        LoginComponent,
+        RegisterComponent,
+        ScheduleComponent
     
     ],
     imports: [
@@ -92,6 +100,7 @@ export function createTranslateLoader(http: HttpClient) {
         ServiceProxyModule,
         SharedModule,
         NgxPaginationModule,
+        AngularMaterialModule,
         TranslateModule.forRoot({
             loader: {
               provide: TranslateLoader,
@@ -101,6 +110,7 @@ export function createTranslateLoader(http: HttpClient) {
           })
     ],
     providers: [
+        LoginService
 
     ]
 })

@@ -31,4 +31,20 @@
 .language-active {
     color: greenyellow;
     font-weight: bold;
+    border-bottom: 1px;
+}
+
+.language-button-active {
+    color: #FFFFFF !important;
+    background-color: #FF4081 !important;
+    position: relative;
+    bottom:-10px;
+}
+
+.language-button-inactive {
+    color: grey !important;
+    background-color: transparent !important;
+    position: relative;
+    bottom:-10px;
+
 }

@@ -13,3 +13,4 @@ export class MaterialInput implements AfterViewInit {
         $.AdminBSB.input.activate($(this._element.nativeElement).parent());
     }
 }
+

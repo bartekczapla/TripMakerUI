@@ -1,0 +1,44 @@
+<mat-card>
+
+  <ng-container *ngIf="formCounter==1">
+      <!-- <mat-toolbar color="primary">
+        <span><mat-icon>mood</mat-icon></span>
+    
+        <span>Yay, Material in Angular 2!</span>
+  
+      </mat-toolbar>
+ -->
+
+      <mat-form-field>
+          <input matInput type="text" class="google-place-input" google-place (onSelect)="setAddress($event)" placeholder="Type to search..">                 
+      </mat-form-field>
+
+
+      <!-- <mat-form-field class="example-full-width">
+          <input matInput placeholder="Favorite food" value="Sushi">
+        </mat-form-field> -->
+
+  </ng-container>
+
+  <ng-container *ngIf="formCounter==2">
+      <input [matDatepicker]="myDatepicker">
+      <mat-datepicker-toggle [for]="myDatepicker"></mat-datepicker-toggle>
+      <mat-datepicker #myDatepicker></mat-datepicker>
+  </ng-container>
+
+  <ng-container *ngIf="formCounter==3">
+
+  </ng-container>
+
+<div class="content-down">
+    <button class="content-left" *ngIf="formCounter!=1" (click)="changeCounter('down')"  mat-raised-button color="accent">{{'Prev'|translate}}</button>
+    <button class="content-right" *ngIf="formCounter!=3" (click)="changeCounter('up')" mat-raised-button color="primary">{{'Next'|translate}}</button>
+    <button class="content-right" *ngIf="formCounter==3" (click)="save($event)" mat-fab color="basic">Generate</button>
+</div>
+
+
+
+</mat-card>  
+
+
+

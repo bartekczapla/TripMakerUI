@@ -1,0 +1,57 @@
+
+body {
+    margin: 0;
+    font-family: Roboto, sans-serif;
+  }
+  
+  mat-card {
+    max-width: 80%;
+    margin: 2em auto;
+    text-align: center;
+    min-height: 200px;
+  }
+  
+  mat-toolbar-row {
+    justify-content: space-between;
+  }
+  
+  .done {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    color: white;
+  }
+
+  .content-down {
+    position: absolute;
+    bottom: 0;
+    width:95%;
+    align-content: center;
+    overflow: auto;
+    min-height: 50px;
+    white-space: nowrap;
+  }
+
+  .content-left {
+    float: left;  
+
+  }
+
+  .content-right {
+      float: right;
+}
+
+
+/* Autocomplete input */
+.input-container {
+    text-align: center; 
+    width: 100%;
+}
+
+.google-place-input {
+    width: 50%;
+    min-width: 280px;
+    height: 2rem; 
+    font-size: 1.5rem; 
+    padding: 0.5rem;
+}

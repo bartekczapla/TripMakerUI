@@ -21,6 +21,7 @@ export class EventsComponent extends PagedListingComponentBase<EventListDto> {
         super(injector);
     }
 
+
     protected list(request: PagedRequestDto, pageNumber: number, finishedCallback: Function): void {
         this.loadEvent();
         finishedCallback();

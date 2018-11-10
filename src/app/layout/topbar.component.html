@@ -15,72 +15,85 @@
 <nav class="navbar">
     <div class="container-fluid">
         <div class="navbar-header"> -->
-            <!-- <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
+<!-- <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
             <a href="javascript:void(0);" class="bars"></a> -->
-            <!-- <a routerLink="/app/home" class="navbar-brand"><i class="fa fa-map-signs"></i> TripMaker</a>
+<!-- <a routerLink="/app/home" class="navbar-brand"><i class="fa fa-map-signs"></i> TripMaker</a>
         </div>
         <div class="collapse navbar-collapse" id="navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
                 <! <li><a href="javascript:void(0);" class="js-search" data-close="true"><i class="material-icons">search</i></a></li> -->
-                <!-- <topbar-languageswitch></topbar-languageswitch>
+<!-- <topbar-languageswitch></topbar-languageswitch>
                 <li class="pull-right"><a href="javascript:void(0);" class="js-right-sidebar" data-close="true"><i class="material-icons">more_vert</i></a></li>
             </ul>
         </div>
     </div>
-</nav> --> 
+</nav> -->
 
 <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
-            <div class='navbar-header'>
-                <!-- <button type='button' class='navbar-toggle' data-toggle='collapse' data-target='.navbar-collapse'>
+    <div class="container-fluid">
+        <div class='navbar-header'>
+            <!-- <button type='button' class='navbar-toggle' data-toggle='collapse' data-target='.navbar-collapse'>
                     <span class='sr-only'>Toggle navigation</span> 
                     <span class='icon-bar'></span>
                     <span class='icon-bar'></span>
                 </button> -->
-                <a routerLink="/app/home" class="navbar-brand"><i class="fa fa-map-signs"></i> TripMaker</a>
-            </div>
-            <!-- <div class="nav navbar-nav">               -->
-                    <ul class='nav navbar-nav'>
-                        
-                        <li [routerLinkActive]="['link-active']">
-                            <a [routerLink]="['/app/tasks']">
-                                <span class='glyphicon glyphicon-education'></span> Tasks
-                            </a>
-                        </li>
-                        <li [routerLinkActive]="['link-active']">
-                                <a [routerLink]="['/app/events']">
-                                    <span class='glyphicon glyphicon-th-list'></span> Events
-                                </a>
-                            </li>
-                            <li [routerLinkActive]="['link-active']">
-                                    <a [routerLink]="['/app/users']">
-                                        <span class='glyphicon glyphicon-education'></span> Users
-                                    </a>
-                                </li>
-                                <li [routerLinkActive]="['link-active']">
-                                        <a [routerLink]="['/app/roles']">
-                                            <span class='glyphicon glyphicon-education'></span> Roles
-                                        </a>
-                                    </li>
-                        <li [routerLinkActive]="['link-active']">
-                            <a [routerLink]="['/app/about']">
-                                <span class='glyphicon glyphicon-th-list'></span> About
-                            </a>
-                        </li>
-                    </ul>
-
-                    <ul class="nav navbar-nav">
-                            <li><a [ngClass]="{'language-active':isPolish}" (click)="setPolish()">Pl</a></li>
-                            <li><a [ngClass]="{'language-active':isEnglish} " (click)="setEnglish()">En</a></li>
-                   </ul>
-                    <ul class="nav navbar-nav navbar-right">
-                        <!-- <li><a href="javascript:void(0);" class="js-search" data-close="true"><i class="material-icons">search</i></a></li> -->
-                        <!-- <topbar-languageswitch></topbar-languageswitch> -->
-                        <!-- <li class="pull-right"><a href="javascript:void(0);" class="js-right-sidebar" data-close="true"><i class="material-icons">more_vert</i></a></li> -->
-                        <li><a><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-                        <li><a><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-                    </ul>
-            <!-- </div> -->
+            <a routerLink="/app/home" class="navbar-brand">
+                <i class="fa fa-map-signs"></i> TripMaker</a>
         </div>
- </nav>
-    
+        <!-- <div class="nav navbar-nav">               -->
+        <ul class='nav navbar-nav'>
+
+            <li [routerLinkActive]="['link-active']">
+                <a [routerLink]="['/app/tasks']">
+                    <span class='glyphicon glyphicon-education'></span> Tasks
+                </a>
+            </li>
+            <li [routerLinkActive]="['link-active']">
+                <a [routerLink]="['/app/events']">
+                    <span class='glyphicon glyphicon-th-list'></span> Events
+                </a>
+            </li>
+            <li [routerLinkActive]="['link-active']">
+                <a [routerLink]="['/app/users']">
+                    <span class='glyphicon glyphicon-education'></span> Users
+                </a>
+            </li>
+            <li [routerLinkActive]="['link-active']">
+                <a [routerLink]="['/app/roles']">
+                    <span class='glyphicon glyphicon-education'></span> Roles
+                </a>
+            </li>
+            <li [routerLinkActive]="['link-active']">
+                <a [routerLink]="['/app/about']">
+                    <span class='glyphicon glyphicon-th-list'></span> About
+                </a>
+            </li>
+        </ul>
+
+        <ul class="nav navbar-nav navbar-right" style="padding-left: 15px;">
+           
+                <!-- <a [ngClass]="{'language-active':isPolish}" (click)="setPolish()">Pl</a>[ngStyle]="{'color': isPolish ? 'basic' : 'disabled' }" -->
+                <button [ngClass]="{'language-button-active': isPolish,'language-button-inactive': !isPolish }"  (click)="setPolish($event)" mat-mini-fab>PL</button>
+
+                <!-- <a [ngClass]="{'language-active':isEnglish}" (click)="setEnglish()">En</a> -->
+                <button [ngClass]="{'language-button-active': isEnglish,'language-button-inactive': !isEnglish }" (click)="setEnglish($event)" mat-mini-fab >EN</button>
+          
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <!-- <li><a href="javascript:void(0);" class="js-search" data-close="true"><i class="material-icons">search</i></a></li> -->
+            <!-- <topbar-languageswitch></topbar-languageswitch> -->
+            <!-- <li class="pull-right"><a href="javascript:void(0);" class="js-right-sidebar" data-close="true"><i class="material-icons">more_vert</i></a></li> -->
+            <li [routerLinkActive]="['link-active']">
+                <a [routerLink]="['/app/register']">
+                    <span class="glyphicon glyphicon-log-in"></span> {{'SignUp'|translate}}
+                </a>
+            </li>
+            <li [routerLinkActive]="['link-active']">
+                <a [routerLink]="['/app/login']">
+                    <span class="glyphicon glyphicon-log-in"></span> {{'Login'|translate}}
+                </a>
+            </li>
+        </ul>
+        <!-- </div> -->
+    </div>
+</nav>

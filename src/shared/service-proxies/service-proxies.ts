@@ -567,6 +567,85 @@ export class EventServiceProxy {
 }
 
 @Injectable()
+export class PlanServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "";
+    }
+
+    /**
+     * @placeInfo_FormattedAddress (optional) 
+     * @placeInfo_Locality (optional) 
+     * @placeInfo_AdminArea (optional) 
+     * @placeInfo_Country (optional) 
+     * @placeInfo_PlaceId (optional) 
+     * @return Success
+     */
+    getPlanAsync(placeInfo_FormattedAddress: string | null | undefined, placeInfo_Locality: string | null | undefined, placeInfo_AdminArea: string | null | undefined, placeInfo_Country: string | null | undefined, placeInfo_PlaceId: string | null | undefined): Observable<ListResultDtoOfPlanListDto> {
+        let url_ = this.baseUrl + "/api/services/app/Plan/GetPlanAsync?";
+        if (placeInfo_FormattedAddress !== undefined)
+            url_ += "PlaceInfo.FormattedAddress=" + encodeURIComponent("" + placeInfo_FormattedAddress) + "&"; 
+        if (placeInfo_Locality !== undefined)
+            url_ += "PlaceInfo.Locality=" + encodeURIComponent("" + placeInfo_Locality) + "&"; 
+        if (placeInfo_AdminArea !== undefined)
+            url_ += "PlaceInfo.AdminArea=" + encodeURIComponent("" + placeInfo_AdminArea) + "&"; 
+        if (placeInfo_Country !== undefined)
+            url_ += "PlaceInfo.Country=" + encodeURIComponent("" + placeInfo_Country) + "&"; 
+        if (placeInfo_PlaceId !== undefined)
+            url_ += "PlaceInfo.PlaceId=" + encodeURIComponent("" + placeInfo_PlaceId) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetPlanAsync(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetPlanAsync(<any>response_);
+                } catch (e) {
+                    return <Observable<ListResultDtoOfPlanListDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<ListResultDtoOfPlanListDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetPlanAsync(response: HttpResponseBase): Observable<ListResultDtoOfPlanListDto> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? ListResultDtoOfPlanListDto.fromJS(resultData200) : new ListResultDtoOfPlanListDto();
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ListResultDtoOfPlanListDto>(<any>null);
+    }
+}
+
+@Injectable()
 export class RoleServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
@@ -2843,6 +2922,104 @@ export class EventRegisterOutput implements IEventRegisterOutput {
 
 export interface IEventRegisterOutput {
     registrationId: number | undefined;
+}
+
+export class ListResultDtoOfPlanListDto implements IListResultDtoOfPlanListDto {
+    items: PlanListDto[] | undefined;
+
+    constructor(data?: IListResultDtoOfPlanListDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            if (data["items"] && data["items"].constructor === Array) {
+                this.items = [];
+                for (let item of data["items"])
+                    this.items.push(PlanListDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): ListResultDtoOfPlanListDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ListResultDtoOfPlanListDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (this.items && this.items.constructor === Array) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone(): ListResultDtoOfPlanListDto {
+        const json = this.toJSON();
+        let result = new ListResultDtoOfPlanListDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IListResultDtoOfPlanListDto {
+    items: PlanListDto[] | undefined;
+}
+
+export class PlanListDto implements IPlanListDto {
+    title: string | undefined;
+    date: moment.Moment | undefined;
+
+    constructor(data?: IPlanListDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.title = data["title"];
+            this.date = data["date"] ? moment(data["date"].toString()) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): PlanListDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PlanListDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["title"] = this.title;
+        data["date"] = this.date ? this.date.toISOString() : <any>undefined;
+        return data; 
+    }
+
+    clone(): PlanListDto {
+        const json = this.toJSON();
+        let result = new PlanListDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IPlanListDto {
+    title: string | undefined;
+    date: moment.Moment | undefined;
 }
 
 export class CreateRoleDto implements ICreateRoleDto {

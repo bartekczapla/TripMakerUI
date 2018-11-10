@@ -1,4 +1,6 @@
-﻿/* my styles */
+﻿@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+/* my styles */
 body {
   padding-top: 70px;
 }

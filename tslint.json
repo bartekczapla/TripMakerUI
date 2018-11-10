@@ -11,7 +11,7 @@
     ],
     "curly": false,
     "eofline": false,
-    "forin": true,
+    "forin": false,
     "import-blacklist": [true],
     "import-spacing": true,
     "indent": [
@@ -21,7 +21,7 @@
     "interface-over-type-literal": true,
     "label-position": true,
     "max-line-length": [
-      true,
+      false,
       140
     ],
     "member-access": false,
@@ -99,7 +99,7 @@
       "check-type"
     ],
 
-    "directive-selector": [true, "attribute", "app", "camelCase"],
+    "directive-selector": [false, "attribute", "app", "camelCase"],
     "component-selector": [false, "element", "app", "kebab-case"],
     "use-input-property-decorator": true,
     "use-output-property-decorator": true,

@@ -9,9 +9,11 @@ import { TenantsComponent } from './tenants/tenants.component';
 import { RolesComponent } from "app/roles/roles.component";
 import { TasksComponent } from "app/tasks/tasks.component";
 import { DashboardComponent } from "app/dashboard/dashboard.component";
-import { FormComponent } from "app/form/form.component";
 import { EventsComponent } from 'app/events/events.component';
 import { EventDetailComponent } from 'app/events/event-detail/event-detail.component';
+import { RegisterComponent } from '@app/account/register/register.component';
+import { LoginComponent } from '@app/account/login/login.component';
+import { PlanComponent } from '@app/plan/plan.component';
 
 @NgModule({
     imports: [
@@ -20,8 +22,10 @@ import { EventDetailComponent } from 'app/events/event-detail/event-detail.compo
                 path: '',
                 component: AppComponent,
                 children: [
+                    { path: 'login', component: LoginComponent },
+                    { path: 'register', component: RegisterComponent },
                     { path: 'home', component: HomeComponent },
-                    { path: 'form', component: FormComponent },
+                    { path: 'plan', component: PlanComponent },
                     { path: 'dashboard', component: DashboardComponent,  canActivate: [AppRouteGuard] },
                     { path: 'users', component: UsersComponent, data: { permission: 'Pages.Users' }, canActivate: [AppRouteGuard] },
                     { path: 'roles', component: RolesComponent, data: { permission: 'Pages.Roles' }, canActivate: [AppRouteGuard] },

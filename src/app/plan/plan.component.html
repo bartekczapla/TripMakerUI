@@ -1,3 +1,7 @@
-<p>
-  plan works!
-</p>
+<div [@routerTransition]>
+
+<app-form *ngIf="isForm" (formSave)="generatePlan($event)"></app-form>
+
+<app-schedule *ngIf="!isForm" [parameters]="parameters"></app-schedule>
+
+</div>

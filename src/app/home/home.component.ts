@@ -13,7 +13,7 @@ import { appModuleAnimation } from '@shared/animations/routerTransition';
 export class HomeComponent extends AppComponentBase implements OnInit {
 
 
-    menuItem: MenuItem= new MenuItem("", "", "", "/app/form");
+    menuItem: MenuItem= new MenuItem("", "", "", "/app/plan");
 
     constructor(injector: Injector) 
     {

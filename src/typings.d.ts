@@ -6,10 +6,14 @@
 ///<reference path="../node_modules/@types/moment-timezone/index.d.ts"/>
 ///<reference path="../node_modules/@types/bootstrap/index.d.ts"/>
 ///<reference path="../node_modules/@types/toastr/index.d.ts"/>
+///<reference path="../node_modules/@types/googlemaps/index.d.ts"/>
 
 // Typings reference file, see links for more information
 // https://github.com/typings/typings
 // https://www.typescriptlang.org/docs/handbook/writing-declaration-files.html
+
+
+//declare const google:any;
 
 declare var System: any;
 
