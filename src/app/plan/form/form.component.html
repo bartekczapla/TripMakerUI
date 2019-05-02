@@ -1,22 +1,32 @@
 <mat-card>
 
   <ng-container *ngIf="formCounter==1">
-      <!-- <mat-toolbar color="primary">
-        <span><mat-icon>mood</mat-icon></span>
-    
-        <span>Yay, Material in Angular 2!</span>
-  
-      </mat-toolbar>
- -->
 
-      <mat-form-field>
-          <input matInput type="text" class="google-place-input" google-place (onSelect)="setAddress($event)" placeholder="Type to search..">                 
-      </mat-form-field>
-
-
-      <!-- <mat-form-field class="example-full-width">
-          <input matInput placeholder="Favorite food" value="Sushi">
-        </mat-form-field> -->
+    <div class="question-container">
+      <span class="form-question">Dokąd się wybierasz?</span>
+      <mat-form-field class="form-question">
+          <mat-label>{{'Where'|translate}}?</mat-label>
+          <input matInput type="text" class="google-place-input" google-place (onSelect)="setAddress($event)">                 
+      </mat-form-field> 
+    </div>
+    <span class="separate-line"></span>
+    <div class="question-container">
+            <span class="form-question">Kiedy zaczynasz?</span>
+            <mat-form-field class="form-question">
+                    <input matInput [matDatepicker]="startDate" [(ngModel)]="parameters.startDate">
+                    <mat-datepicker-toggle matSuffix [for]="startDate"> </mat-datepicker-toggle>
+                    <mat-datepicker #startDate></mat-datepicker>
+            </mat-form-field>
+   </div>
+   <span class="separate-line"></span>
+   <div class="question-container">
+           <span class="form-question">A kiedy kończysz?</span>
+           <mat-form-field class="form-question">
+                   <input matInput [matDatepicker]="endDate"  [(ngModel)]="parameters.endDate">
+                   <mat-datepicker-toggle matSuffix [for]="endDate"> </mat-datepicker-toggle>
+                   <mat-datepicker #endDate></mat-datepicker>
+           </mat-form-field>
+  </div>
 
   </ng-container>
 

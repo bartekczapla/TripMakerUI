@@ -28,29 +28,29 @@ export class LoginComponent extends AppComponentBase implements OnInit,AfterView
     }
 
     ngOnInit():void {
-      $('body').attr('class', 'login-page');
+    //  $('body').attr('class', 'login-page');
     }
 
     ngAfterViewInit(): void {
-        $(this.cardBody.nativeElement).find('input:first').focus();
+       // $(this.cardBody.nativeElement).find('input:first').focus();
     }
 
-    get multiTenancySideIsTeanant(): boolean {
-        return this._sessionService.tenantId > 0;
-    }
+    // get multiTenancySideIsTeanant(): boolean {
+    //     return this._sessionService.tenantId > 0;
+    // }
 
-    get isSelfRegistrationAllowed(): boolean {
-        if (!this._sessionService.tenantId) {
-            return false;
-        }
+    // get isSelfRegistrationAllowed(): boolean {
+    //     if (!this._sessionService.tenantId) {
+    //         return false;
+    //     }
 
-        return true;
-    }
+    //     return true;
+    // }
 
-    login(): void {
-        this.submitting = true;
-        this.loginService.authenticate(
-            () => this.submitting = false
-        );
-    }
+    // login(): void {
+    //     this.submitting = true;
+    //     this.loginService.authenticate(
+    //         () => this.submitting = false
+    //     );
+    // }
 }

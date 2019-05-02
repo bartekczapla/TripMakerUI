@@ -11,17 +11,15 @@ import { TasksComponent } from "app/tasks/tasks.component";
 import { DashboardComponent } from "app/dashboard/dashboard.component";
 import { EventsComponent } from 'app/events/events.component';
 import { EventDetailComponent } from 'app/events/event-detail/event-detail.component';
-import { RegisterComponent } from '@app/account/register/register.component';
-import { LoginComponent } from '@app/account/login/login.component';
 import { PlanComponent } from '@app/plan/plan.component';
+import { LoginComponent } from './account/login/login.component';
+import { RegisterComponent } from './account/register/register.component';
 
 @NgModule({
     imports: [
         RouterModule.forChild([
-            {
-                path: '',
-                component: AppComponent,
-                children: [
+            
+                    { path: '', redirectTo: 'home', pathMatch: 'full' },
                     { path: 'login', component: LoginComponent },
                     { path: 'register', component: RegisterComponent },
                     { path: 'home', component: HomeComponent },
@@ -34,8 +32,8 @@ import { PlanComponent } from '@app/plan/plan.component';
                     { path: 'events/:eventId', component: EventDetailComponent },
                     { path: 'about', component: AboutComponent },
                     { path: 'tasks', component: TasksComponent }
-                ]
-            }
+                
+            
         ])
     ],
     exports: [RouterModule]

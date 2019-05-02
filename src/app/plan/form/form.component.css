@@ -55,3 +55,27 @@ body {
     font-size: 1.5rem; 
     padding: 0.5rem;
 }
+
+/* Separate line */
+.separate-line{
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #ccc;
+  width:70%;
+  margin: 0 auto;
+  align-content: center;
+}
+
+.form-question {
+  display: inline-block;
+  min-width: 48.8%;
+  text-align: left;
+}
+
+.question-container {
+  display: block;
+  padding-top:40px;
+  padding-bottom: 40px;
+}
+

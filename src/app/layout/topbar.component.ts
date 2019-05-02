@@ -2,6 +2,7 @@
 import { AppComponentBase } from '@shared/app-component-base';
 import { MenuItem } from '@shared/layout/menu-item';
 import {TranslateService } from '@ngx-translate/core'
+import { LoginService } from '@app/account/login/login.service';
 
 
 @Component({
@@ -14,6 +15,7 @@ export class TopBarComponent extends AppComponentBase {
 
 public isEnglish:boolean=true;
 public isPolish:boolean=false;
+public isUserLogged:boolean=false;
 
     menuItems: MenuItem[] = [
         new MenuItem(this.l("HomePage"), "", "home", "/app/home"),
@@ -26,7 +28,7 @@ public isPolish:boolean=false;
         new MenuItem(this.l("Events"), "Pages.Events", "event", "/app/events"),
     ];
 
-    constructor( injector: Injector, private translate: TranslateService) {
+    constructor( injector: Injector, private translate: TranslateService,  private _loginService: LoginService) {
         super(injector);
     }
 
@@ -49,6 +51,10 @@ public isPolish:boolean=false;
         this.isEnglish=true;
         this.isPolish=false;
         this.translate.use('en');
+      }
+
+      checkIfUserLogged(){
+
       }
 
 

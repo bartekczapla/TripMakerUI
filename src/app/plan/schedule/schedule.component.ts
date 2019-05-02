@@ -33,7 +33,8 @@ protected list(request: PagedRequestDto, pageNumber: number, finishedCallback: F
   loadPlan() {
     console.log('test');
     this._planService.getPlanAsync(this.parameters.placeInfo.formattedAddress,
-      this.parameters.placeInfo.locality,   this.parameters.placeInfo.adminArea,   this.parameters.placeInfo.country,this.parameters.placeInfo.placeId
+      this.parameters.placeInfo.locality,   this.parameters.placeInfo.adminArea,   this.parameters.placeInfo.country,this.parameters.placeInfo.placeId,
+      this.parameters.startDate,this.parameters.endDate
     )
         .subscribe((result: ListResultDtoOfPlanListDto) => {
           console.log(result);

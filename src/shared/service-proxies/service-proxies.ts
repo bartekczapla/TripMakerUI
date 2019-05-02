@@ -583,9 +583,11 @@ export class PlanServiceProxy {
      * @placeInfo_AdminArea (optional) 
      * @placeInfo_Country (optional) 
      * @placeInfo_PlaceId (optional) 
+     * @startDate (optional) 
+     * @endDate (optional) 
      * @return Success
      */
-    getPlanAsync(placeInfo_FormattedAddress: string | null | undefined, placeInfo_Locality: string | null | undefined, placeInfo_AdminArea: string | null | undefined, placeInfo_Country: string | null | undefined, placeInfo_PlaceId: string | null | undefined): Observable<ListResultDtoOfPlanListDto> {
+    getPlanAsync(placeInfo_FormattedAddress: string | null | undefined, placeInfo_Locality: string | null | undefined, placeInfo_AdminArea: string | null | undefined, placeInfo_Country: string | null | undefined, placeInfo_PlaceId: string | null | undefined, startDate: moment.Moment | null | undefined, endDate: moment.Moment | null | undefined): Observable<ListResultDtoOfPlanListDto> {
         let url_ = this.baseUrl + "/api/services/app/Plan/GetPlanAsync?";
         if (placeInfo_FormattedAddress !== undefined)
             url_ += "PlaceInfo.FormattedAddress=" + encodeURIComponent("" + placeInfo_FormattedAddress) + "&"; 
@@ -597,6 +599,10 @@ export class PlanServiceProxy {
             url_ += "PlaceInfo.Country=" + encodeURIComponent("" + placeInfo_Country) + "&"; 
         if (placeInfo_PlaceId !== undefined)
             url_ += "PlaceInfo.PlaceId=" + encodeURIComponent("" + placeInfo_PlaceId) + "&"; 
+        if (startDate !== undefined)
+            url_ += "StartDate=" + encodeURIComponent(startDate ? "" + startDate.toJSON() : "") + "&"; 
+        if (endDate !== undefined)
+            url_ += "EndDate=" + encodeURIComponent(endDate ? "" + endDate.toJSON() : "") + "&"; 
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
