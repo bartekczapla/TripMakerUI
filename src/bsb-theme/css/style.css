@@ -2,8 +2,18 @@
 
 /* my styles */
 body {
-  padding-top: 70px;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  min-width: 100%;
+  min-height: 100%;
 }
+
+html {
+  height: 100%;
+}
+
+
 
 
 /* Show Fieldset and Legend ==================== */

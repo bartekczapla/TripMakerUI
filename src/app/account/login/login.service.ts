@@ -8,6 +8,7 @@ import { MessageService } from '@abp/message/message.service';
 import { LogService } from '@abp/log/log.service';
 import { TokenService } from '@abp/auth/token.service';
 import { UtilsService } from '@abp/utils/utils.service';
+import { AppSessionService } from '@shared/session/app-session.service';
 
 @Injectable()
 export class LoginService {
@@ -25,7 +26,8 @@ export class LoginService {
         private _utilsService: UtilsService,
         private _messageService: MessageService,
         private _tokenService: TokenService,
-        private _logService: LogService
+        private _logService: LogService,
+        private _sessionService: AppSessionService
     ) {
         this.clear();
     }
@@ -43,7 +45,7 @@ export class LoginService {
 
     private processAuthenticateResult(authenticateResult: AuthenticateResultModel) {
         this.authenticateResult = authenticateResult;
-
+        console.log(this.authenticateResult)
         if (authenticateResult.accessToken) {
             //Successfully logged in
             this.login(authenticateResult.accessToken, authenticateResult.encryptedAccessToken, authenticateResult.expireInSeconds, this.rememberMe);
@@ -52,7 +54,7 @@ export class LoginService {
             //Unexpected result!
 
             this._logService.warn('Unexpected authenticateResult!');
-            this._router.navigate(['account/login']);
+            this._router.navigate(['login']);
         }
     }
 
@@ -76,8 +78,15 @@ export class LoginService {
         if (initialUrl.indexOf('/login') > 0) {
             initialUrl = AppConsts.appBaseUrl;
         }
-
+        //this._router.navigate(['home']);
         location.href = initialUrl;
+    }
+
+    public isUserLogged():boolean {
+        if(this._sessionService.user)
+            return true;
+        else 
+            return false;
     }
 
     private clear(): void {

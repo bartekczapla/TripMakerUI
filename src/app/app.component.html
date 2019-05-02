@@ -1,6 +1,51 @@
 ﻿<!-- <div class="overlay"></div> -->
 
-<top-bar></top-bar>
+
+<div id="wrapper">
+    <div id="header">
+        <top-bar></top-bar> 
+    </div>
+    <div id="content">
+            <router-outlet></router-outlet>
+    </div>
+    <div id="footer">
+        <app-footer></app-footer>
+    </div>
+  </div>
+
+<!-- <div class="page-wrapper">
+    <top-bar></top-bar> 
+    
+    <app-footer></app-footer>
+</div> -->
+
+<style>
+    #wrapper {
+    padding: 50px 0;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    }
+
+    #content {
+    min-height: 100%;
+    margin-top: 60px;
+    }
+
+    #header {
+    margin-top: -80px;
+    height: 80px;
+    }
+
+    #footer {
+    margin-bottom: -50px;
+    height: 50px;
+    }
+
+</style>
+
 
 <!-- <section> -->
      <!-- <aside id="leftsidebar" class="sidebar">
@@ -14,8 +59,7 @@
 
 <!-- <section class="content"> -->
 <!-- <div class="container-fluid" style="margin-top:300px"> -->
- <router-outlet></router-outlet>
+
  <!-- </div> -->
 <!-- </section> -->
 
-<app-footer></app-footer>

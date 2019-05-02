@@ -3,6 +3,7 @@ import { AppComponentBase } from '@shared/app-component-base';
 import { MenuItem } from '@shared/layout/menu-item';
 import {TranslateService } from '@ngx-translate/core'
 import { LoginService } from '@app/account/login/login.service';
+import { AppAuthService } from '@shared/auth/app-auth.service';
 
 
 @Component({
@@ -18,17 +19,17 @@ public isPolish:boolean=false;
 public isUserLogged:boolean=false;
 
     menuItems: MenuItem[] = [
-        new MenuItem(this.l("HomePage"), "", "home", "/app/home"),
+        new MenuItem(this.l("HomePage"), "", "home", "/home"),
 
-        new MenuItem(this.l("Tenants"), "Pages.Tenants", "business", "/app/tenants"),
-        new MenuItem(this.l("Users"), "Pages.Users", "people", "/app/users"),
-        new MenuItem(this.l("Roles"), "Pages.Roles", "local_offer", "/app/roles"),
-        new MenuItem(this.l("About"), "", "info", "/app/about"),
-        new MenuItem(this.l("Tasks"), "", "info", "/app/tasks"),
-        new MenuItem(this.l("Events"), "Pages.Events", "event", "/app/events"),
+        new MenuItem(this.l("Tenants"), "Pages.Tenants", "business", "/tenants"),
+        new MenuItem(this.l("Users"), "Pages.Users", "people", "/users"),
+        new MenuItem(this.l("Roles"), "Pages.Roles", "local_offer", "/roles"),
+        new MenuItem(this.l("About"), "", "info", "/about"),
+        new MenuItem(this.l("Tasks"), "", "info", "/tasks"),
+        new MenuItem(this.l("Events"), "Pages.Events", "event", "/events"),
     ];
 
-    constructor( injector: Injector, private translate: TranslateService,  private _loginService: LoginService) {
+    constructor( injector: Injector, private translate: TranslateService,  private _loginService: LoginService, private _authService: AppAuthService) {
         super(injector);
     }
 
@@ -53,9 +54,12 @@ public isUserLogged:boolean=false;
         this.translate.use('en');
       }
 
-      checkIfUserLogged(){
-
+      checkIfUserLogged():boolean{
+            return this._loginService.isUserLogged();
       }
 
+      logout(): void {
+          this._authService.logout();
+      }
 
 }

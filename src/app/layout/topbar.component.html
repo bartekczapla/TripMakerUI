@@ -47,32 +47,32 @@
                     <span class='glyphicon glyphicon-education'></span> Plan
                 </a>
             </li>
-            <li [routerLinkActive]="['link-active']">
+            <li *ngIf="checkIfUserLogged()" [routerLinkActive]="['link-active']">
                 <a [routerLink]="['/dashboard']">
                     <span class='glyphicon glyphicon-education'></span> Dashboard
                 </a>
             </li>
-            <li [routerLinkActive]="['link-active']">
+            <li *ngIf="checkIfUserLogged()" [routerLinkActive]="['link-active']">
                 <a [routerLink]="['/tasks']">
                     <span class='glyphicon glyphicon-education'></span> Tasks
                 </a>
             </li>
-            <li [routerLinkActive]="['link-active']">
+            <li *ngIf="checkIfUserLogged()" [routerLinkActive]="['link-active']">
                 <a [routerLink]="['/events']">
                     <span class='glyphicon glyphicon-th-list'></span> Events
                 </a>
             </li>
-            <li [routerLinkActive]="['link-active']">
+            <li *ngIf="checkIfUserLogged()" [routerLinkActive]="['link-active']">
                 <a [routerLink]="['/users']">
                     <span class='glyphicon glyphicon-education'></span> Users
                 </a>
             </li>
-            <li [routerLinkActive]="['link-active']">
+            <li *ngIf="checkIfUserLogged()" [routerLinkActive]="['link-active']">
                 <a [routerLink]="['/roles']">
                     <span class='glyphicon glyphicon-education'></span> Roles
                 </a>
             </li>
-            <li [routerLinkActive]="['link-active']">
+            <li *ngIf="checkIfUserLogged()" [routerLinkActive]="['link-active']">
                 <a [routerLink]="['/tenants']">
                     <span class='glyphicon glyphicon-education'></span> Tenants
                 </a>
@@ -97,14 +97,19 @@
             <!-- <li><a href="javascript:void(0);" class="js-search" data-close="true"><i class="material-icons">search</i></a></li> -->
             <!-- <topbar-languageswitch></topbar-languageswitch> -->
             <!-- <li class="pull-right"><a href="javascript:void(0);" class="js-right-sidebar" data-close="true"><i class="material-icons">more_vert</i></a></li> -->
-            <li [routerLinkActive]="['link-active']">
+            <li *ngIf="!checkIfUserLogged()" [routerLinkActive]="['link-active']">
                 <a [routerLink]="['/register']">
                     <span class="glyphicon glyphicon-log-in"></span> {{'SignUp'|translate}}
                 </a>
             </li>
-            <li [routerLinkActive]="['link-active']">
+            <li *ngIf="!checkIfUserLogged()" [routerLinkActive]="['link-active']">
                 <a [routerLink]="['/login']">
                     <span class="glyphicon glyphicon-log-in"></span> {{'Login'|translate}}
+                </a>
+            </li>
+            <li *ngIf="checkIfUserLogged()">
+                <a (click)="logout()">
+                    <span class="glyphicon glyphicon-log-out"></span> {{'Logout'|translate}}
                 </a>
             </li>
         </ul>
