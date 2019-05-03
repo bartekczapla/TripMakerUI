@@ -2,6 +2,7 @@ import { Component, Injector, OnInit} from '@angular/core';
 import { AppComponentBase } from '@shared/app-component-base';
 import { MenuItem } from '@shared/layout/menu-item';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -15,7 +16,7 @@ export class HomeComponent extends AppComponentBase implements OnInit {
 
     menuItem: MenuItem= new MenuItem("", "", "", "/plan");
 
-    constructor(injector: Injector) 
+    constructor(   private _router: Router, injector: Injector) 
     {
         super(injector);
     }
@@ -24,5 +25,8 @@ export class HomeComponent extends AppComponentBase implements OnInit {
 
     }
     
+    navigateToPlan(){
+        this._router.navigate(['plan'])
+    }
 
 }

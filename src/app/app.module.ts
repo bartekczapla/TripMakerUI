@@ -3,17 +3,12 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { JsonpModule } from '@angular/http';
 import { HttpClientModule, HttpClient,HttpResponse } from '@angular/common/http';
-
 import { ModalModule } from 'ngx-bootstrap';
 import { NgxPaginationModule } from 'ngx-pagination';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-
 import { AbpModule } from '@abp/abp.module';
-
 import { ServiceProxyModule } from '@shared/service-proxies/service-proxy.module';
-
 import { HomeComponent } from '@app/home/home.component';
 import { UsersComponent } from '@app/users/users.component';
 import { CreateUserComponent } from '@app/users/create-user/create-user.component';
@@ -51,14 +46,11 @@ import { LoginService } from './account/login/login.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {  Injector, APP_INITIALIZER, LOCALE_ID } from '@angular/core';
-
 import { AbpHttpInterceptor } from '@abp/abpHttpInterceptor';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-
 import { AppConsts } from '@shared/AppConsts';
 import { AppSessionService } from '@shared/session/app-session.service';
 import { API_BASE_URL } from '@shared/service-proxies/service-proxies';
-
 import { AppPreBootstrap } from '../AppPreBootstrap';
 import { RouterModule } from '@angular/router';
 import { GooglePlacesDirective } from '@shared/directives/google-places.directive';
@@ -66,6 +58,9 @@ import { AppUrlService } from '@shared/nav/app-url.service';
 import { AppAuthService } from '@shared/auth/app-auth.service';
 import { AppRouteGuard } from '@shared/auth/auth-route-guard';
 import { AdminManagementComponent } from './admin-management/admin-management.component';
+import { ContactComponent } from './home/contact/contact.component';
+import { TrendingDestinationComponent } from './home/trending-destination/trending-destination.component';
+import { HowItWorksComponent } from './home/how-it-works/how-it-works.component';
 // export function HttpLoaderFactory(http: HttpClient) {
 //   return new TranslateHttpLoader(http);
 // }
@@ -139,7 +134,10 @@ export function createTranslateLoader(http: HttpClient) {
         TenantChangeModalComponent,
         MaterialInput,
         GooglePlacesDirective,
-        AdminManagementComponent
+        AdminManagementComponent,
+        ContactComponent,
+        TrendingDestinationComponent,
+        HowItWorksComponent
     
     ],
     imports: [

@@ -1,7 +1,7 @@
 {
     "SignUp": "Rejestracja",
     "Login": "Logowanie",
-    "HowItWorks": "Jak to działa",
+    "HowItWorks": "JAK TO DZIAŁA",
     "Next": "Dalej",
     "Prev": "Wstecz",
     "GeneratePlan": "Generuj plan",
@@ -97,5 +97,14 @@
     "Settings": "Ustawienia",
     "FindMeOnGitHub": "Odwiedź mnie na GitHub!", 
     "DontYouHaveAnAccount":"Nie masz konta?",
-    "Register2": "Zarejestruj się!"
+    "Register2": "Zarejestruj się!",
+    "TrendingDestination": "TOPOWE KIERUNKI",
+    "Contact": "KONTAKT",
+    "ContactUs": "NAPISZ DO NAS",
+    "SendMessage": "Wyślij wiadomość",
+    "Message": "Wiadomość",
+    "Email": "E-mail",
+    "AreYouReady": "Czy jesteś gotowy",
+    "ToStartYourJourney": "ROZPOCZĄĆ SWOJĄ PRZYGODĘ",
+    "GetPlan": "Stwórz plan"
 }

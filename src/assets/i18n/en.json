@@ -1,7 +1,7 @@
 {
     "SignUp": "Sign Up",
     "Login": "Login",
-    "HowItWorks": "How it works",
+    "HowItWorks": "HOW IT WORKS",
     "Next": "Next",
     "Prev": "Prev",
     "GeneratePlan": "Generate plan",
@@ -97,5 +97,14 @@
     "Settings": "Settings",
     "FindMeOnGitHub": "Find me on GitHub!",
     "DontYouHaveAnAccount":"Don't you have an account?",
-    "Register2": "Register!"
+    "Register2": "Register!",
+    "TrendingDestination": "TRENDING DESTINATION",
+    "Contact": "CONTACT",
+    "ContactUs": "CONTACT US",
+    "SendMessage": "Send message",
+    "Message": "Message",
+    "Email": "E-mail",
+    "AreYouReady": "Are you ready",
+    "ToStartYourJourney": "TO START YOUR JOURNEY",
+    "GetPlan": "Get plan"
 }
