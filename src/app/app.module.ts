@@ -15,7 +15,6 @@ import { AbpModule } from '@abp/abp.module';
 import { ServiceProxyModule } from '@shared/service-proxies/service-proxy.module';
 
 import { HomeComponent } from '@app/home/home.component';
-import { AboutComponent } from '@app/about/about.component';
 import { UsersComponent } from '@app/users/users.component';
 import { CreateUserComponent } from '@app/users/create-user/create-user.component';
 import { EditUserComponent } from './users/edit-user/edit-user.component';
@@ -32,7 +31,6 @@ import { SideBarNavComponent } from '@app/layout/sidebar-nav.component';
 import { SideBarFooterComponent } from '@app/layout/sidebar-footer.component';
 import { RightSideBarComponent } from '@app/layout/right-sidebar.component';
 import { MaterialInput } from '@shared/directives/material-input.directive';
-import { TasksComponent } from './tasks/tasks.component';
 import { FooterComponent } from './layout/footer.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { FormComponent } from './plan/form/form.component';
@@ -67,6 +65,7 @@ import { GooglePlacesDirective } from '@shared/directives/google-places.directiv
 import { AppUrlService } from '@shared/nav/app-url.service';
 import { AppAuthService } from '@shared/auth/app-auth.service';
 import { AppRouteGuard } from '@shared/auth/auth-route-guard';
+import { AdminManagementComponent } from './admin-management/admin-management.component';
 // export function HttpLoaderFactory(http: HttpClient) {
 //   return new TranslateHttpLoader(http);
 // }
@@ -109,7 +108,7 @@ export function createTranslateLoader(http: HttpClient) {
     declarations: [
         AppComponent,
         HomeComponent,
-        AboutComponent,
+      
         TenantsComponent,
 		CreateTenantComponent,
 		EditTenantComponent,
@@ -125,7 +124,6 @@ export function createTranslateLoader(http: HttpClient) {
         SideBarNavComponent,
         SideBarFooterComponent,
         RightSideBarComponent,
-        TasksComponent,
         FooterComponent,
         DashboardComponent,
         FormComponent,
@@ -140,7 +138,8 @@ export function createTranslateLoader(http: HttpClient) {
         TenantChangeComponent,
         TenantChangeModalComponent,
         MaterialInput,
-        GooglePlacesDirective
+        GooglePlacesDirective,
+        AdminManagementComponent
     
     ],
     imports: [

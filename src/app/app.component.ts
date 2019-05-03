@@ -18,8 +18,8 @@ export class AppComponent extends AppComponentBase implements OnInit, AfterViewI
 
     constructor(injector: Injector, translate: TranslateService) {
         super(injector);
-        translate.setDefaultLang('en');
-        translate.use('en');
+        translate.setDefaultLang('pl');
+        translate.use('pl');
     }
 
     ngOnInit(): void {

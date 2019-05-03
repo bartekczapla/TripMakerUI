@@ -9,13 +9,13 @@ import { AppAuthService } from '@shared/auth/app-auth.service';
 @Component({
     templateUrl: './topbar.component.html',
     selector: 'top-bar',
-    styleUrls: ['./topbar.component.css']
+    styleUrls: ['./topbar.component.less']
    // encapsulation: ViewEncapsulation.None
 })
 export class TopBarComponent extends AppComponentBase {
 
-public isEnglish:boolean=true;
-public isPolish:boolean=false;
+public isEnglish:boolean=false;
+public isPolish:boolean=true;
 public isUserLogged:boolean=false;
 
     menuItems: MenuItem[] = [

@@ -94,5 +94,8 @@
     "AreYouSureWantToDelete": "Are you sure want to delete {0}?",
     "StartTyping": "Start Typing",
     "Skins": "Skins",
-    "Settings": "Settings"
+    "Settings": "Settings",
+    "FindMeOnGitHub": "Find me on GitHub!",
+    "DontYouHaveAnAccount":"Don't you have an account?",
+    "Register2": "Register!"
 }

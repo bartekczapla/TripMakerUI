@@ -1,5 +1,19 @@
-    /* Add a gray background color and some padding to the footer */
-    footer {
-        background-color: whitesmoke;
-        padding: 25px;
+
+      footer {
+        background-color: #403C39;
+        color: #f5f5f5;
+        padding: 32px;
+      }
+      
+      footer a {
+        color: #f5f5f5;
+      }
+      
+      footer a:hover {
+        color: #fed136;
+        text-decoration: none;
+      }
+
+      .footer-text-size {
+        font-size: 16px;
       }

@@ -1,118 +1,74 @@
-﻿<!-- Search Bar -->
-
-<!-- <div class="search-bar">
-    <div class="search-icon">
-        <i class="material-icons">search</i>
-    </div>
-    <input materialInput type="text" placeholder="START TYPING...">
-    <div class="close-search">
-        <i class="material-icons">close</i>
-    </div>
-</div>  -->
-
-<!-- #END# Search Bar -->
-<!-- 
-<nav class="navbar">
+﻿<nav class="navbar navbar-inverse">
     <div class="container-fluid">
-        <div class="navbar-header"> -->
-<!-- <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
-            <a href="javascript:void(0);" class="bars"></a> -->
-<!-- <a routerLink="/app/home" class="navbar-brand"><i class="fa fa-map-signs"></i> TripMaker</a>
+        <div class="navbar-header">
+            <a routerLink="/home" class="navbar-brand">
+                <i class="fa fa-map-signs yellow-theme"></i> <span class="yellow-theme">TripMaker</span></a>
         </div>
-        <div class="collapse navbar-collapse" id="navbar-collapse">
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+                <li [routerLinkActive]="['link-active']">
+                    <a [routerLink]="['/plan']">
+                        <span class='glyphicon glyphicon-education'></span> PLAN
+                    </a>
+                </li>
+                <li *ngIf="checkIfUserLogged()" [routerLinkActive]="['link-active']">
+                    <a [routerLink]="['/dashboard']">
+                        <span class='glyphicon glyphicon-education'></span> Dashboard
+                    </a>
+                </li>
+                <li *ngIf="checkIfUserLogged()" [routerLinkActive]="['link-active']">
+                    <a [routerLink]="['/events']">
+                        <span class='glyphicon glyphicon-th-list'></span> Events
+                    </a>
+                </li>
+                <!-- <li *ngIf="checkIfUserLogged()" [routerLinkActive]="['link-active']">
+                    <a [routerLink]="['/users']">
+                        <span class='glyphicon glyphicon-education'></span> Users
+                    </a>
+                </li>
+                <li *ngIf="checkIfUserLogged()" [routerLinkActive]="['link-active']">
+                    <a [routerLink]="['/roles']">
+                        <span class='glyphicon glyphicon-education'></span> Roles
+                    </a>
+                </li>
+                <li *ngIf="checkIfUserLogged()" [routerLinkActive]="['link-active']">
+                    <a [routerLink]="['/tenants']">
+                        <span class='glyphicon glyphicon-education'></span> Tenants
+                    </a>
+                </li> -->
+            </ul>
             <ul class="nav navbar-nav navbar-right">
-                <! <li><a href="javascript:void(0);" class="js-search" data-close="true"><i class="material-icons">search</i></a></li> -->
-<!-- <topbar-languageswitch></topbar-languageswitch>
-                <li class="pull-right"><a href="javascript:void(0);" class="js-right-sidebar" data-close="true"><i class="material-icons">more_vert</i></a></li>
+                <!-- <li *ngIf="!checkIfUserLogged()" [routerLinkActive]="['link-active']">
+                    <a [routerLink]="['/register']">
+                        <span class="glyphicon glyphicon-log-in"></span> {{'SignUp'|translate}}
+                    </a>
+                </li> -->
+                <li>
+                    <div class="div-container">
+                        <a class="navbar-item-color "  (click)="setPolish($event)"><span [ngClass]="{'active-language': isPolish }">PL</span></a>
+                        <span class="ml-5 mr-5 navbar-item-color">/</span>
+                        <a class="navbar-item-color "  (click)="setEnglish($event)"><span [ngClass]="{'active-language': isEnglish }">EN</span></a>    
+                    </div>
+                       
+                </li>
+                <li *ngIf="!checkIfUserLogged()" [routerLinkActive]="['link-active']">
+                    <a [routerLink]="['/login']">
+                        <span class="glyphicon glyphicon-log-in"></span> {{'Login'|translate}}
+                    </a>
+                </li>
+                <li *ngIf="checkIfUserLogged()">
+                    <a (click)="logout()">
+                        <span class="glyphicon glyphicon-log-out"></span> {{'Logout'|translate}}
+                    </a>
+                </li>
             </ul>
         </div>
     </div>
-</nav> -->
-
-<nav class="navbar navbar-inverse">
-    <div class="container-fluid">
-        <div class='navbar-header'>
-            <!-- <button type='button' class='navbar-toggle' data-toggle='collapse' data-target='.navbar-collapse'>
-                    <span class='sr-only'>Toggle navigation</span> 
-                    <span class='icon-bar'></span>
-                    <span class='icon-bar'></span>
-                </button> -->
-            <a routerLink="/home" class="navbar-brand">
-                <i class="fa fa-map-signs"></i> TripMaker</a>
-        </div>
-        <!-- <div class="nav navbar-nav">               -->
-        <ul class='nav navbar-nav'>
-            <li [routerLinkActive]="['link-active']">
-                <a [routerLink]="['/plan']">
-                    <span class='glyphicon glyphicon-education'></span> Plan
-                </a>
-            </li>
-            <li *ngIf="checkIfUserLogged()" [routerLinkActive]="['link-active']">
-                <a [routerLink]="['/dashboard']">
-                    <span class='glyphicon glyphicon-education'></span> Dashboard
-                </a>
-            </li>
-            <li *ngIf="checkIfUserLogged()" [routerLinkActive]="['link-active']">
-                <a [routerLink]="['/tasks']">
-                    <span class='glyphicon glyphicon-education'></span> Tasks
-                </a>
-            </li>
-            <li *ngIf="checkIfUserLogged()" [routerLinkActive]="['link-active']">
-                <a [routerLink]="['/events']">
-                    <span class='glyphicon glyphicon-th-list'></span> Events
-                </a>
-            </li>
-            <li *ngIf="checkIfUserLogged()" [routerLinkActive]="['link-active']">
-                <a [routerLink]="['/users']">
-                    <span class='glyphicon glyphicon-education'></span> Users
-                </a>
-            </li>
-            <li *ngIf="checkIfUserLogged()" [routerLinkActive]="['link-active']">
-                <a [routerLink]="['/roles']">
-                    <span class='glyphicon glyphicon-education'></span> Roles
-                </a>
-            </li>
-            <li *ngIf="checkIfUserLogged()" [routerLinkActive]="['link-active']">
-                <a [routerLink]="['/tenants']">
-                    <span class='glyphicon glyphicon-education'></span> Tenants
-                </a>
-            </li>
-            <li [routerLinkActive]="['link-active']">
-                <a [routerLink]="['/about']">
-                    <span class='glyphicon glyphicon-th-list'></span> About
-                </a>
-            </li>
-        </ul>
-
-        <ul class="nav navbar-nav navbar-right" style="padding-left: 15px;">
-           
-                <!-- <a [ngClass]="{'language-active':isPolish}" (click)="setPolish()">Pl</a>[ngStyle]="{'color': isPolish ? 'basic' : 'disabled' }" -->
-                <button [ngClass]="{'language-button-active': isPolish,'language-button-inactive': !isPolish }"  (click)="setPolish($event)" mat-mini-fab>PL</button>
-
-                <!-- <a [ngClass]="{'language-active':isEnglish}" (click)="setEnglish()">En</a> -->
-                <button [ngClass]="{'language-button-active': isEnglish,'language-button-inactive': !isEnglish }" (click)="setEnglish($event)" mat-mini-fab >EN</button>
-          
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
-            <!-- <li><a href="javascript:void(0);" class="js-search" data-close="true"><i class="material-icons">search</i></a></li> -->
-            <!-- <topbar-languageswitch></topbar-languageswitch> -->
-            <!-- <li class="pull-right"><a href="javascript:void(0);" class="js-right-sidebar" data-close="true"><i class="material-icons">more_vert</i></a></li> -->
-            <li *ngIf="!checkIfUserLogged()" [routerLinkActive]="['link-active']">
-                <a [routerLink]="['/register']">
-                    <span class="glyphicon glyphicon-log-in"></span> {{'SignUp'|translate}}
-                </a>
-            </li>
-            <li *ngIf="!checkIfUserLogged()" [routerLinkActive]="['link-active']">
-                <a [routerLink]="['/login']">
-                    <span class="glyphicon glyphicon-log-in"></span> {{'Login'|translate}}
-                </a>
-            </li>
-            <li *ngIf="checkIfUserLogged()">
-                <a (click)="logout()">
-                    <span class="glyphicon glyphicon-log-out"></span> {{'Logout'|translate}}
-                </a>
-            </li>
-        </ul>
-        <!-- </div> -->
-    </div>
 </nav>
+
+<!--       
+
+<button [ngClass]="{'language-button-active': isPolish,'language-button-inactive': !isPolish }"  (click)="setPolish($event)" mat-mini-fab>PL</button>
+ <button [ngClass]="{'language-button-active': isEnglish,'language-button-inactive': !isEnglish }" (click)="setEnglish($event)" mat-mini-fab >EN</button>
+          
+   -->
