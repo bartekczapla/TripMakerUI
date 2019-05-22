@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Injector } from '@angular/core';
 import { FormParameters } from '@app/plan/form/models/form-parameters.interface';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
-import { PlanServiceProxy, ListResultDtoOfPlanListDto, PlanListDto, EntityDtoOfGuid } from '@shared/service-proxies/service-proxies';
+import { PlanServiceProxy, PlanDto,  } from '@shared/service-proxies/service-proxies';
 import { PagedListingComponentBase, PagedRequestDto } from '@shared/paged-listing-component-base';
 import { AppComponentBase } from '@shared/app-component-base';
 
@@ -11,35 +11,72 @@ import { AppComponentBase } from '@shared/app-component-base';
   styleUrls: ['./schedule.component.css'],
   animations: [appModuleAnimation()]
 })
-export class ScheduleComponent extends PagedListingComponentBase<PlanListDto>  {
+export class ScheduleComponent implements OnInit   {
 
-   @Input() parameters: FormParameters;
+  @Input() parameters: FormParameters;
+  plan:PlanDto;
+  loading:boolean=false;
 
-  constructor(injector: Injector,private _planService: PlanServiceProxy)
+
+  constructor(private _planService: PlanServiceProxy)
   {
-            super(injector);
+      
   }
 
+  ngOnInit(): void {
+    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+    //Add 'implements OnInit' to the class.
+    this.getTestPlan();
+  }
+
+  checkIfFirstDate(index:number):boolean {
+    if(this.plan !== undefined){
+      if(index === 0) return true;
+      else {
+        var actualDate=this.plan.elements[index].start.toDate().getDate();
+        var previousDate=this.plan.elements[index-1].start.toDate().getDate();
+
+        return actualDate !== previousDate;
+
+        //return this.plan.elements[index].start.diff(this.plan.elements[index-1].start,'days') !==0;
+        // console.log(this.plan.elements[3].start.diff(this.plan.elements[2].start,'days'))
+        // console.log(this.plan.elements[3].start.toDate().getDate())
+      }      
+    }
+    else return false;
+
+  }
+
+
+  getTestPlan(){
+    this.loading=true;
+    this._planService.getTestPlanAsync()
+        .finally(()=>{this.loading=false;})
+        .subscribe((result:PlanDto)=>{
+          this.plan=result.clone();
+
+        })
+  }
 
 protected list(request: PagedRequestDto, pageNumber: number, finishedCallback: Function): void {
     this.loadPlan();
     finishedCallback();
 }
 
-  protected delete(entity: PlanListDto): void {
-    throw new Error("Method not implemented.");
-  }
+  // protected delete(entity: PlanListDto): void {
+  //   throw new Error("Method not implemented.");
+  // }
 
   loadPlan() {
-    console.log('test');
-    this._planService.getPlanAsync(this.parameters.placeInfo.formattedAddress,
-      this.parameters.placeInfo.locality,   this.parameters.placeInfo.adminArea,   this.parameters.placeInfo.country,this.parameters.placeInfo.placeId,
-      this.parameters.startDate,this.parameters.endDate
-    )
-        .subscribe((result: ListResultDtoOfPlanListDto) => {
-          console.log(result);
-            //this.events = result.items;
-        });
+    // console.log('test');
+    // this._planService.getPlanAsync(this.parameters.placeInfo.formattedAddress,
+    //   this.parameters.placeInfo.locality,   this.parameters.placeInfo.adminArea,   this.parameters.placeInfo.country,this.parameters.placeInfo.placeId,
+    //   this.parameters.startDate,this.parameters.endDate
+    // )
+    //     .subscribe((result: ListResultDtoOfPlanListDto) => {
+    //       console.log(result);
+    //         //this.events = result.items;
+    //     });
 }
 
 }

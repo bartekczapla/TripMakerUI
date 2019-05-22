@@ -7,9 +7,12 @@ import {
     MatCardModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatInputModule, MatDividerModule
+    MatInputModule,
+     MatDividerModule,
+     MatTabsModule
   } from '@angular/material';
-
+  import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {CdkStepperModule} from '@angular/cdk/stepper';
 @NgModule({
     imports: [
         MatButtonModule,
@@ -20,7 +23,10 @@ import {
         MatDatepickerModule,
         MatNativeDateModule,
         MatInputModule,
-        MatDividerModule
+        MatDividerModule,
+        MatProgressSpinnerModule,
+        CdkStepperModule,
+        MatTabsModule
       ],
       exports: [
         MatButtonModule,
@@ -31,7 +37,10 @@ import {
         MatDatepickerModule,
         MatNativeDateModule,
         MatInputModule,
-        MatDividerModule
+        MatDividerModule,
+        MatProgressSpinnerModule,
+        CdkStepperModule,
+        MatTabsModule
       ]
 })
 export class AngularMaterialModule {}

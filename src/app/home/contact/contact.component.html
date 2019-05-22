@@ -15,7 +15,7 @@
             <div class="row no-margins row-padding-10">
                 <mat-form-field class="form-question">
                     <mat-label>{{'Email'|translate}}</mat-label>
-                    <input matInput type="text" [(ngModel)]="model.Email">
+                    <input matInput type="text" [(ngModel)]="model.Email">                
                 </mat-form-field>
             </div>
         </div>
@@ -31,7 +31,7 @@
     </div>
     <div class="row no-margins row-padding-20">
         <div class="col-md-12 text-center">
-            <button class="tm-button">{{'SendMessage'|translate}}</button>
+            <button class="tm-button" (click)="sendContactUs()">{{'SendMessage'|translate}}</button>
         </div>
     </div>
 

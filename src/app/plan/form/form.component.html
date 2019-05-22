@@ -1,53 +1,57 @@
 <mat-card>
-
-  <ng-container *ngIf="formCounter==1">
-
-    <div class="question-container">
-      <span class="form-question">Dokąd się wybierasz?</span>
-      <mat-form-field class="form-question">
-          <mat-label>{{'Where'|translate}}?</mat-label>
-          <input matInput type="text" class="google-place-input" google-place (onSelect)="setAddress($event)">                 
-      </mat-form-field> 
-    </div>
-    <span class="separate-line"></span>
-    <div class="question-container">
-            <span class="form-question">Kiedy zaczynasz?</span>
-            <mat-form-field class="form-question">
-                    <input matInput [matDatepicker]="startDate" [(ngModel)]="parameters.startDate">
-                    <mat-datepicker-toggle matSuffix [for]="startDate"> </mat-datepicker-toggle>
-                    <mat-datepicker #startDate></mat-datepicker>
-            </mat-form-field>
+   <div class="row no-margins circles-container">
+       <span class="circle" [ngClass]="{'filled-circle':formCounter>0}"></span>
+       <span class="circle" [ngClass]="{'filled-circle':formCounter>1}"></span>
+       <span class="circle" [ngClass]="{'filled-circle':formCounter>2}"></span>
    </div>
    <span class="separate-line"></span>
-   <div class="question-container">
-           <span class="form-question">A kiedy kończysz?</span>
-           <mat-form-field class="form-question">
-                   <input matInput [matDatepicker]="endDate"  [(ngModel)]="parameters.endDate">
-                   <mat-datepicker-toggle matSuffix [for]="endDate"> </mat-datepicker-toggle>
-                   <mat-datepicker #endDate></mat-datepicker>
-           </mat-form-field>
-  </div>
-
+  <ng-container *ngIf="formCounter==1">
+    <div class="question-flex-container ">
+        <div class="form-question normal-font">{{'WhereAreYouGoing'|translate}}?</div>
+        <div class="form-input pull-right">
+            <mat-form-field>
+                <mat-label>{{'Where'|translate}}?</mat-label>
+                <input matInput type="text" class="google-place-input" google-place (onSelect)="setAddress($event)">                 
+            </mat-form-field>           
+        </div>
+    </div>
+    <div class="question-flex-container ">
+                <div class="form-question normal-font">Kiedy zaczynasz?</div>
+                <div class="form-input pull-right">
+                    <mat-form-field class="form-question">
+                            <input matInput [matDatepicker]="startDate" [(ngModel)]="parameters.startDate">
+                            <mat-datepicker-toggle matSuffix [for]="startDate"> </mat-datepicker-toggle>
+                            <mat-datepicker #startDate></mat-datepicker>
+                    </mat-form-field>                
+                </div>
+    </div>
+    <div class="question-flex-container ">
+            <div class="form-question normal-font">A kiedy kończysz?</div>
+            <div class="form-input pull-right">
+                <mat-form-field class="form-question">
+                        <input matInput [matDatepicker]="endDate"  [(ngModel)]="parameters.endDate">
+                        <mat-datepicker-toggle matSuffix [for]="endDate"> </mat-datepicker-toggle>
+                        <mat-datepicker #endDate></mat-datepicker>
+                </mat-form-field>               
+            </div>
+    </div>
   </ng-container>
 
   <ng-container *ngIf="formCounter==2">
-      <input [matDatepicker]="myDatepicker">
+      <!-- <input [matDatepicker]="myDatepicker">
       <mat-datepicker-toggle [for]="myDatepicker"></mat-datepicker-toggle>
-      <mat-datepicker #myDatepicker></mat-datepicker>
+      <mat-datepicker #myDatepicker></mat-datepicker> -->
   </ng-container>
 
   <ng-container *ngIf="formCounter==3">
 
   </ng-container>
 
-<div class="content-down">
-    <button class="content-left" *ngIf="formCounter!=1" (click)="changeCounter('down')"  mat-raised-button color="accent">{{'Prev'|translate}}</button>
-    <button class="content-right" *ngIf="formCounter!=3" (click)="changeCounter('up')" mat-raised-button color="primary">{{'Next'|translate}}</button>
-    <button class="content-right" *ngIf="formCounter==3" (click)="save($event)" mat-fab color="basic">Generate</button>
-</div>
-
-
-
+  <div class="row no-margins">
+        <button class="content-left prev-button" *ngIf="formCounter!=1" (click)="changeCounter('down')"  mat-raised-button color="accent">{{'Prev'|translate}}</button>
+        <button class="content-right next-button" *ngIf="formCounter!=3" (click)="changeCounter('up')" mat-raised-button color="primary">{{'Next'|translate}}</button>
+        <button class="content-right" *ngIf="formCounter==1" (click)="save($event)" mat-fab color="basic">Generate</button>  
+  </div>
 </mat-card>  
 
 

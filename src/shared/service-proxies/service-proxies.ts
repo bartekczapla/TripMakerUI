@@ -567,6 +567,126 @@ export class EventServiceProxy {
 }
 
 @Injectable()
+export class HomeServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "";
+    }
+
+    /**
+     * @input (optional) 
+     * @return Success
+     */
+    createContactUsAsync(input: ContactUsDto | null | undefined): Observable<boolean> {
+        let url_ = this.baseUrl + "/api/services/app/Home/CreateContactUsAsync";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(input);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreateContactUsAsync(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreateContactUsAsync(<any>response_);
+                } catch (e) {
+                    return <Observable<boolean>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<boolean>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processCreateContactUsAsync(response: HttpResponseBase): Observable<boolean> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 !== undefined ? resultData200 : <any>null;
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<boolean>(<any>null);
+    }
+
+    /**
+     * @return Success
+     */
+    getMostSearchedPlacesAsync(): Observable<ListResultDtoOfSearchedPlaceDto> {
+        let url_ = this.baseUrl + "/api/services/app/Home/GetMostSearchedPlacesAsync";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetMostSearchedPlacesAsync(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetMostSearchedPlacesAsync(<any>response_);
+                } catch (e) {
+                    return <Observable<ListResultDtoOfSearchedPlaceDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<ListResultDtoOfSearchedPlaceDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetMostSearchedPlacesAsync(response: HttpResponseBase): Observable<ListResultDtoOfSearchedPlaceDto> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? ListResultDtoOfSearchedPlaceDto.fromJS(resultData200) : new ListResultDtoOfSearchedPlaceDto();
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ListResultDtoOfSearchedPlaceDto>(<any>null);
+    }
+}
+
+@Injectable()
 export class PlanServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
@@ -578,31 +698,54 @@ export class PlanServiceProxy {
     }
 
     /**
-     * @placeInfo_FormattedAddress (optional) 
-     * @placeInfo_Locality (optional) 
-     * @placeInfo_AdminArea (optional) 
-     * @placeInfo_Country (optional) 
-     * @placeInfo_PlaceId (optional) 
      * @startDate (optional) 
+     * @startTime (optional) 
      * @endDate (optional) 
+     * @endTime (optional) 
+     * @hasJourneyBooked (optional) 
+     * @hasAccomodationBooked (optional) 
+     * @planAccomodation_Lat (optional) 
+     * @planAccomodation_Lng (optional) 
+     * @planAccomodation_PlaceId (optional) 
+     * @planAccomodation_PlaceName (optional) 
+     * @planAccomodation_FormattedAddress (optional) 
+     * @language (optional) 
      * @return Success
      */
-    getPlanAsync(placeInfo_FormattedAddress: string | null | undefined, placeInfo_Locality: string | null | undefined, placeInfo_AdminArea: string | null | undefined, placeInfo_Country: string | null | undefined, placeInfo_PlaceId: string | null | undefined, startDate: moment.Moment | null | undefined, endDate: moment.Moment | null | undefined): Observable<ListResultDtoOfPlanListDto> {
+    getPlanAsync(placeName: string, placeId: string, startDate: moment.Moment | null | undefined, startTime: string | null | undefined, endDate: moment.Moment | null | undefined, endTime: string | null | undefined, hasJourneyBooked: boolean | null | undefined, hasAccomodationBooked: boolean | null | undefined, planAccomodation_Lat: number | null | undefined, planAccomodation_Lng: number | null | undefined, planAccomodation_PlaceId: string | null | undefined, planAccomodation_PlaceName: string | null | undefined, planAccomodation_FormattedAddress: string | null | undefined, language: Language | null | undefined): Observable<ListResultDtoOfPlanDto> {
         let url_ = this.baseUrl + "/api/services/app/Plan/GetPlanAsync?";
-        if (placeInfo_FormattedAddress !== undefined)
-            url_ += "PlaceInfo.FormattedAddress=" + encodeURIComponent("" + placeInfo_FormattedAddress) + "&"; 
-        if (placeInfo_Locality !== undefined)
-            url_ += "PlaceInfo.Locality=" + encodeURIComponent("" + placeInfo_Locality) + "&"; 
-        if (placeInfo_AdminArea !== undefined)
-            url_ += "PlaceInfo.AdminArea=" + encodeURIComponent("" + placeInfo_AdminArea) + "&"; 
-        if (placeInfo_Country !== undefined)
-            url_ += "PlaceInfo.Country=" + encodeURIComponent("" + placeInfo_Country) + "&"; 
-        if (placeInfo_PlaceId !== undefined)
-            url_ += "PlaceInfo.PlaceId=" + encodeURIComponent("" + placeInfo_PlaceId) + "&"; 
+        if (placeName === undefined || placeName === null)
+            throw new Error("The parameter 'placeName' must be defined and cannot be null.");
+        else
+            url_ += "PlaceName=" + encodeURIComponent("" + placeName) + "&"; 
+        if (placeId === undefined || placeId === null)
+            throw new Error("The parameter 'placeId' must be defined and cannot be null.");
+        else
+            url_ += "PlaceId=" + encodeURIComponent("" + placeId) + "&"; 
         if (startDate !== undefined)
             url_ += "StartDate=" + encodeURIComponent(startDate ? "" + startDate.toJSON() : "") + "&"; 
+        if (startTime !== undefined)
+            url_ += "StartTime=" + encodeURIComponent("" + startTime) + "&"; 
         if (endDate !== undefined)
             url_ += "EndDate=" + encodeURIComponent(endDate ? "" + endDate.toJSON() : "") + "&"; 
+        if (endTime !== undefined)
+            url_ += "EndTime=" + encodeURIComponent("" + endTime) + "&"; 
+        if (hasJourneyBooked !== undefined)
+            url_ += "HasJourneyBooked=" + encodeURIComponent("" + hasJourneyBooked) + "&"; 
+        if (hasAccomodationBooked !== undefined)
+            url_ += "HasAccomodationBooked=" + encodeURIComponent("" + hasAccomodationBooked) + "&"; 
+        if (planAccomodation_Lat !== undefined)
+            url_ += "PlanAccomodation.Lat=" + encodeURIComponent("" + planAccomodation_Lat) + "&"; 
+        if (planAccomodation_Lng !== undefined)
+            url_ += "PlanAccomodation.Lng=" + encodeURIComponent("" + planAccomodation_Lng) + "&"; 
+        if (planAccomodation_PlaceId !== undefined)
+            url_ += "PlanAccomodation.PlaceId=" + encodeURIComponent("" + planAccomodation_PlaceId) + "&"; 
+        if (planAccomodation_PlaceName !== undefined)
+            url_ += "PlanAccomodation.PlaceName=" + encodeURIComponent("" + planAccomodation_PlaceName) + "&"; 
+        if (planAccomodation_FormattedAddress !== undefined)
+            url_ += "PlanAccomodation.FormattedAddress=" + encodeURIComponent("" + planAccomodation_FormattedAddress) + "&"; 
+        if (language !== undefined)
+            url_ += "Language=" + encodeURIComponent("" + language) + "&"; 
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -621,14 +764,14 @@ export class PlanServiceProxy {
                 try {
                     return this.processGetPlanAsync(<any>response_);
                 } catch (e) {
-                    return <Observable<ListResultDtoOfPlanListDto>><any>_observableThrow(e);
+                    return <Observable<ListResultDtoOfPlanDto>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<ListResultDtoOfPlanListDto>><any>_observableThrow(response_);
+                return <Observable<ListResultDtoOfPlanDto>><any>_observableThrow(response_);
         }));
     }
 
-    protected processGetPlanAsync(response: HttpResponseBase): Observable<ListResultDtoOfPlanListDto> {
+    protected processGetPlanAsync(response: HttpResponseBase): Observable<ListResultDtoOfPlanDto> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -639,7 +782,7 @@ export class PlanServiceProxy {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 ? ListResultDtoOfPlanListDto.fromJS(resultData200) : new ListResultDtoOfPlanListDto();
+            result200 = resultData200 ? ListResultDtoOfPlanDto.fromJS(resultData200) : new ListResultDtoOfPlanDto();
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -647,7 +790,114 @@ export class PlanServiceProxy {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<ListResultDtoOfPlanListDto>(<any>null);
+        return _observableOf<ListResultDtoOfPlanDto>(<any>null);
+    }
+
+    /**
+     * @return Success
+     */
+    getTestPlanAsync(): Observable<PlanDto> {
+        let url_ = this.baseUrl + "/api/services/app/Plan/GetTestPlanAsync";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetTestPlanAsync(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetTestPlanAsync(<any>response_);
+                } catch (e) {
+                    return <Observable<PlanDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<PlanDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetTestPlanAsync(response: HttpResponseBase): Observable<PlanDto> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? PlanDto.fromJS(resultData200) : new PlanDto();
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<PlanDto>(<any>null);
+    }
+
+    /**
+     * @planId (optional) 
+     * @return Success
+     */
+    getTestPlanByIdAsync(planId: number | null | undefined): Observable<PlanDto> {
+        let url_ = this.baseUrl + "/api/services/app/Plan/GetTestPlanByIdAsync?";
+        if (planId !== undefined)
+            url_ += "planId=" + encodeURIComponent("" + planId) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetTestPlanByIdAsync(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetTestPlanByIdAsync(<any>response_);
+                } catch (e) {
+                    return <Observable<PlanDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<PlanDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetTestPlanByIdAsync(response: HttpResponseBase): Observable<PlanDto> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? PlanDto.fromJS(resultData200) : new PlanDto();
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<PlanDto>(<any>null);
     }
 }
 
@@ -1599,6 +1849,66 @@ export class TenantServiceProxy {
             }));
         }
         return _observableOf<TenantDto>(<any>null);
+    }
+}
+
+@Injectable()
+export class TestServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "";
+    }
+
+    /**
+     * @return Success
+     */
+    getTestAsync(): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Test/GetTestAsync";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetTestAsync(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetTestAsync(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetTestAsync(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
     }
 }
 
@@ -2930,10 +3240,61 @@ export interface IEventRegisterOutput {
     registrationId: number | undefined;
 }
 
-export class ListResultDtoOfPlanListDto implements IListResultDtoOfPlanListDto {
-    items: PlanListDto[] | undefined;
+export class ContactUsDto implements IContactUsDto {
+    name: string | undefined;
+    email: string | undefined;
+    message: string | undefined;
 
-    constructor(data?: IListResultDtoOfPlanListDto) {
+    constructor(data?: IContactUsDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.name = data["name"];
+            this.email = data["email"];
+            this.message = data["message"];
+        }
+    }
+
+    static fromJS(data: any): ContactUsDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ContactUsDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        data["email"] = this.email;
+        data["message"] = this.message;
+        return data; 
+    }
+
+    clone(): ContactUsDto {
+        const json = this.toJSON();
+        let result = new ContactUsDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IContactUsDto {
+    name: string | undefined;
+    email: string | undefined;
+    message: string | undefined;
+}
+
+export class ListResultDtoOfSearchedPlaceDto implements IListResultDtoOfSearchedPlaceDto {
+    items: SearchedPlaceDto[] | undefined;
+
+    constructor(data?: IListResultDtoOfSearchedPlaceDto) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -2947,14 +3308,14 @@ export class ListResultDtoOfPlanListDto implements IListResultDtoOfPlanListDto {
             if (data["items"] && data["items"].constructor === Array) {
                 this.items = [];
                 for (let item of data["items"])
-                    this.items.push(PlanListDto.fromJS(item));
+                    this.items.push(SearchedPlaceDto.fromJS(item));
             }
         }
     }
 
-    static fromJS(data: any): ListResultDtoOfPlanListDto {
+    static fromJS(data: any): ListResultDtoOfSearchedPlaceDto {
         data = typeof data === 'object' ? data : {};
-        let result = new ListResultDtoOfPlanListDto();
+        let result = new ListResultDtoOfSearchedPlaceDto();
         result.init(data);
         return result;
     }
@@ -2969,23 +3330,24 @@ export class ListResultDtoOfPlanListDto implements IListResultDtoOfPlanListDto {
         return data; 
     }
 
-    clone(): ListResultDtoOfPlanListDto {
+    clone(): ListResultDtoOfSearchedPlaceDto {
         const json = this.toJSON();
-        let result = new ListResultDtoOfPlanListDto();
+        let result = new ListResultDtoOfSearchedPlaceDto();
         result.init(json);
         return result;
     }
 }
 
-export interface IListResultDtoOfPlanListDto {
-    items: PlanListDto[] | undefined;
+export interface IListResultDtoOfSearchedPlaceDto {
+    items: SearchedPlaceDto[] | undefined;
 }
 
-export class PlanListDto implements IPlanListDto {
-    title: string | undefined;
-    date: moment.Moment | undefined;
+export class SearchedPlaceDto implements ISearchedPlaceDto {
+    placeId: string;
+    placeName: string | undefined;
+    searchCount: number | undefined;
 
-    constructor(data?: IPlanListDto) {
+    constructor(data?: ISearchedPlaceDto) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -2996,36 +3358,236 @@ export class PlanListDto implements IPlanListDto {
 
     init(data?: any) {
         if (data) {
-            this.title = data["title"];
-            this.date = data["date"] ? moment(data["date"].toString()) : <any>undefined;
+            this.placeId = data["placeId"];
+            this.placeName = data["placeName"];
+            this.searchCount = data["searchCount"];
         }
     }
 
-    static fromJS(data: any): PlanListDto {
+    static fromJS(data: any): SearchedPlaceDto {
         data = typeof data === 'object' ? data : {};
-        let result = new PlanListDto();
+        let result = new SearchedPlaceDto();
         result.init(data);
         return result;
     }
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["title"] = this.title;
-        data["date"] = this.date ? this.date.toISOString() : <any>undefined;
+        data["placeId"] = this.placeId;
+        data["placeName"] = this.placeName;
+        data["searchCount"] = this.searchCount;
         return data; 
     }
 
-    clone(): PlanListDto {
+    clone(): SearchedPlaceDto {
         const json = this.toJSON();
-        let result = new PlanListDto();
+        let result = new SearchedPlaceDto();
         result.init(json);
         return result;
     }
 }
 
-export interface IPlanListDto {
-    title: string | undefined;
-    date: moment.Moment | undefined;
+export interface ISearchedPlaceDto {
+    placeId: string;
+    placeName: string | undefined;
+    searchCount: number | undefined;
+}
+
+export class ListResultDtoOfPlanDto implements IListResultDtoOfPlanDto {
+    items: PlanDto[] | undefined;
+
+    constructor(data?: IListResultDtoOfPlanDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            if (data["items"] && data["items"].constructor === Array) {
+                this.items = [];
+                for (let item of data["items"])
+                    this.items.push(PlanDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): ListResultDtoOfPlanDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ListResultDtoOfPlanDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (this.items && this.items.constructor === Array) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone(): ListResultDtoOfPlanDto {
+        const json = this.toJSON();
+        let result = new ListResultDtoOfPlanDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IListResultDtoOfPlanDto {
+    items: PlanDto[] | undefined;
+}
+
+export class PlanDto implements IPlanDto {
+    destination: string | undefined;
+    planFormId: number | undefined;
+    elements: PlanElementDto[] | undefined;
+    id: number | undefined;
+
+    constructor(data?: IPlanDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.destination = data["destination"];
+            this.planFormId = data["planFormId"];
+            if (data["elements"] && data["elements"].constructor === Array) {
+                this.elements = [];
+                for (let item of data["elements"])
+                    this.elements.push(PlanElementDto.fromJS(item));
+            }
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): PlanDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PlanDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["destination"] = this.destination;
+        data["planFormId"] = this.planFormId;
+        if (this.elements && this.elements.constructor === Array) {
+            data["elements"] = [];
+            for (let item of this.elements)
+                data["elements"].push(item.toJSON());
+        }
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): PlanDto {
+        const json = this.toJSON();
+        let result = new PlanDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IPlanDto {
+    destination: string | undefined;
+    planFormId: number | undefined;
+    elements: PlanElementDto[] | undefined;
+    id: number | undefined;
+}
+
+export class PlanElementDto implements IPlanElementDto {
+    placeName: string | undefined;
+    placeId: string | undefined;
+    lat: number | undefined;
+    lng: number | undefined;
+    orderNo: number | undefined;
+    start: moment.Moment | undefined;
+    end: moment.Moment | undefined;
+    elementType: PlanElementDtoElementType | undefined;
+    rating: number | undefined;
+    planId: number | undefined;
+    id: number | undefined;
+
+    constructor(data?: IPlanElementDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.placeName = data["placeName"];
+            this.placeId = data["placeId"];
+            this.lat = data["lat"];
+            this.lng = data["lng"];
+            this.orderNo = data["orderNo"];
+            this.start = data["start"] ? moment(data["start"].toString()) : <any>undefined;
+            this.end = data["end"] ? moment(data["end"].toString()) : <any>undefined;
+            this.elementType = data["elementType"];
+            this.rating = data["rating"];
+            this.planId = data["planId"];
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): PlanElementDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PlanElementDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["placeName"] = this.placeName;
+        data["placeId"] = this.placeId;
+        data["lat"] = this.lat;
+        data["lng"] = this.lng;
+        data["orderNo"] = this.orderNo;
+        data["start"] = this.start ? this.start.toISOString() : <any>undefined;
+        data["end"] = this.end ? this.end.toISOString() : <any>undefined;
+        data["elementType"] = this.elementType;
+        data["rating"] = this.rating;
+        data["planId"] = this.planId;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): PlanElementDto {
+        const json = this.toJSON();
+        let result = new PlanElementDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IPlanElementDto {
+    placeName: string | undefined;
+    placeId: string | undefined;
+    lat: number | undefined;
+    lng: number | undefined;
+    orderNo: number | undefined;
+    start: moment.Moment | undefined;
+    end: moment.Moment | undefined;
+    elementType: PlanElementDtoElementType | undefined;
+    rating: number | undefined;
+    planId: number | undefined;
+    id: number | undefined;
 }
 
 export class CreateRoleDto implements ICreateRoleDto {
@@ -4518,6 +5080,11 @@ export interface IPagedResultDtoOfUserDto {
     items: UserDto[] | undefined;
 }
 
+export enum Language {
+    _0 = 0, 
+    _1 = 1, 
+}
+
 export enum State {
     _0 = 0, 
     _1 = 1, 
@@ -4527,6 +5094,20 @@ export enum IsTenantAvailableOutputState {
     _1 = 1, 
     _2 = 2, 
     _3 = 3, 
+}
+
+export enum PlanElementDtoElementType {
+    _0 = 0, 
+    _1 = 1, 
+    _2 = 2, 
+    _3 = 3, 
+    _4 = 4, 
+    _5 = 5, 
+    _6 = 6, 
+    _7 = 7, 
+    _8 = 8, 
+    _9 = 9, 
+    _10 = 10, 
 }
 
 export enum TaskListDtoState {

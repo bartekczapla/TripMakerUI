@@ -106,5 +106,10 @@
     "Email": "E-mail",
     "AreYouReady": "Are you ready",
     "ToStartYourJourney": "TO START YOUR JOURNEY",
-    "GetPlan": "Get plan"
+    "GetPlan": "Get plan",
+    "WeWillContactYouASAP": "We will contact you as soon as possible!",
+    "InvalidForm": "Invalid form!",
+    "WhereAreYouGoing": "Where are you going",
+    "Where": "Where",
+    "Place": "Place"
 }

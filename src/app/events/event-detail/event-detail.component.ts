@@ -81,6 +81,6 @@ export class EventDetailComponent extends AppComponentBase implements OnInit {
     }
 
     backToEventsPage() {
-        this._router.navigate(['app/events']);
+        this._router.navigate(['events']);
     };
 }

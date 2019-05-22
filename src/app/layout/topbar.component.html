@@ -6,11 +6,11 @@
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
-                <li [routerLinkActive]="['link-active']">
+                <!-- <li [routerLinkActive]="['link-active']">
                     <a [routerLink]="['/plan']">
                         <span class='glyphicon glyphicon-education'></span> PLAN
                     </a>
-                </li>
+                </li> -->
                 <li *ngIf="checkIfUserLogged()" [routerLinkActive]="['link-active']">
                     <a [routerLink]="['/dashboard']">
                         <span class='glyphicon glyphicon-education'></span> Dashboard

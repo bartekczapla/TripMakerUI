@@ -2474,7 +2474,7 @@ a{cursor: pointer;
 @media (min-width: 992px) and (max-width: 1169px) {
   .navbar > .container .navbar-brand,
   .navbar > .container-fluid .navbar-brand {
-    margin-left: 20px; } }
+    margin-left: 2px; } }
 
 /* General ===================================== */
 body {
@@ -8189,4 +8189,26 @@ html.ie11 .bs-searchbox .form-control {
   font-size: 16px;
   width: 100%;
   font-family: 'Lato', sans-serif;
+}
+
+.pull-right {
+  float: right;
+}
+
+.pull-left {
+  float: left;
+}
+
+/* FONTS */
+
+.small-font {
+  font-size: 12px;
+}
+
+.normal-font {
+  font-size: 15px;
+}
+
+.big-font {
+  font-size: 18px;
 }

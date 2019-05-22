@@ -2,19 +2,34 @@
     <div class="row no-margins section-header-padding">
         <span class="section-header ">{{'TrendingDestination'|translate}}</span>
     </div>
-   
+
     <div class="row">
         <div class="col-sm-4">
-            <img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image">
-            <p></p>
+            <ng-container *ngIf="!loaded">
+                <img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image">
+            </ng-container>
+            <ng-container *ngIf="loaded">
+                <img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image">
+                <span class="how-it-works-title">{{destinationA?.placeName}} ({{destinationA?.searchCount}})</span>
+            </ng-container>
         </div>
         <div class="col-sm-4">
-            <img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image">
-            <p></p>
+            <ng-container *ngIf="!loaded">
+                <img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image">
+            </ng-container>
+            <ng-container *ngIf="loaded">
+                    <img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image">
+                    <span class="how-it-works-title">{{destinationB?.placeName}} ({{destinationB?.searchCount}})</span>
+            </ng-container>
         </div>
         <div class="col-sm-4">
-            <img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image">
-            <p></p>
+            <ng-container *ngIf="!loaded">
+                <img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image">
+            </ng-container>
+            <ng-container *ngIf="loaded">
+                    <img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image">
+                    <span class="how-it-works-title">{{destinationC?.placeName}} ({{destinationC?.searchCount}})</span>
+            </ng-container>
         </div>
     </div>
 </div>
