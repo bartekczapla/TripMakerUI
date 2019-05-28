@@ -4,6 +4,7 @@ import { appModuleAnimation } from '@shared/animations/routerTransition';
 import { PlanServiceProxy, PlanDto,  } from '@shared/service-proxies/service-proxies';
 import { PagedListingComponentBase, PagedRequestDto } from '@shared/paged-listing-component-base';
 import { AppComponentBase } from '@shared/app-component-base';
+import { Moment } from 'moment';
 
 @Component({
   selector: 'app-schedule',
@@ -45,6 +46,11 @@ export class ScheduleComponent implements OnInit   {
     }
     else return false;
 
+  }
+
+  mapDateToString(date:Moment):string{
+
+    return date.toDate().toLocaleDateString();
   }
 
 

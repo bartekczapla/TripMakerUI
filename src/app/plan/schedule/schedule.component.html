@@ -1,23 +1,23 @@
 <div *ngIf="loading; then spinnerBlock else planBlock"></div>
 <ng-template #planBlock>
     <!-- <mat-tab-group animationDuration="100ms"> -->
-    <mat-tab-group animationDuration="0">
+    <mat-tab-group animationDuration="0" style="margin-bottom:50px;">
     <mat-tab label="General">
         <div class="row no-margins">
             <span class="big-font">{{plan.destination}}</span>
         </div>
     </mat-tab>
     <mat-tab label="Detail">
-        <ng-container *ngFor="let element of plan.elements;let i=index">
-            <div class="row no-margins" *ngIf="checkIfFirstDate(i)">
-                <span class="big-font bold">{{element.start | date}}</span>
+        <ng-container *ngFor="let element of plan.elements;let i=index; let even=even">
+            <div class="row no-margins day-to-day-date-container" *ngIf="checkIfFirstDate(i)">
+                <span class="font-30 bolder">{{mapDateToString(element.start)}}</span>
             </div>
-            <plan-element [element]="element"></plan-element>
+            <plan-element [element]="element" [even]="even"></plan-element>
         </ng-container>
     </mat-tab>
     </mat-tab-group>
 
-
+ 
 </ng-template>
 <ng-template #spinnerBlock>
     <div class="spinner-container">

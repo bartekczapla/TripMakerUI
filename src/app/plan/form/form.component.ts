@@ -24,6 +24,11 @@ export class FormComponent implements OnInit {
   }
 
   changeCounter(direction: string){
+    var today=new Date();
+    console.log(today.toLocaleString())
+    console.log(today.getDay())
+    console.log(today.toUTCString())
+    console.log(today.toLocaleDateString())
     switch(direction){
       case 'up':
       this.formCounter+=1;

@@ -11,6 +11,7 @@ import { PlanElementDto  } from '@shared/service-proxies/service-proxies';
 export class PlanElementComponent   {
 
  @Input() element: PlanElementDto;
+ @Input() even:boolean;
 
 
 

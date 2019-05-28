@@ -8201,6 +8201,10 @@ html.ie11 .bs-searchbox .form-control {
 
 /* FONTS */
 
+.bolder {
+  font-weight: 900;
+}
+
 .small-font {
   font-size: 12px;
 }
@@ -8211,4 +8215,20 @@ html.ie11 .bs-searchbox .form-control {
 
 .big-font {
   font-size: 18px;
+}
+
+.font-20 {
+  font-size: 20px;
+}
+
+.font-22 {
+  font-size: 22px;
+}
+
+.font-24 {
+  font-size: 24px;
+}
+
+.font-30 {
+  font-size: 30px;
 }

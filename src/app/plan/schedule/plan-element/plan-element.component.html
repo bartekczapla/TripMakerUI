@@ -1,5 +1,54 @@
-<div class="row no-margins" style="padding-top: 10px;padding-bottom: 10px;">
-        {{element.orderNo}}.) {{element.start}} - {{element.placeName}} - {{element.elementType}}
+<div class="row no-margins">
+        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-6" [ngClass]="{'col-xl-offset-6  col-lg-offset-6  col-md-offset-6 col-sm-offset-6 col-xs-offset-6':even, 'left-element-border':even,'right-element-border':!even}">
+                <div class="element-box-container" [ngClass]="{'pull-right':!even}">
+                        <div class="element-text-container">
+                                <span class="bold font-16">{{element.start | date: 'HH:mm'}} - {{element.end | date: 'HH:mm'}}, </span>
+                                <span class="font-16">{{element.placeName}}</span>
+                        </div>
+                        <div class="element-icon-container">
+                                <ng-container *ngIf="element.elementType==0">
+
+                                </ng-container>
+                                <ng-container *ngIf="element.elementType==1">
+                                        <i class="fas fa-utensils"></i>
+                                </ng-container>
+                                <ng-container *ngIf="element.elementType==2">
+                                        <i class="fas fa-bed"></i>
+                                </ng-container>
+                                <ng-container *ngIf="element.elementType==3">
+
+                                </ng-container>
+                                <ng-container *ngIf="element.elementType==4">
+                                        <i class="far fa-smile"></i>
+                                </ng-container>
+                                <ng-container *ngIf="element.elementType==5">
+                                        <i class="fas fa-futbol"></i>
+                                </ng-container>
+                                <ng-container *ngIf="element.elementType==6">
+                                        <i class="fas fa-book"></i>
+                                </ng-container>
+                                <ng-container *ngIf="element.elementType==7">
+                                        <i class="fas fa-landmark"></i>
+                                </ng-container>
+                                <ng-container *ngIf="element.elementType==8">
+                                        <i class="fas fa-cocktail"></i>
+                                </ng-container>
+                                <ng-container *ngIf="element.elementType==9">
+                                        <i class="fas fa-shopping-cart"></i>
+                                </ng-container>
+                                <ng-container *ngIf="element.elementType==10 ">
+                                        <i class="fas fa-walking"></i>
+                                </ng-container>
+                        </div>
 
 
+                </div>
+
+        </div>
+        <!-- <div class="plan-element-container" [ngClass]="{'pull-right':even, 'left-element-border ':even, 'right-element-border':!even}">
+                <div>
+                {{element.orderNo}}.) {{element.start}} - {{element.placeName}} - {{element.elementType}}   
+                </div>
+
+        </div>        -->
 </div>
