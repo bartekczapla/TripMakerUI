@@ -62,6 +62,7 @@ import { ContactComponent } from './home/contact/contact.component';
 import { TrendingDestinationComponent } from './home/trending-destination/trending-destination.component';
 import { HowItWorksComponent } from './home/how-it-works/how-it-works.component';
 import { PlanElementComponent } from './plan/schedule/plan-element/plan-element.component';
+import { UserPlansComponent } from './user-plans/user-plans.component';
 // export function HttpLoaderFactory(http: HttpClient) {
 //   return new TranslateHttpLoader(http);
 // }
@@ -139,7 +140,8 @@ export function getCurrentLanguage(): string {
     ContactComponent,
     TrendingDestinationComponent,
     HowItWorksComponent,
-    PlanElementComponent
+    PlanElementComponent,
+    UserPlansComponent
 
   ],
   imports: [

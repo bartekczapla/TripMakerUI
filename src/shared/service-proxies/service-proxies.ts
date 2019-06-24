@@ -2540,6 +2540,192 @@ export class UserServiceProxy {
     }
 }
 
+@Injectable()
+export class UserPlansServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "";
+    }
+
+    /**
+     * @id (optional) 
+     * @return Success
+     */
+    deleteAsync(id: number | null | undefined): Observable<boolean> {
+        let url_ = this.baseUrl + "/api/services/app/UserPlans/DeleteAsync?";
+        if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDeleteAsync(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDeleteAsync(<any>response_);
+                } catch (e) {
+                    return <Observable<boolean>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<boolean>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processDeleteAsync(response: HttpResponseBase): Observable<boolean> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 !== undefined ? resultData200 : <any>null;
+            return _observableOf(result200);
+            }));
+        } else if (status === 401) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("A server error occurred.", status, _responseText, _headers);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<boolean>(<any>null);
+    }
+
+    /**
+     * @return Success
+     */
+    getAllUserPlansAsync(): Observable<ListResultDtoOfUserPlansListDto> {
+        let url_ = this.baseUrl + "/api/services/app/UserPlans/GetAllUserPlansAsync";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAllUserPlansAsync(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAllUserPlansAsync(<any>response_);
+                } catch (e) {
+                    return <Observable<ListResultDtoOfUserPlansListDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<ListResultDtoOfUserPlansListDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetAllUserPlansAsync(response: HttpResponseBase): Observable<ListResultDtoOfUserPlansListDto> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? ListResultDtoOfUserPlansListDto.fromJS(resultData200) : new ListResultDtoOfUserPlansListDto();
+            return _observableOf(result200);
+            }));
+        } else if (status === 401) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("A server error occurred.", status, _responseText, _headers);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ListResultDtoOfUserPlansListDto>(<any>null);
+    }
+
+    /**
+     * @id (optional) 
+     * @return Success
+     */
+    getDetailAsync(id: number | null | undefined): Observable<PlanDto> {
+        let url_ = this.baseUrl + "/api/services/app/UserPlans/GetDetailAsync?";
+        if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetDetailAsync(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetDetailAsync(<any>response_);
+                } catch (e) {
+                    return <Observable<PlanDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<PlanDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetDetailAsync(response: HttpResponseBase): Observable<PlanDto> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? PlanDto.fromJS(resultData200) : new PlanDto();
+            return _observableOf(result200);
+            }));
+        } else if (status === 401) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("A server error occurred.", status, _responseText, _headers);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<PlanDto>(<any>null);
+    }
+}
+
 export class IsTenantAvailableInput implements IIsTenantAvailableInput {
     tenancyName: string;
 
@@ -3447,6 +3633,7 @@ export interface IListResultDtoOfPlanDto {
 export class PlanDto implements IPlanDto {
     destination: string | undefined;
     planFormId: number | undefined;
+    planForm: PlanFormDto | undefined;
     elements: PlanElementDto[] | undefined;
     id: number | undefined;
 
@@ -3463,6 +3650,7 @@ export class PlanDto implements IPlanDto {
         if (data) {
             this.destination = data["destination"];
             this.planFormId = data["planFormId"];
+            this.planForm = data["planForm"] ? PlanFormDto.fromJS(data["planForm"]) : <any>undefined;
             if (data["elements"] && data["elements"].constructor === Array) {
                 this.elements = [];
                 for (let item of data["elements"])
@@ -3483,6 +3671,7 @@ export class PlanDto implements IPlanDto {
         data = typeof data === 'object' ? data : {};
         data["destination"] = this.destination;
         data["planFormId"] = this.planFormId;
+        data["planForm"] = this.planForm ? this.planForm.toJSON() : <any>undefined;
         if (this.elements && this.elements.constructor === Array) {
             data["elements"] = [];
             for (let item of this.elements)
@@ -3503,8 +3692,92 @@ export class PlanDto implements IPlanDto {
 export interface IPlanDto {
     destination: string | undefined;
     planFormId: number | undefined;
+    planForm: PlanFormDto | undefined;
     elements: PlanElementDto[] | undefined;
     id: number | undefined;
+}
+
+export class PlanFormDto implements IPlanFormDto {
+    placeName: string | undefined;
+    placeId: string | undefined;
+    startDate: moment.Moment | undefined;
+    startTime: string | undefined;
+    endDate: moment.Moment | undefined;
+    endTime: string | undefined;
+    hasJourneyBooked: boolean | undefined;
+    hasAccomodationBooked: boolean | undefined;
+    language: PlanFormDtoLanguage | undefined;
+    creationTime: moment.Moment | undefined;
+    accomodation: PlanAccomodationDto | undefined;
+
+    constructor(data?: IPlanFormDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.placeName = data["placeName"];
+            this.placeId = data["placeId"];
+            this.startDate = data["startDate"] ? moment(data["startDate"].toString()) : <any>undefined;
+            this.startTime = data["startTime"];
+            this.endDate = data["endDate"] ? moment(data["endDate"].toString()) : <any>undefined;
+            this.endTime = data["endTime"];
+            this.hasJourneyBooked = data["hasJourneyBooked"];
+            this.hasAccomodationBooked = data["hasAccomodationBooked"];
+            this.language = data["language"];
+            this.creationTime = data["creationTime"] ? moment(data["creationTime"].toString()) : <any>undefined;
+            this.accomodation = data["accomodation"] ? PlanAccomodationDto.fromJS(data["accomodation"]) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): PlanFormDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PlanFormDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["placeName"] = this.placeName;
+        data["placeId"] = this.placeId;
+        data["startDate"] = this.startDate ? this.startDate.toISOString() : <any>undefined;
+        data["startTime"] = this.startTime;
+        data["endDate"] = this.endDate ? this.endDate.toISOString() : <any>undefined;
+        data["endTime"] = this.endTime;
+        data["hasJourneyBooked"] = this.hasJourneyBooked;
+        data["hasAccomodationBooked"] = this.hasAccomodationBooked;
+        data["language"] = this.language;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["accomodation"] = this.accomodation ? this.accomodation.toJSON() : <any>undefined;
+        return data; 
+    }
+
+    clone(): PlanFormDto {
+        const json = this.toJSON();
+        let result = new PlanFormDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IPlanFormDto {
+    placeName: string | undefined;
+    placeId: string | undefined;
+    startDate: moment.Moment | undefined;
+    startTime: string | undefined;
+    endDate: moment.Moment | undefined;
+    endTime: string | undefined;
+    hasJourneyBooked: boolean | undefined;
+    hasAccomodationBooked: boolean | undefined;
+    language: PlanFormDtoLanguage | undefined;
+    creationTime: moment.Moment | undefined;
+    accomodation: PlanAccomodationDto | undefined;
 }
 
 export class PlanElementDto implements IPlanElementDto {
@@ -3518,6 +3791,7 @@ export class PlanElementDto implements IPlanElementDto {
     elementType: PlanElementDtoElementType | undefined;
     rating: number | undefined;
     planId: number | undefined;
+    endingRoute: PlanRouteDto | undefined;
     id: number | undefined;
 
     constructor(data?: IPlanElementDto) {
@@ -3541,6 +3815,7 @@ export class PlanElementDto implements IPlanElementDto {
             this.elementType = data["elementType"];
             this.rating = data["rating"];
             this.planId = data["planId"];
+            this.endingRoute = data["endingRoute"] ? PlanRouteDto.fromJS(data["endingRoute"]) : <any>undefined;
             this.id = data["id"];
         }
     }
@@ -3564,6 +3839,7 @@ export class PlanElementDto implements IPlanElementDto {
         data["elementType"] = this.elementType;
         data["rating"] = this.rating;
         data["planId"] = this.planId;
+        data["endingRoute"] = this.endingRoute ? this.endingRoute.toJSON() : <any>undefined;
         data["id"] = this.id;
         return data; 
     }
@@ -3587,7 +3863,201 @@ export interface IPlanElementDto {
     elementType: PlanElementDtoElementType | undefined;
     rating: number | undefined;
     planId: number | undefined;
+    endingRoute: PlanRouteDto | undefined;
     id: number | undefined;
+}
+
+export class PlanAccomodationDto implements IPlanAccomodationDto {
+    lat: number | undefined;
+    lng: number | undefined;
+    placeId: string | undefined;
+    placeName: string | undefined;
+    formattedAddress: string | undefined;
+
+    constructor(data?: IPlanAccomodationDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.lat = data["lat"];
+            this.lng = data["lng"];
+            this.placeId = data["placeId"];
+            this.placeName = data["placeName"];
+            this.formattedAddress = data["formattedAddress"];
+        }
+    }
+
+    static fromJS(data: any): PlanAccomodationDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PlanAccomodationDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["lat"] = this.lat;
+        data["lng"] = this.lng;
+        data["placeId"] = this.placeId;
+        data["placeName"] = this.placeName;
+        data["formattedAddress"] = this.formattedAddress;
+        return data; 
+    }
+
+    clone(): PlanAccomodationDto {
+        const json = this.toJSON();
+        let result = new PlanAccomodationDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IPlanAccomodationDto {
+    lat: number | undefined;
+    lng: number | undefined;
+    placeId: string | undefined;
+    placeName: string | undefined;
+    formattedAddress: string | undefined;
+}
+
+export class PlanRouteDto implements IPlanRouteDto {
+    distance: number | undefined;
+    duration: number | undefined;
+    steps: PlanRouteStepDto[] | undefined;
+
+    constructor(data?: IPlanRouteDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.distance = data["distance"];
+            this.duration = data["duration"];
+            if (data["steps"] && data["steps"].constructor === Array) {
+                this.steps = [];
+                for (let item of data["steps"])
+                    this.steps.push(PlanRouteStepDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): PlanRouteDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PlanRouteDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["distance"] = this.distance;
+        data["duration"] = this.duration;
+        if (this.steps && this.steps.constructor === Array) {
+            data["steps"] = [];
+            for (let item of this.steps)
+                data["steps"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone(): PlanRouteDto {
+        const json = this.toJSON();
+        let result = new PlanRouteDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IPlanRouteDto {
+    distance: number | undefined;
+    duration: number | undefined;
+    steps: PlanRouteStepDto[] | undefined;
+}
+
+export class PlanRouteStepDto implements IPlanRouteStepDto {
+    distance: number | undefined;
+    duration: number | undefined;
+    startStepLat: number | undefined;
+    startStepLng: number | undefined;
+    endStepLat: number | undefined;
+    endStepLng: number | undefined;
+    htmlInstruction: string | undefined;
+    travelMode: PlanRouteStepDtoTravelMode | undefined;
+    maneuver: string | undefined;
+
+    constructor(data?: IPlanRouteStepDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.distance = data["distance"];
+            this.duration = data["duration"];
+            this.startStepLat = data["startStepLat"];
+            this.startStepLng = data["startStepLng"];
+            this.endStepLat = data["endStepLat"];
+            this.endStepLng = data["endStepLng"];
+            this.htmlInstruction = data["htmlInstruction"];
+            this.travelMode = data["travelMode"];
+            this.maneuver = data["maneuver"];
+        }
+    }
+
+    static fromJS(data: any): PlanRouteStepDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PlanRouteStepDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["distance"] = this.distance;
+        data["duration"] = this.duration;
+        data["startStepLat"] = this.startStepLat;
+        data["startStepLng"] = this.startStepLng;
+        data["endStepLat"] = this.endStepLat;
+        data["endStepLng"] = this.endStepLng;
+        data["htmlInstruction"] = this.htmlInstruction;
+        data["travelMode"] = this.travelMode;
+        data["maneuver"] = this.maneuver;
+        return data; 
+    }
+
+    clone(): PlanRouteStepDto {
+        const json = this.toJSON();
+        let result = new PlanRouteStepDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IPlanRouteStepDto {
+    distance: number | undefined;
+    duration: number | undefined;
+    startStepLat: number | undefined;
+    startStepLng: number | undefined;
+    endStepLat: number | undefined;
+    endStepLng: number | undefined;
+    htmlInstruction: string | undefined;
+    travelMode: PlanRouteStepDtoTravelMode | undefined;
+    maneuver: string | undefined;
 }
 
 export class CreateRoleDto implements ICreateRoleDto {
@@ -5080,6 +5550,148 @@ export interface IPagedResultDtoOfUserDto {
     items: UserDto[] | undefined;
 }
 
+export class ListResultDtoOfUserPlansListDto implements IListResultDtoOfUserPlansListDto {
+    items: UserPlansListDto[] | undefined;
+
+    constructor(data?: IListResultDtoOfUserPlansListDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            if (data["items"] && data["items"].constructor === Array) {
+                this.items = [];
+                for (let item of data["items"])
+                    this.items.push(UserPlansListDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): ListResultDtoOfUserPlansListDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ListResultDtoOfUserPlansListDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (this.items && this.items.constructor === Array) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone(): ListResultDtoOfUserPlansListDto {
+        const json = this.toJSON();
+        let result = new ListResultDtoOfUserPlansListDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IListResultDtoOfUserPlansListDto {
+    items: UserPlansListDto[] | undefined;
+}
+
+export class UserPlansListDto implements IUserPlansListDto {
+    placeName: string | undefined;
+    placeId: string | undefined;
+    destination: string | undefined;
+    planFormId: number | undefined;
+    startDate: moment.Moment | undefined;
+    startTime: string | undefined;
+    endDate: moment.Moment | undefined;
+    endTime: string | undefined;
+    hasJourneyBooked: boolean | undefined;
+    hasAccomodationBooked: boolean | undefined;
+    language: UserPlansListDtoLanguage | undefined;
+    creationTime: moment.Moment | undefined;
+    id: number | undefined;
+
+    constructor(data?: IUserPlansListDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.placeName = data["placeName"];
+            this.placeId = data["placeId"];
+            this.destination = data["destination"];
+            this.planFormId = data["planFormId"];
+            this.startDate = data["startDate"] ? moment(data["startDate"].toString()) : <any>undefined;
+            this.startTime = data["startTime"];
+            this.endDate = data["endDate"] ? moment(data["endDate"].toString()) : <any>undefined;
+            this.endTime = data["endTime"];
+            this.hasJourneyBooked = data["hasJourneyBooked"];
+            this.hasAccomodationBooked = data["hasAccomodationBooked"];
+            this.language = data["language"];
+            this.creationTime = data["creationTime"] ? moment(data["creationTime"].toString()) : <any>undefined;
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): UserPlansListDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new UserPlansListDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["placeName"] = this.placeName;
+        data["placeId"] = this.placeId;
+        data["destination"] = this.destination;
+        data["planFormId"] = this.planFormId;
+        data["startDate"] = this.startDate ? this.startDate.toISOString() : <any>undefined;
+        data["startTime"] = this.startTime;
+        data["endDate"] = this.endDate ? this.endDate.toISOString() : <any>undefined;
+        data["endTime"] = this.endTime;
+        data["hasJourneyBooked"] = this.hasJourneyBooked;
+        data["hasAccomodationBooked"] = this.hasAccomodationBooked;
+        data["language"] = this.language;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): UserPlansListDto {
+        const json = this.toJSON();
+        let result = new UserPlansListDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IUserPlansListDto {
+    placeName: string | undefined;
+    placeId: string | undefined;
+    destination: string | undefined;
+    planFormId: number | undefined;
+    startDate: moment.Moment | undefined;
+    startTime: string | undefined;
+    endDate: moment.Moment | undefined;
+    endTime: string | undefined;
+    hasJourneyBooked: boolean | undefined;
+    hasAccomodationBooked: boolean | undefined;
+    language: UserPlansListDtoLanguage | undefined;
+    creationTime: moment.Moment | undefined;
+    id: number | undefined;
+}
+
 export enum Language {
     _0 = 0, 
     _1 = 1, 
@@ -5096,6 +5708,11 @@ export enum IsTenantAvailableOutputState {
     _3 = 3, 
 }
 
+export enum PlanFormDtoLanguage {
+    _0 = 0, 
+    _1 = 1, 
+}
+
 export enum PlanElementDtoElementType {
     _0 = 0, 
     _1 = 1, 
@@ -5110,12 +5727,24 @@ export enum PlanElementDtoElementType {
     _10 = 10, 
 }
 
+export enum PlanRouteStepDtoTravelMode {
+    _0 = 0, 
+    _1 = 1, 
+    _2 = 2, 
+    _3 = 3, 
+}
+
 export enum TaskListDtoState {
     _0 = 0, 
     _1 = 1, 
 }
 
 export enum UpdateTaskInputState {
+    _0 = 0, 
+    _1 = 1, 
+}
+
+export enum UserPlansListDtoLanguage {
     _0 = 0, 
     _1 = 1, 
 }

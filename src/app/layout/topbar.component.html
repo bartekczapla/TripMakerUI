@@ -43,6 +43,30 @@
                         <span class="glyphicon glyphicon-log-in"></span> {{'SignUp'|translate}}
                     </a>
                 </li> -->
+
+                <li *ngIf="!checkIfUserLogged()" [routerLinkActive]="['link-active']">
+                    <a [routerLink]="['/login']">
+                        <span class="glyphicon glyphicon-log-in"></span> {{'Login'|translate}}
+                    </a>
+                </li>
+                <li  *ngIf="checkIfUserLogged()" class="dropdown">
+                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" style="color:black;">
+                        <i class="fas fa-user"></i>  {{getUserName()}}
+                      <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li [routerLinkActive]="['link-active']">
+                            <a [routerLink]="['/user-plans']">
+                                {{'MyPlans'|translate}}
+                             </a>
+                        </li>
+                        <li>
+                            <a (click)="logout()">
+                                <span class="glyphicon glyphicon-log-out"></span> {{'Logout'|translate}}
+                            </a>    
+                        </li>
+                    </ul>
+                </li> 
                 <li>
                     <div class="div-container">
                         <a class="navbar-item-color "  (click)="setPolish($event)"><span [ngClass]="{'active-language': isPolish }">PL</span></a>
@@ -50,17 +74,12 @@
                         <a class="navbar-item-color "  (click)="setEnglish($event)"><span [ngClass]="{'active-language': isEnglish }">EN</span></a>    
                     </div>
                        
-                </li>
-                <li *ngIf="!checkIfUserLogged()" [routerLinkActive]="['link-active']">
-                    <a [routerLink]="['/login']">
-                        <span class="glyphicon glyphicon-log-in"></span> {{'Login'|translate}}
-                    </a>
-                </li>
-                <li *ngIf="checkIfUserLogged()">
+                </li>                                 
+                <!-- <li *ngIf="checkIfUserLogged()">
                     <a (click)="logout()">
                         <span class="glyphicon glyphicon-log-out"></span> {{'Logout'|translate}}
                     </a>
-                </li>
+                </li> -->
             </ul>
         </div>
     </div>

@@ -29,7 +29,7 @@ public isUserLogged:boolean=false;
         new MenuItem(this.l("Events"), "Pages.Events", "event", "/events"),
     ];
 
-    constructor( injector: Injector, private translate: TranslateService,  private _loginService: LoginService, private _authService: AppAuthService) {
+    constructor( injector: Injector,  private _loginService: LoginService, private _authService: AppAuthService) {
         super(injector);
     }
 
@@ -56,6 +56,10 @@ public isUserLogged:boolean=false;
 
       checkIfUserLogged():boolean{
             return this._loginService.isUserLogged();
+      }
+
+      getUserName():string {
+          return this.appSession.user.name+' '+this.appSession.user.surname;
       }
 
       logout(): void {

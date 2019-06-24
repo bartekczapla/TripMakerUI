@@ -28,6 +28,7 @@ export abstract class PagedListingComponentBase<EntityDto> extends AppComponentB
     }
 
     ngOnInit(): void {
+        console.log('test')
         this.refresh();
     }
 

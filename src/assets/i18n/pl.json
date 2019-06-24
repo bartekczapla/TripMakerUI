@@ -111,5 +111,8 @@
     "InvalidForm": "Niepoprawnie wypełnione pola!",
     "WhereAreYouGoing": "Gdzie się wybierasz",
     "Where": "Gdzie",
-    "Place": "Miejsce"
+    "Place": "Miejsce",
+    "MyPlans": "Moje plany",
+    "SureToDeleteThisPlan": "Czy jesteś pewny, że chcesz usunąć ten plan?",
+    "Deleted":"Usunięto"
 }
