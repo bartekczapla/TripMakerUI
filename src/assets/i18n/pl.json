@@ -117,5 +117,7 @@
     "Deleted":"Usunięto",
     "CreationDate": "Data utworzenia",
     "Term": "Termin", 
-    "Show": "Pokaż"
+    "Show": "Pokaż",
+    "Username": "Użytkownik",
+    "Login2": "Zaloguj"
 }

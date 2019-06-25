@@ -9,7 +9,8 @@ import {
     MatNativeDateModule,
     MatInputModule,
      MatDividerModule,
-     MatTabsModule
+     MatTabsModule,
+     MatCheckboxModule
   } from '@angular/material';
   import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {CdkStepperModule} from '@angular/cdk/stepper';
@@ -26,7 +27,8 @@ import {CdkStepperModule} from '@angular/cdk/stepper';
         MatDividerModule,
         MatProgressSpinnerModule,
         CdkStepperModule,
-        MatTabsModule
+        MatTabsModule,
+        MatCheckboxModule
       ],
       exports: [
         MatButtonModule,
@@ -40,7 +42,8 @@ import {CdkStepperModule} from '@angular/cdk/stepper';
         MatDividerModule,
         MatProgressSpinnerModule,
         CdkStepperModule,
-        MatTabsModule
+        MatTabsModule,
+        MatCheckboxModule
       ]
 })
 export class AngularMaterialModule {}

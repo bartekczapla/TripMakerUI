@@ -3551,6 +3551,12 @@ section.content {
   width: 11px;
   height: 19px; }
 
+  
+
+  [type="checkbox"]:checked.app-theme+ label:before {
+    border-right: 2px solid #fed136;
+    border-bottom: 2px solid #fed136; }
+
 [type="checkbox"]:checked.chk-col-red + label:before {
   border-right: 2px solid #F44336;
   border-bottom: 2px solid #F44336; }
@@ -3646,6 +3652,10 @@ section.content {
 [type="checkbox"].filled-in:checked + label:before {
   border-right: 2px solid #fff !important;
   border-bottom: 2px solid #fff !important; }
+
+[type="checkbox"].filled-in:checked.app-theme + label:after {
+  border: 2px solid #fed136;
+  background-color: #fed136; }
 
 [type="checkbox"].filled-in:checked.chk-col-red + label:after {
   border: 2px solid #F44336;
@@ -8256,4 +8266,39 @@ html.ie11 .bs-searchbox .form-control {
   height: 40px;
   font-size: 18px;
   border: none;
+}
+
+.pb-15{
+  padding-bottom: 15px;
+}
+
+.pb-10{
+  padding-bottom: 10px;
+}
+
+.pb-30{
+  padding-bottom: 30px;
+}
+
+.width-60 {
+  width:60%;
+}
+
+.block {
+  display: block;
+}
+
+
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  -webkit-box-shadow: transparent !important;
+  background-color: transparent;
 }
