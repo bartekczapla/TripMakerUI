@@ -13,6 +13,7 @@ import { PlanComponent } from '@app/plan/plan.component';
 import { LoginComponent } from './account/login/login.component';
 import { RegisterComponent } from './account/register/register.component';
 import { UserPlansComponent } from './user-plans/user-plans.component';
+import { UserPlanDetailsComponent } from './user-plans/user-plan-details/user-plan-details.component';
 
 @NgModule({
     imports: [
@@ -28,8 +29,9 @@ import { UserPlansComponent } from './user-plans/user-plans.component';
                     { path: 'roles', component: RolesComponent, data: { permission: 'Pages.Roles' }, canActivate: [AppRouteGuard] },
                     { path: 'tenants', component: TenantsComponent, data: { permission: 'Pages.Tenants' }, canActivate: [AppRouteGuard] },
                     { path: 'events', component: EventsComponent, canActivate: [AppRouteGuard] },
-                    { path: 'events/:eventId', component: EventDetailComponent },
-                    { path: 'user-plans', component: UserPlansComponent },
+                    { path: 'events/:eventId', component: EventDetailComponent, canActivate: [AppRouteGuard] },
+                    { path: 'user-plans', component: UserPlansComponent, canActivate: [AppRouteGuard] },
+                    { path: 'user-plans/:planId', component: UserPlanDetailsComponent, canActivate: [AppRouteGuard] }
                 
             
         ])

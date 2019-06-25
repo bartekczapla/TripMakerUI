@@ -114,5 +114,8 @@
     "Place": "Miejsce",
     "MyPlans": "Moje plany",
     "SureToDeleteThisPlan": "Czy jesteś pewny, że chcesz usunąć ten plan?",
-    "Deleted":"Usunięto"
+    "Deleted":"Usunięto",
+    "CreationDate": "Data utworzenia",
+    "Term": "Termin", 
+    "Show": "Pokaż"
 }

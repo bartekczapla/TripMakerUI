@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, registerLocaleData } from '@angular/common';
+import localePl from '@angular/common/locales/pl';
+registerLocaleData(localePl);
 import { FormsModule } from '@angular/forms';
 import { JsonpModule } from '@angular/http';
 import { HttpClientModule, HttpClient, HttpResponse } from '@angular/common/http';
@@ -63,6 +65,9 @@ import { TrendingDestinationComponent } from './home/trending-destination/trendi
 import { HowItWorksComponent } from './home/how-it-works/how-it-works.component';
 import { PlanElementComponent } from './plan/schedule/plan-element/plan-element.component';
 import { UserPlansComponent } from './user-plans/user-plans.component';
+import { UserPlanDetailsComponent } from './user-plans/user-plan-details/user-plan-details.component';
+
+
 // export function HttpLoaderFactory(http: HttpClient) {
 //   return new TranslateHttpLoader(http);
 // }
@@ -95,10 +100,6 @@ export function appInitializerFactory(injector: Injector) {
 
 export function getRemoteServiceBaseUrl(): string {
   return AppConsts.remoteServiceBaseUrl;
-}
-
-export function getCurrentLanguage(): string {
-  return abp.localization.currentLanguage.name;
 }
 
 @NgModule({
@@ -141,7 +142,8 @@ export function getCurrentLanguage(): string {
     TrendingDestinationComponent,
     HowItWorksComponent,
     PlanElementComponent,
-    UserPlansComponent
+    UserPlansComponent,
+    UserPlanDetailsComponent
 
   ],
   imports: [
@@ -183,7 +185,7 @@ export function getCurrentLanguage(): string {
     },
     {
       provide: LOCALE_ID,
-      useFactory: getCurrentLanguage
+      useValue: 'pl'
     }
 
   ],

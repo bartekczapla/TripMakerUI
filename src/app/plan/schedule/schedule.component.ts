@@ -14,12 +14,13 @@ import { Moment } from 'moment';
 })
 export class ScheduleComponent implements OnInit   {
 
-  @Input() parameters: FormParameters;
-  plan:PlanDto;
+  //@Input() parameters: FormParameters;
+  //plan:PlanDto;
+  @Input() plan:PlanDto;
   loading:boolean=false;
 
 
-  constructor(private _planService: PlanServiceProxy)
+  constructor()
   {
       
   }
@@ -27,7 +28,7 @@ export class ScheduleComponent implements OnInit   {
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
-    this.getTestPlan();
+   // this.getTestPlan();
   }
 
   checkIfFirstDate(index:number):boolean {
@@ -49,25 +50,10 @@ export class ScheduleComponent implements OnInit   {
   }
 
   mapDateToString(date:Moment):string{
-
     return date.toDate().toLocaleDateString();
   }
 
 
-  getTestPlan(){
-    this.loading=true;
-    this._planService.getTestPlanAsync()
-        .finally(()=>{this.loading=false;})
-        .subscribe((result:PlanDto)=>{
-          this.plan=result.clone();
-
-        })
-  }
-
-protected list(request: PagedRequestDto, pageNumber: number, finishedCallback: Function): void {
-    this.loadPlan();
-    finishedCallback();
-}
 
   // protected delete(entity: PlanListDto): void {
   //   throw new Error("Method not implemented.");

@@ -1,57 +1,84 @@
-<div class="row clearfix" [@routerTransition]>
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <div class="block-header row">
-            <div class="col-md-6">
-                <span class="section-header">{{'MyPlans' | translate}}</span>                                  
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6" *ngFor="let userPlan of userPlans">
-                <div class="card">
-                    {{userPlan.destination}}
-
+<div class="page-container" [@routerTransition]>
+    <div class="row clearfix" >
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="block-header row">
+                <div class="col-md-6">
+                    <span class="font-24 bold">{{'MyPlans' | translate}}</span>                                  
                 </div>
             </div>
-        </div>
-        <!-- <div class="row">
-            <div class="col-md-6" *ngFor="let event of events">
-                <div class="card">
-                    <div [class]="event.isCancelled ? 'header bg-red' : 'header'">
-                        <h2>
-                            {{event.title}} <small class="event-description">{{event.description}}</small>
-                        </h2>
-                        <ul class="header-dropdown m-r-0">
-                            <li>
-                                <i class="fa fa-calendar"></i>
-                            </li>
-                            <li>
-                                <span>{{event.date | date:'short'}}</span>
-                            </li>
-                        </ul>
-                        <hr />
-                        <div class="row">
-                            <div class="col-md-6">
-                                <small *ngIf="event.registrationsCount < event.maxRegistrationCount">
-                                    {{l('XofYregistered', event.registrationsCount,event.maxRegistrationCount)}}
-                                </small>
-                                <small *ngIf="event.maxRegistrationCount > 0 && event.registrationsCount >= event.maxRegistrationCount">
-                                    {{l("XregisteredNoNewRegistrationAvailable", event.registrationsCount)}}
-                                </small>
-                                <small *ngIf="event.maxRegistrationCount <= 0">
-                                    {{l("XregisteredUnlimitedRegistrations", event.registrationsCount)}}
-                                </small>
-                            </div>
-                            <div class="col-md-6 text-right">
-                                <button type="button" class="btn bg-deep-purple waves-effect btn-sm"
-                                        [routerLink]="['/events', event.id]">
-                                    <span>{{l("Details")}}</span>
-                                    <i class="fa fa-arrow-circle-right"></i>
-                                </button>
+            <div class="row">
+                <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-xs-12" *ngFor="let userPlan of userPlans">
+                    <div class="plan-card">
+                        <div class="row no-margins">
+                             <a (click)="delete(userPlan)"><i class="fas fa-times cross-button"></i></a>
+                        </div>
+                        <div class="row no-margins pb-15 text-center">
+                            <span class="font-24 bold">{{userPlan.destination}}</span>
+                        </div>
+                        <div class="row no-margins pb-30">
+                                <span class="font-15 bold">{{'Term' | translate}}:</span>   
+                                <span class="pull-right width-60 ">
+                                    <span class="font-15 block text-right">{{userPlan.startDate | date:'shortDate'}}, {{formatTimeString(userPlan.startTime)}}</span>
+                                    <span class="font-15 block text-right">-</span>  
+                                    <span class="font-15 block text-right">{{userPlan.endDate | date:'shortDate'}}, {{formatTimeString(userPlan.endTime)}}</span>                                    
+                                </span> 
+                        </div>                      
+                        <div class="row no-margins pb-30">
+                                <span class="font-15 bold">{{'CreationDate' | translate}}:</span>   
+                                <span class="pull-right width-60 block">
+                                    <span class="font-15 block text-right">{{userPlan.creationTime | date:'short'}}</span>
+                                </span>
+                                
+                        </div>
+                        <div class="row no-margins">
+                            <div class="text-right">
+                                    <button class="yellow-button" [routerLink]="['/user-plans', userPlan.id]">{{'Show'|translate}} <i class="fa fa-arrow-circle-right"></i></button>
+                            </div>                            
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="row">
+                <div class="col-md-6" *ngFor="let event of events">
+                    <div class="card">
+                        <div [class]="event.isCancelled ? 'header bg-red' : 'header'">
+                            <h2>
+                                {{event.title}} <small class="event-description">{{event.description}}</small>
+                            </h2>
+                            <ul class="header-dropdown m-r-0">
+                                <li>
+                                    <i class="fa fa-calendar"></i>
+                                </li>
+                                <li>
+                                    <span>{{event.date | date:'short'}}</span>
+                                </li>
+                            </ul>
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <small *ngIf="event.registrationsCount < event.maxRegistrationCount">
+                                        {{l('XofYregistered', event.registrationsCount,event.maxRegistrationCount)}}
+                                    </small>
+                                    <small *ngIf="event.maxRegistrationCount > 0 && event.registrationsCount >= event.maxRegistrationCount">
+                                        {{l("XregisteredNoNewRegistrationAvailable", event.registrationsCount)}}
+                                    </small>
+                                    <small *ngIf="event.maxRegistrationCount <= 0">
+                                        {{l("XregisteredUnlimitedRegistrations", event.registrationsCount)}}
+                                    </small>
+                                </div>
+                                <div class="col-md-6 text-right">
+                                    <button type="button" class="btn bg-deep-purple waves-effect btn-sm"
+                                            [routerLink]="['/events', event.id]">
+                                        <span>{{l("Details")}}</span>
+                                        <i class="fa fa-arrow-circle-right"></i>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div> -->
-    </div>
-  </div>
+            </div> -->
+        </div>
+      </div>
+</div>

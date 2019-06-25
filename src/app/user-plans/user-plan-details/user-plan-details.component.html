@@ -1,8 +1,7 @@
 <div [@routerTransition]>
-<div *ngIf="loading; then spinnerBlock else planBlock"></div>
+<div *ngIf="loaded; then planBlock else spinnerBlock"></div>
     <ng-template #planBlock>
-        <app-form *ngIf="isForm" (formSave)="generatePlan($event)"></app-form>
-        <app-schedule *ngIf="!isForm" [plan]="plan"></app-schedule>    
+        <app-schedule  [plan]="plan"></app-schedule>    
     </ng-template>
     <ng-template #spinnerBlock>
             <div class="spinner-container">

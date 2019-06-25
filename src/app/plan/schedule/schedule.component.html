@@ -1,7 +1,5 @@
-<div *ngIf="loading; then spinnerBlock else planBlock"></div>
-<ng-template #planBlock>
-    <!-- <mat-tab-group animationDuration="100ms"> -->
-    <mat-tab-group animationDuration="0" style="margin-bottom:50px;">
+<!-- <mat-tab-group animationDuration="100ms"> -->
+<mat-tab-group animationDuration="0" style="margin-bottom:50px;">
     <mat-tab label="General">
         <div class="row no-margins">
             <span class="big-font">{{plan.destination}}</span>
@@ -15,12 +13,4 @@
             <plan-element [element]="element" [even]="even"></plan-element>
         </ng-container>
     </mat-tab>
-    </mat-tab-group>
-
- 
-</ng-template>
-<ng-template #spinnerBlock>
-    <div class="spinner-container">
-            <mat-spinner></mat-spinner>
-    </div>
-</ng-template>
+</mat-tab-group>

@@ -30,6 +30,7 @@ export class UserPlansComponent extends PagedListingComponentBase<UserPlansListD
 
   protected delete(entity: UserPlansListDto): void {
     abp.message.confirm(
+      '',
       this.translate.instant('SureToDeleteThisPlan'),
       (result: boolean) => {
           if (result) {
@@ -47,10 +48,16 @@ export class UserPlansComponent extends PagedListingComponentBase<UserPlansListD
       this._userPlansService.getAllUserPlansAsync()
           .subscribe((result:ListResultDtoOfUserPlansListDto)=>{
               this.userPlans=result.items;
-              console.log(this.userPlans)
           })
             
   }
 
+  formatTimeString(time:string):string {
+      if(time != null && time !== undefined){
+            return time.substring(0,time.length-3);
+      } else {
+          return '';
+      }
+  }
 
 }
