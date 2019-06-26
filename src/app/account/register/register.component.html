@@ -1,47 +1,54 @@
-<div class="card register-card " [@routerTransition]>
-    <div #cardBody class="body">
-        <form #registerForm="ngForm" method="post" novalidate (ngSubmit)="save()">
-            <h4 class="text-center">{{'Register'|translate}}s</h4>
-
-            <div class="form-group form-float">
-                <div class="form-line">
-                    <input materialInput class="form-control" autoFocus type="text" [(ngModel)]="model.name" name="Name" required maxlength="32" />
-                    <label class="form-label">{{'Name'|translate}}</label>
+<div class="page-container">
+    <div class="card login-card  " id="LoginArea" [@routerTransition]>
+        <div #cardBody class="body">
+            <form #registerForm="ngForm" method="post" novalidate (ngSubmit)="save()" autocomplete="off">
+                <h4 class="text-center p-b-20">{{'Register'|translate}}</h4>
+                <input type="text" autofocus="autofocus" style="display:none" />
+                <div class="width-100">
+                    <mat-form-field>
+                        <mat-label>{{'Name'|translate}}</mat-label>
+                        <input matInput name="Name" type="text" required maxlength="32" autocomplete="off"
+                            [(ngModel)]="model.name">
+                    </mat-form-field>
                 </div>
-            </div>
 
-            <div class="form-group form-float">
-                <div class="form-line">
-                    <input materialInput class="form-control" type="text" [(ngModel)]="model.surname" name="Surname" required maxlength="32" />
-                    <label class="form-label">{{'Surname'|translate}}</label>
+                <div class="width-100">
+                    <mat-form-field>
+                        <mat-label>{{'Surname'|translate}}</mat-label>
+                        <input matInput name="Surname" type="text" required maxlength="32" autocomplete="off"
+                            [(ngModel)]="model.surname">
+                    </mat-form-field>
                 </div>
-            </div>
 
-            <div class="form-group form-float">
-                <div class="form-line">
-                    <input materialInput class="form-control" type="email" [(ngModel)]="model.emailAddress" name="EmailAddress" required maxlength="255" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{1,})+$" />
-                    <label class="form-label">{{'EmailAddress'|translate}}</label>
+                <div class="width-100">
+                    <mat-form-field>
+                        <mat-label>{{'EmailAddress'|translate}}</mat-label>
+                        <input matInput name="EmailAddress" type="email" required maxlength="255" autocomplete="off"
+                            [(ngModel)]="model.emailAddress" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{1,})+$">
+                    </mat-form-field>
                 </div>
-            </div>
 
-            <div class="form-group form-float">
-                <div class="form-line">
-                    <input materialInput class="form-control" type="text" autocomplete="off" [(ngModel)]="model.userName" name="UserName" required maxlength="32" />
-                    <label class="form-label">{{'UserName'|translate}}</label>
+                <div class="width-100">
+                    <mat-form-field>
+                        <mat-label>{{'UserName'|translate}}</mat-label>
+                        <input matInput name="UserName" type="text" required maxlength="32" autocomplete="off"
+                            [(ngModel)]="model.userName">
+                    </mat-form-field>
                 </div>
-            </div>
 
-            <div class="form-group form-float">
-                <div class="form-line">
-                    <input materialInput class="form-control" type="password" [(ngModel)]="model.password" name="Password" required maxlength="32" />
-                    <label class="form-label">{{'Password'|translate}}</label>
+                <div class="width-100">
+                    <mat-form-field>
+                        <mat-label>{{'Password'|translate}}</mat-label>
+                        <input matInput name="Password" type="password" required maxlength="32" autocomplete="off"
+                            [(ngModel)]="model.password">
+                    </mat-form-field>
                 </div>
-            </div>
 
-            <div class="form-actions">
-                <button type="submit" class="btn btn-success" [disabled]="!registerForm.form.valid">{{'Submit'|translate}}</button>
-            </div>
-
-        </form>
+                <div class="row no-margins p-b-20 p-t-30">
+                    <button id="RegisterButton" class="yellow-button width-100" [disabled]="!registerForm.form.valid"
+                        type="submit">{{'Submit'|translate}}</button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>

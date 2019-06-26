@@ -7,7 +7,7 @@ import { accountModuleAnimation } from '@shared/animations/routerTransition';
 
 @Component({
     templateUrl: './register.component.html',
-    styleUrls: ['../login/login.component.less'],
+    styleUrls: ['../account.component.less'],
     animations: [accountModuleAnimation()]
 })
 export class RegisterComponent extends AppComponentBase implements AfterViewInit {

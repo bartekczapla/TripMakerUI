@@ -41,9 +41,6 @@ import { LoginComponent } from './account/login/login.component';
 import { RegisterComponent } from './account/register/register.component';
 import { AngularMaterialModule } from '@shared/modules/angular-material.module';
 import { ScheduleComponent } from './plan/schedule/schedule.component';
-import { AccountComponent } from './account/account.component';
-import { TenantChangeModalComponent } from './account/tenant/tenant-change-modal.component';
-import { TenantChangeComponent } from './account/tenant/tenant-change.component';
 import { LoginService } from './account/login/login.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -132,9 +129,6 @@ export function getRemoteServiceBaseUrl(): string {
     LoginComponent,
     RegisterComponent,
     ScheduleComponent,
-    AccountComponent,
-    TenantChangeComponent,
-    TenantChangeModalComponent,
     MaterialInput,
     GooglePlacesDirective,
     AdminManagementComponent,
@@ -175,14 +169,14 @@ export function getRemoteServiceBaseUrl(): string {
     AppUrlService,
     AppAuthService,
     AppRouteGuard,
-    { provide: HTTP_INTERCEPTORS, useClass: AbpHttpInterceptor, multi: true },
-    { provide: API_BASE_URL, useFactory: getRemoteServiceBaseUrl },
-    {
-      provide: APP_INITIALIZER,
-      useFactory: appInitializerFactory,
-      deps: [Injector],
-      multi: true
-    },
+    // { provide: HTTP_INTERCEPTORS, useClass: AbpHttpInterceptor, multi: true },
+    // { provide: API_BASE_URL, useFactory: getRemoteServiceBaseUrl },
+    // {
+    //   provide: APP_INITIALIZER,
+    //   useFactory: appInitializerFactory,
+    //   deps: [Injector],
+    //   multi: true
+    // },
     {
       provide: LOCALE_ID,
       useValue: 'pl'
