@@ -1,4 +1,9 @@
 <mat-card>
+
+
+
+
+
    <div class="row no-margins circles-container">
        <span class="circle" [ngClass]="{'filled-circle':formCounter>0}"></span>
        <span class="circle" [ngClass]="{'filled-circle':formCounter>1}"></span>
@@ -6,6 +11,19 @@
    </div>
    <span class="separate-line"></span>
   <ng-container *ngIf="formCounter==1">
+
+    <div class="question-flex-container ">
+        <div class="form-question normal-font">{{'WhereAreYouGoing'|translate}}?</div>
+        <div class="form-input pull-right">      
+                <!-- <bs-datepicker-inline [bsValue]="bsInlineValue"></bs-datepicker-inline>   -->
+        </div>
+    </div>
+    <div class="question-flex-container ">
+            <div class="form-question normal-font">{{'WhereAreYouGoing'|translate}}?</div>
+            <div class="form-input pull-right">      
+                    <!-- <timepicker [(ngModel)]="mytime"></timepicker> -->
+            </div>
+        </div>
     <div class="question-flex-container ">
         <div class="form-question normal-font">{{'WhereAreYouGoing'|translate}}?</div>
         <div class="form-input pull-right">

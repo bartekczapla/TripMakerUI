@@ -2,7 +2,6 @@ import { Component, ViewContainerRef, Injector, OnInit, AfterViewInit } from '@a
 import { AppConsts } from '@shared/AppConsts';
 import { AppComponentBase } from '@shared/app-component-base';
 import {TranslateService} from '@ngx-translate/core';
-
 // import { SignalRAspNetCoreHelper } from '@shared/helpers/SignalRAspNetCoreHelper';
 
 @Component({
