@@ -169,11 +169,7 @@ export function getRemoteServiceBaseUrl(): string {
     AppUrlService,
     AppAuthService,
     AppRouteGuard,
-<<<<<<< HEAD
-    // { provide: HTTP_INTERCEPTORS, useClass: AbpHttpInterceptor, multi: true },
-=======
     { provide: HTTP_INTERCEPTORS, useClass: AbpHttpInterceptor, multi: true },
->>>>>>> 2c5ea5189bcb4c9dc062852011af436985006b78
     // { provide: API_BASE_URL, useFactory: getRemoteServiceBaseUrl },
     // {
     //   provide: APP_INITIALIZER,
