@@ -5,7 +5,6 @@ registerLocaleData(localePl);
 import { FormsModule } from '@angular/forms';
 import { JsonpModule } from '@angular/http';
 import { HttpClientModule, HttpClient, HttpResponse } from '@angular/common/http';
-import { ModalModule } from 'ngx-bootstrap';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -63,8 +62,8 @@ import { HowItWorksComponent } from './home/how-it-works/how-it-works.component'
 import { PlanElementComponent } from './plan/schedule/plan-element/plan-element.component';
 import { UserPlansComponent } from './user-plans/user-plans.component';
 import { UserPlanDetailsComponent } from './user-plans/user-plan-details/user-plan-details.component';
-
-
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
+import { ModalModule, BsDatepickerModule} from 'ngx-bootstrap';
 // export function HttpLoaderFactory(http: HttpClient) {
 //   return new TranslateHttpLoader(http);
 // }
@@ -145,10 +144,11 @@ export function getRemoteServiceBaseUrl(): string {
     AppRoutingModule,
     BrowserModule,
     BrowserAnimationsModule,
+    BsDatepickerModule.forRoot(),
+    MDBBootstrapModule,
     HttpClientModule,
     CommonModule,
     FormsModule,
-    HttpClientModule,
     JsonpModule,
     ModalModule.forRoot(),
     AbpModule,
@@ -169,7 +169,11 @@ export function getRemoteServiceBaseUrl(): string {
     AppUrlService,
     AppAuthService,
     AppRouteGuard,
+<<<<<<< HEAD
     // { provide: HTTP_INTERCEPTORS, useClass: AbpHttpInterceptor, multi: true },
+=======
+    { provide: HTTP_INTERCEPTORS, useClass: AbpHttpInterceptor, multi: true },
+>>>>>>> 2c5ea5189bcb4c9dc062852011af436985006b78
     // { provide: API_BASE_URL, useFactory: getRemoteServiceBaseUrl },
     // {
     //   provide: APP_INITIALIZER,

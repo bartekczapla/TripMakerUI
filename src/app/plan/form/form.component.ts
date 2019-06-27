@@ -15,8 +15,8 @@ export class FormComponent implements OnInit {
   parameters: FormParameters=new FormParameters();
   formCounter: number;
   public placeInfo: IGooglePlace;
-
-
+  bsInlineValue = new Date();
+  mytime: Date = new Date();
   constructor(private zone:NgZone) { }
 
   ngOnInit() {

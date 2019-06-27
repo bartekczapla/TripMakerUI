@@ -32,7 +32,8 @@
             ],
             "styles": [
               "src/assets/fonts/roboto/roboto.css",
-              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/bootstrap/scss/bootstrap.scss",
+              "node_modules/angular-bootstrap-md/scss/mdb-free.scss",
               "node_modules/simple-line-icons/css/simple-line-icons.css",
               "node_modules/@fortawesome/fontawesome-free/css/all.css",
               "node_modules/famfamfam-flags/dist/sprite/famfamfam-flags.css",
