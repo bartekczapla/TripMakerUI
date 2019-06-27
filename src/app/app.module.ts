@@ -1,3 +1,4 @@
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { NgModule } from '@angular/core';
 import { CommonModule, registerLocaleData } from '@angular/common';
 import localePl from '@angular/common/locales/pl';
@@ -35,7 +36,6 @@ import { EventsComponent } from './events/events.component';
 import { EventDetailComponent } from './events/event-detail/event-detail.component';
 import { CreateEventComponent } from './events/create-event/create-event.component';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { LoginComponent } from './account/login/login.component';
 import { RegisterComponent } from './account/register/register.component';
 import { AngularMaterialModule } from '@shared/modules/angular-material.module';
@@ -62,8 +62,9 @@ import { HowItWorksComponent } from './home/how-it-works/how-it-works.component'
 import { PlanElementComponent } from './plan/schedule/plan-element/plan-element.component';
 import { UserPlansComponent } from './user-plans/user-plans.component';
 import { UserPlanDetailsComponent } from './user-plans/user-plan-details/user-plan-details.component';
-import { MDBBootstrapModule } from 'angular-bootstrap-md';
-import { ModalModule, BsDatepickerModule} from 'ngx-bootstrap';
+import { ModalModule, BsDatepickerModule } from 'ngx-bootstrap';
+import { NgbTimepickerModule} from '@ng-bootstrap/ng-bootstrap';
+//import { ModalModule, BsDatepickerModule} from 'ngx-bootstrap';
 // export function HttpLoaderFactory(http: HttpClient) {
 //   return new TranslateHttpLoader(http);
 // }
@@ -145,7 +146,7 @@ export function getRemoteServiceBaseUrl(): string {
     BrowserModule,
     BrowserAnimationsModule,
     BsDatepickerModule.forRoot(),
-    MDBBootstrapModule,
+    NgbTimepickerModule,
     HttpClientModule,
     CommonModule,
     FormsModule,

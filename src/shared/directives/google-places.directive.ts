@@ -21,7 +21,7 @@
 // }
 
 import { Directive, ElementRef, OnInit, Output, EventEmitter } from '@angular/core';
-import {} from 'googlemaps';
+//import {} from 'googlemaps';
 //declare var google:any;
 
 @Directive({

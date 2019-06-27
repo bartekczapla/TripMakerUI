@@ -1,9 +1,15 @@
 ﻿<div id="wrapper">
-    <div id="header">
+    <!-- <div id="header">
         <top-bar></top-bar> 
-    </div>
+    </div> -->
     <div class="router-container" id="content">
-            <router-outlet></router-outlet>
+        <div class="row no-margins">
+            <top-bar class="w-100"></top-bar>             
+        </div>
+        <div>
+            <router-outlet></router-outlet>                
+        </div>
+
     </div>
     <div id="footer">
         <app-footer></app-footer>

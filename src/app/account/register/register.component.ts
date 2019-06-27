@@ -7,7 +7,7 @@ import { accountModuleAnimation } from '@shared/animations/routerTransition';
 
 @Component({
     templateUrl: './register.component.html',
-    styleUrls: ['../account.component.less'],
+    styleUrls: ['../account.component.scss'],
     animations: [accountModuleAnimation()]
 })
 export class RegisterComponent extends AppComponentBase implements AfterViewInit {
@@ -38,8 +38,8 @@ export class RegisterComponent extends AppComponentBase implements AfterViewInit
     save(): void {
         this.saving = true;
         this._accountService.register(this.model)
-            .finally(() => { this.saving = false; })
             .subscribe((result:RegisterOutput) => {
+                this.saving = false;
                 if (!result.canLogin) {
                     this.notify.success(this.l('SuccessfullyRegistered'));
                     this._router.navigate(['/login']);

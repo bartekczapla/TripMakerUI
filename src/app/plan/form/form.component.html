@@ -15,13 +15,15 @@
     <div class="question-flex-container ">
         <div class="form-question normal-font">{{'WhereAreYouGoing'|translate}}?</div>
         <div class="form-input pull-right">      
-                <!-- <bs-datepicker-inline [bsValue]="bsInlineValue"></bs-datepicker-inline>   -->
+                <bs-datepicker-inline [bsValue]="bsInlineValue"></bs-datepicker-inline>
         </div>
     </div>
     <div class="question-flex-container ">
             <div class="form-question normal-font">{{'WhereAreYouGoing'|translate}}?</div>
             <div class="form-input pull-right">      
-                    <!-- <timepicker [(ngModel)]="mytime"></timepicker> -->
+                    <ngb-timepicker [(ngModel)]="time"></ngb-timepicker>
+        <hr>
+        <pre>Selected time: {{time | json}}</pre>
             </div>
         </div>
     <div class="question-flex-container ">

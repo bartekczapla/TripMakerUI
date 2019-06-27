@@ -8,7 +8,7 @@ import { AbpSessionService } from '@abp/session/abp-session.service';
 @Component({
     templateUrl: './login.component.html',
     styleUrls: [
-        '../account.component.less'
+        '../account.component.scss'
     ],
     animations: [accountModuleAnimation()]
 })

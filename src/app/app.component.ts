@@ -8,7 +8,7 @@ import {TranslateService} from '@ngx-translate/core';
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: [
-        './app.component.less'
+        './app.component.scss'
     ],
 })
 export class AppComponent extends AppComponentBase implements OnInit, AfterViewInit {

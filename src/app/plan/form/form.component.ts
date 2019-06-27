@@ -6,7 +6,7 @@ import { IGooglePlace } from '@app/models/google-place.interface';
 @Component({
   selector: 'app-form',
   templateUrl: './form.component.html',
-  styleUrls: ['./form.component.css'],
+  styleUrls: ['./form.component.scss'],
   animations: [appModuleAnimation()]
 })
 export class FormComponent implements OnInit {

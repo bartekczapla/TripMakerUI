@@ -5,7 +5,7 @@ import { HomeServiceProxy, ListResultDtoOfSearchedPlaceDto, SearchedPlaceDto, IS
 @Component({
     selector:'trending-destination',
     templateUrl: './trending-destination.component.html',
-    styleUrls: ['../home.component.less']
+    styleUrls: ['../home.component.scss']
 })
 export class TrendingDestinationComponent extends AppComponentBase implements OnInit {
 
@@ -27,8 +27,8 @@ export class TrendingDestinationComponent extends AppComponentBase implements On
     getTrendingDestination(){
         this.loaded=false;
         this._homeService.getMostSearchedPlacesAsync()
-            .finally(()=>this.loaded=true)
             .subscribe((result: ListResultDtoOfSearchedPlaceDto)=>{
+                this.loaded=true
                 this.destinations=result.items;
                 if(this.destinations.length>0){
                     this.destinationA={

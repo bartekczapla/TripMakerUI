@@ -33,7 +33,7 @@
             "styles": [
               "src/assets/fonts/roboto/roboto.css",
               "node_modules/bootstrap/scss/bootstrap.scss",
-              "node_modules/angular-bootstrap-md/scss/mdb-free.scss",
+              "node_modules/ngx-bootstrap/datepicker/bs-datepicker.scss",
               "node_modules/simple-line-icons/css/simple-line-icons.css",
               "node_modules/@fortawesome/fontawesome-free/css/all.css",
               "node_modules/famfamfam-flags/dist/sprite/famfamfam-flags.css",
@@ -42,7 +42,7 @@
               "src/bsb-theme/css/materialize.css",
               "src/bsb-theme/css/style.css",
               "src/bsb-theme/css/themes/all-themes.css",
-              "src/shared/core.less"
+              "src/shared/core.scss"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
@@ -140,6 +140,7 @@
               "node_modules/jquery/dist/jquery.min.js",
               "node_modules/jquery-migrate/dist/jquery-migrate.min.js",
               "node_modules/js-cookie/src/js.cookie.js",
+              "node_modules/popper.js/dist/umd/popper.min.js",
               "node_modules/bootstrap/dist/js/bootstrap.js",
               "node_modules/lodash/lodash.min.js",
               "node_modules/moment/min/moment.min.js",
@@ -184,7 +185,7 @@
               "src/bsb-theme/css/materialize.css",
               "src/bsb-theme/css/style.css",
               "src/bsb-theme/css/themes/all-themes.css",
-              "src/shared/core.less"
+              "src/shared/core.scss"
             ],
             "assets": [
               "src/assets",
@@ -241,7 +242,7 @@
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "app",
-      "styleext": "css"
+      "styleext": "scss"
     },
     "@schematics/angular:directive": {
       "prefix": "app"
