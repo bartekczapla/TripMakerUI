@@ -5,11 +5,12 @@ import { FormParameters } from '@app/plan/form/models/form-parameters.interface'
 import { ScheduleComponent } from '@app/plan/schedule/schedule.component';
 import { PlanDto, PlanServiceProxy } from '@shared/service-proxies/service-proxies';
 import { AppComponentBase } from '@shared/app-component-base';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-plan',
   templateUrl: './plan.component.html',
-  styleUrls: ['./plan.component.css'],
+  styleUrls: ['./plan.component.scss'],
   animations: [appModuleAnimation()]
 })
 export class PlanComponent extends AppComponentBase implements OnInit {
@@ -40,7 +41,9 @@ export class PlanComponent extends AppComponentBase implements OnInit {
   getTestPlan(){
     this.loading=true;
     this._planService.getTestPlanAsync()
-        .finally(()=>{this.loading=false;})
+        .pipe(finalize(()=>{
+          this.loading=false;
+        }))
         .subscribe((result:PlanDto)=>{
           this.plan=result.clone();
         })

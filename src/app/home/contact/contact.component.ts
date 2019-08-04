@@ -7,7 +7,7 @@ import { TranslateService } from '@ngx-translate/core';
 @Component({
     selector:'contact',
     templateUrl: './contact.component.html',
-    styleUrls: ['../home.component.less']
+    styleUrls: ['../home.component.scss']
 })
 export class ContactComponent extends AppComponentBase implements OnInit {
 

@@ -9,7 +9,7 @@ import { AppAuthService } from '@shared/auth/app-auth.service';
 @Component({
     templateUrl: './topbar.component.html',
     selector: 'top-bar',
-    styleUrls: ['./topbar.component.less']
+    styleUrls: ['./topbar.component.scss']
    // encapsulation: ViewEncapsulation.None
 })
 export class TopBarComponent extends AppComponentBase {
@@ -17,7 +17,7 @@ export class TopBarComponent extends AppComponentBase {
 public isEnglish:boolean=false;
 public isPolish:boolean=true;
 public isUserLogged:boolean=false;
-
+isMobileMenu=false;
     menuItems: MenuItem[] = [
         new MenuItem(this.l("HomePage"), "", "home", "/home"),
 
@@ -59,11 +59,22 @@ public isUserLogged:boolean=false;
       }
 
       getUserName():string {
-          return this.appSession.user.name+' '+this.appSession.user.surname;
+          //return this.appSession.user.name+' '+this.appSession.user.surname;
+          return 'admin admin';
       }
 
       logout(): void {
           this._authService.logout();
       }
 
+      toggleMenu() {
+        $('#hamburgerMenu').toggleClass('change-menu');
+        if ($('#topNavbar').hasClass('responsive-topnavbar')) {
+            this.isMobileMenu=true;
+            $('#topNavbar').removeClass('responsive-topnavbar');
+        } else {
+            this.isMobileMenu=false;
+            $('#topNavbar').addClass('responsive-topnavbar');
+        }  
+    }
 }

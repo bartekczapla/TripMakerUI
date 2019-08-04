@@ -9,7 +9,7 @@ import { Moment } from 'moment';
 @Component({
   selector: 'app-schedule',
   templateUrl: './schedule.component.html',
-  styleUrls: ['./schedule.component.css'],
+  styleUrls: ['./schedule.component.scss'],
   animations: [appModuleAnimation()]
 })
 export class ScheduleComponent implements OnInit   {

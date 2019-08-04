@@ -5,7 +5,7 @@ import { PlanElementDto  } from '@shared/service-proxies/service-proxies';
 @Component({
   selector: 'plan-element',
   templateUrl: './plan-element.component.html',
-  styleUrls: ['../schedule.component.css'],
+  styleUrls: ['../schedule.component.scss'],
   animations: [appModuleAnimation()]
 })
 export class PlanElementComponent   {

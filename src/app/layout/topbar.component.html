@@ -1,93 +1,66 @@
-﻿<nav class="navbar navbar-inverse">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <a routerLink="/home" class="navbar-brand">
-                <i class="fa fa-map-signs yellow-theme"></i> <span class="yellow-theme logo-font ">TripMaker</span></a>
-        </div>
-        <div class="collapse navbar-collapse" id="myNavbar">
-            <ul class="nav navbar-nav">
-                <!-- <li [routerLinkActive]="['link-active']">
-                    <a [routerLink]="['/plan']">
-                        <span class='glyphicon glyphicon-education'></span> PLAN
-                    </a>
-                </li> -->
-                <li *ngIf="checkIfUserLogged()" [routerLinkActive]="['link-active']">
-                    <a [routerLink]="['/dashboard']">
-                        <span class='glyphicon glyphicon-education'></span> Dashboard
-                    </a>
-                </li>
-                <li *ngIf="checkIfUserLogged()" [routerLinkActive]="['link-active']">
-                    <a [routerLink]="['/events']">
-                        <span class='glyphicon glyphicon-th-list'></span> Events
-                    </a>
-                </li>
-                <!-- <li *ngIf="checkIfUserLogged()" [routerLinkActive]="['link-active']">
-                    <a [routerLink]="['/users']">
-                        <span class='glyphicon glyphicon-education'></span> Users
-                    </a>
-                </li>
-                <li *ngIf="checkIfUserLogged()" [routerLinkActive]="['link-active']">
-                    <a [routerLink]="['/roles']">
-                        <span class='glyphicon glyphicon-education'></span> Roles
-                    </a>
-                </li>
-                <li *ngIf="checkIfUserLogged()" [routerLinkActive]="['link-active']">
-                    <a [routerLink]="['/tenants']">
-                        <span class='glyphicon glyphicon-education'></span> Tenants
-                    </a>
-                </li> -->
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <!-- <li *ngIf="!checkIfUserLogged()" [routerLinkActive]="['link-active']">
-                    <a [routerLink]="['/register']">
-                        <span class="glyphicon glyphicon-log-in"></span> {{'SignUp'|translate}}
-                    </a>
-                </li> -->
-
-                <li *ngIf="!checkIfUserLogged()" [routerLinkActive]="['link-active']">
-                    <a [routerLink]="['/login']">
-                        <span class="glyphicon glyphicon-log-in"></span> {{'Login'|translate}}
+﻿<nav class="navbar" id="topNavbar">
+    <div class="navbar-header mr-1">
+        <a routerLink="/home">
+            <i class="fa fa-map-signs yellow-theme"></i> <span class="yellow-theme logo-font ">TripMaker</span></a>
+    </div>
+    <ul class="navbar-nav  mr-auto">
+        <li class="nav-item center" *ngIf="checkIfUserLogged()" [routerLinkActive]="['link-active']">
+            <a [routerLink]="['/dashboard']">
+                <span class='glyphicon glyphicon-education'></span> Dashboard
+            </a>
+        </li>
+        <li class="nav-item center" *ngIf="checkIfUserLogged()" [routerLinkActive]="['link-active']">
+            <a [routerLink]="['/events']">
+                <span class='glyphicon glyphicon-th-list'></span> Events
+            </a>
+        </li>
+    </ul>
+    <ul class="navbar-nav ml-auto">
+        <li class="nav-item center" *ngIf="!checkIfUserLogged()" [routerLinkActive]="['link-active']">
+            <a [routerLink]="['/login']">
+                <span class="glyphicon glyphicon-log-in"></span> {{'Login'|translate}}
+            </a>
+        </li>
+        <li *ngIf="checkIfUserLogged()" class="dropdown nav-item">
+            <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
+                style="color:black;">
+                <i class="fas fa-user"></i> {{getUserName()}}
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu arrow_box">
+                <li class="dropdown-item" [routerLinkActive]="['link-active']">
+                    <a [routerLink]="['/user-plans']">
+                        {{'MyPlans'|translate}}
                     </a>
                 </li>
-                <li  *ngIf="checkIfUserLogged()" class="dropdown">
-                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" style="color:black;">
-                        <i class="fas fa-user"></i>  {{getUserName()}}
-                      <b class="caret"></b>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li [routerLinkActive]="['link-active']">
-                            <a [routerLink]="['/user-plans']">
-                                {{'MyPlans'|translate}}
-                             </a>
-                        </li>
-                        <li>
-                            <a (click)="logout()">
-                                <span class="glyphicon glyphicon-log-out"></span> {{'Logout'|translate}}
-                            </a>    
-                        </li>
-                    </ul>
-                </li> 
-                <li>
-                    <div class="div-container">
-                        <a class="navbar-item-color "  (click)="setPolish($event)"><span [ngClass]="{'active-language': isPolish }">PL</span></a>
-                        <span class="ml-5 mr-5 navbar-item-color">/</span>
-                        <a class="navbar-item-color "  (click)="setEnglish($event)"><span [ngClass]="{'active-language': isEnglish }">EN</span></a>    
-                    </div>
-                       
-                </li>                                 
-                <!-- <li *ngIf="checkIfUserLogged()">
+                <li class="dropdown-item" >
                     <a (click)="logout()">
                         <span class="glyphicon glyphicon-log-out"></span> {{'Logout'|translate}}
                     </a>
-                </li> -->
+                </li>
             </ul>
+        </li>
+        <li class="nav-item center" >
+            <div>
+                <a class="navbar-item-color " (click)="setPolish($event)"><span
+                        [ngClass]="{'active-language': isPolish }">PL</span></a>
+                <span class="navbar-item-color ml-1 mr-1">/</span>
+                <a class="navbar-item-color " (click)="setEnglish($event)"><span
+                        [ngClass]="{'active-language': isEnglish }">EN</span></a>
+            </div>
+
+        </li>
+    </ul>
+
+    <a href="javascript:void(0);" class="hamburger-icon white-color" (click)="toggleMenu()">
+        <div class="buger-menu-container" id="hamburgerMenu">
+            <div class="bar1"></div>
+            <div class="bar2"></div>
+            <div class="bar3"></div>
         </div>
-    </div>
-</nav>
+    </a>
 
-<!--       
+</nav> 
 
-<button [ngClass]="{'language-button-active': isPolish,'language-button-inactive': !isPolish }"  (click)="setPolish($event)" mat-mini-fab>PL</button>
- <button [ngClass]="{'language-button-active': isEnglish,'language-button-inactive': !isEnglish }" (click)="setEnglish($event)" mat-mini-fab >EN</button>
-          
-   -->
+
+

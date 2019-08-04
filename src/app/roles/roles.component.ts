@@ -4,6 +4,7 @@ import { RoleServiceProxy, RoleDto, PagedResultDtoOfRoleDto } from "shared/servi
 import { appModuleAnimation } from '@shared/animations/routerTransition';
 import { CreateRoleComponent } from "app/roles/create-role/create-role.component";
 import { EditRoleComponent } from "app/roles/edit-role/edit-role.component";
+import { finalize } from 'rxjs/operators';
 
 @Component({
   templateUrl: './roles.component.html',
@@ -25,10 +26,10 @@ export class RolesComponent extends PagedListingComponentBase<RoleDto> {
     
 	list(request: PagedRequestDto, pageNumber: number, finishedCallback: Function): void {
 		this.rolesService.getAll(request.skipCount, request.maxResultCount)
-			.finally( ()=> {
-				finishedCallback();
-			})
-            .subscribe((result: PagedResultDtoOfRoleDto)=>{
+					.pipe(finalize(()=>{
+						finishedCallback();
+					})) 
+          .subscribe((result: PagedResultDtoOfRoleDto)=>{
 				this.roles = result.items;
 				this.showPaging(result, pageNumber);
 		});
@@ -42,10 +43,10 @@ export class RolesComponent extends PagedListingComponentBase<RoleDto> {
 				if(result)
 				{
 					this.rolesService.delete(role.id)
-						.finally(() => {
+					   .pipe(finalize(()=>{
 							abp.notify.info("Deleted Role: " + role.displayName );
 							this.refresh();
-						})
+            })) 
 						.subscribe(() => { });
 				}
 			}

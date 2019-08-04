@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 @Component({
     selector: 'home',
     templateUrl: './home.component.html',
-    styleUrls: ['./home.component.less'],
+    styleUrls: ['./home.component.scss'],
     animations: [appModuleAnimation()]
 })
 export class HomeComponent extends AppComponentBase implements OnInit {

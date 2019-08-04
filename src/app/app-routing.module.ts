@@ -24,14 +24,14 @@ import { UserPlanDetailsComponent } from './user-plans/user-plan-details/user-pl
                     { path: 'register', component: RegisterComponent },
                     { path: 'home', component: HomeComponent },
                     { path: 'plan', component: PlanComponent },
-                    { path: 'dashboard', component: DashboardComponent,  canActivate: [AppRouteGuard] },
+                    { path: 'dashboard', component: DashboardComponent },//,  canActivate: [AppRouteGuard] },
                     { path: 'users', component: UsersComponent, data: { permission: 'Pages.Users' }, canActivate: [AppRouteGuard] },
                     { path: 'roles', component: RolesComponent, data: { permission: 'Pages.Roles' }, canActivate: [AppRouteGuard] },
                     { path: 'tenants', component: TenantsComponent, data: { permission: 'Pages.Tenants' }, canActivate: [AppRouteGuard] },
-                    { path: 'events', component: EventsComponent, canActivate: [AppRouteGuard] },
-                    { path: 'events/:eventId', component: EventDetailComponent, canActivate: [AppRouteGuard] },
-                    { path: 'user-plans', component: UserPlansComponent, canActivate: [AppRouteGuard] },
-                    { path: 'user-plans/:planId', component: UserPlanDetailsComponent, canActivate: [AppRouteGuard] }
+                    { path: 'events', component: EventsComponent},//, canActivate: [AppRouteGuard] },
+                    { path: 'events/:eventId', component: EventDetailComponent},//, canActivate: [AppRouteGuard] },
+                    { path: 'user-plans', component: UserPlansComponent},//, canActivate: [AppRouteGuard] },
+                    { path: 'user-plans/:planId', component: UserPlanDetailsComponent},//, canActivate: [AppRouteGuard] }
                 
             
         ])

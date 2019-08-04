@@ -5,7 +5,7 @@ import { HomeServiceProxy,  ListResultDtoOfSearchedPlaceAndPhoto, ISearchedPlace
 @Component({
     selector:'trending-destination',
     templateUrl: './trending-destination.component.html',
-    styleUrls: ['../home.component.less']
+    styleUrls: ['../home.component.scss']
 })
 export class TrendingDestinationComponent extends AppComponentBase implements OnInit {
 
