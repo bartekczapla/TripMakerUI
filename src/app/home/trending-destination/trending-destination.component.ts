@@ -27,8 +27,8 @@ export class TrendingDestinationComponent extends AppComponentBase implements On
     getTrendingDestination(){
         this.loaded=false;
         this._homeService.getMostSearchedPlacesAsync()
-            .finally(()=>this.loaded=true)
             .subscribe((result: ListResultDtoOfSearchedPlaceAndPhoto)=>{
+                this.loaded = true;
                 this.destinations=result.items;
                 if(this.destinations.length>0){
                     this.destinationA={

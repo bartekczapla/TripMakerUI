@@ -40,9 +40,6 @@ import { LoginComponent } from './account/login/login.component';
 import { RegisterComponent } from './account/register/register.component';
 import { AngularMaterialModule } from '@shared/modules/angular-material.module';
 import { ScheduleComponent } from './plan/schedule/schedule.component';
-import { AccountComponent } from './account/account.component';
-import { TenantChangeModalComponent } from './account/tenant/tenant-change-modal.component';
-import { TenantChangeComponent } from './account/tenant/tenant-change.component';
 import { LoginService } from './account/login/login.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -65,7 +62,6 @@ import { HowItWorksComponent } from './home/how-it-works/how-it-works.component'
 import { PlanElementComponent } from './plan/schedule/plan-element/plan-element.component';
 import { UserPlansComponent } from './user-plans/user-plans.component';
 import { UserPlanDetailsComponent } from './user-plans/user-plan-details/user-plan-details.component';
-import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { ModalModule, BsDatepickerModule} from 'ngx-bootstrap';
 // export function HttpLoaderFactory(http: HttpClient) {
 //   return new TranslateHttpLoader(http);
@@ -105,7 +101,6 @@ export function getRemoteServiceBaseUrl(): string {
   declarations: [
     AppComponent,
     HomeComponent,
-
     TenantsComponent,
     CreateTenantComponent,
     EditTenantComponent,
@@ -131,14 +126,11 @@ export function getRemoteServiceBaseUrl(): string {
     LoginComponent,
     RegisterComponent,
     ScheduleComponent,
-    AccountComponent,
-    TenantChangeComponent,
-    TenantChangeModalComponent,
     MaterialInput,
     GooglePlacesDirective,
     AdminManagementComponent,
     ContactComponent,
-    TrendingDestinationComponent,
+    TrendingDestinationComponent, 
     HowItWorksComponent,
     PlanElementComponent,
     UserPlansComponent,
@@ -150,7 +142,6 @@ export function getRemoteServiceBaseUrl(): string {
     AppRoutingModule,
     BrowserModule,
     BrowserAnimationsModule,
-    MDBBootstrapModule,
     HttpClientModule,
     CommonModule,
     FormsModule,

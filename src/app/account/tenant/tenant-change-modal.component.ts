@@ -50,8 +50,8 @@ export class TenantChangeModalComponent extends AppComponentBase {
 
         this.saving = true;
         this._accountService.isTenantAvailable(input)
-            .finally(() => { this.saving = false; })
             .subscribe((result) => {
+                this.saving = false;
                 switch (result.state) {
                     case AppTenantAvailabilityState.Available:
                         abp.multiTenancy.setTenantIdCookie(result.tenantId);
