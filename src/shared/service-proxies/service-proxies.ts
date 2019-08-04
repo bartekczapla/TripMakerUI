@@ -636,7 +636,7 @@ export class HomeServiceProxy {
     /**
      * @return Success
      */
-    getMostSearchedPlacesAsync(): Observable<ListResultDtoOfSearchedPlaceDto> {
+    getMostSearchedPlacesAsync(): Observable<ListResultDtoOfSearchedPlaceAndPhoto> {
         let url_ = this.baseUrl + "/api/services/app/Home/GetMostSearchedPlacesAsync";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -656,14 +656,14 @@ export class HomeServiceProxy {
                 try {
                     return this.processGetMostSearchedPlacesAsync(<any>response_);
                 } catch (e) {
-                    return <Observable<ListResultDtoOfSearchedPlaceDto>><any>_observableThrow(e);
+                    return <Observable<ListResultDtoOfSearchedPlaceAndPhoto>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<ListResultDtoOfSearchedPlaceDto>><any>_observableThrow(response_);
+                return <Observable<ListResultDtoOfSearchedPlaceAndPhoto>><any>_observableThrow(response_);
         }));
     }
 
-    protected processGetMostSearchedPlacesAsync(response: HttpResponseBase): Observable<ListResultDtoOfSearchedPlaceDto> {
+    protected processGetMostSearchedPlacesAsync(response: HttpResponseBase): Observable<ListResultDtoOfSearchedPlaceAndPhoto> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -674,7 +674,7 @@ export class HomeServiceProxy {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 ? ListResultDtoOfSearchedPlaceDto.fromJS(resultData200) : new ListResultDtoOfSearchedPlaceDto();
+            result200 = resultData200 ? ListResultDtoOfSearchedPlaceAndPhoto.fromJS(resultData200) : new ListResultDtoOfSearchedPlaceAndPhoto();
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -682,7 +682,7 @@ export class HomeServiceProxy {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<ListResultDtoOfSearchedPlaceDto>(<any>null);
+        return _observableOf<ListResultDtoOfSearchedPlaceAndPhoto>(<any>null);
     }
 }
 
@@ -3477,10 +3477,10 @@ export interface IContactUsDto {
     message: string | undefined;
 }
 
-export class ListResultDtoOfSearchedPlaceDto implements IListResultDtoOfSearchedPlaceDto {
-    items: SearchedPlaceDto[] | undefined;
+export class ListResultDtoOfSearchedPlaceAndPhoto implements IListResultDtoOfSearchedPlaceAndPhoto {
+    items: SearchedPlaceAndPhoto[] | undefined;
 
-    constructor(data?: IListResultDtoOfSearchedPlaceDto) {
+    constructor(data?: IListResultDtoOfSearchedPlaceAndPhoto) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -3494,14 +3494,14 @@ export class ListResultDtoOfSearchedPlaceDto implements IListResultDtoOfSearched
             if (data["items"] && data["items"].constructor === Array) {
                 this.items = [];
                 for (let item of data["items"])
-                    this.items.push(SearchedPlaceDto.fromJS(item));
+                    this.items.push(SearchedPlaceAndPhoto.fromJS(item));
             }
         }
     }
 
-    static fromJS(data: any): ListResultDtoOfSearchedPlaceDto {
+    static fromJS(data: any): ListResultDtoOfSearchedPlaceAndPhoto {
         data = typeof data === 'object' ? data : {};
-        let result = new ListResultDtoOfSearchedPlaceDto();
+        let result = new ListResultDtoOfSearchedPlaceAndPhoto();
         result.init(data);
         return result;
     }
@@ -3516,24 +3516,25 @@ export class ListResultDtoOfSearchedPlaceDto implements IListResultDtoOfSearched
         return data; 
     }
 
-    clone(): ListResultDtoOfSearchedPlaceDto {
+    clone(): ListResultDtoOfSearchedPlaceAndPhoto {
         const json = this.toJSON();
-        let result = new ListResultDtoOfSearchedPlaceDto();
+        let result = new ListResultDtoOfSearchedPlaceAndPhoto();
         result.init(json);
         return result;
     }
 }
 
-export interface IListResultDtoOfSearchedPlaceDto {
-    items: SearchedPlaceDto[] | undefined;
+export interface IListResultDtoOfSearchedPlaceAndPhoto {
+    items: SearchedPlaceAndPhoto[] | undefined;
 }
 
-export class SearchedPlaceDto implements ISearchedPlaceDto {
-    placeId: string;
+export class SearchedPlaceAndPhoto implements ISearchedPlaceAndPhoto {
+    placeId: string | undefined;
     placeName: string | undefined;
     searchCount: number | undefined;
+    photo: string | undefined;
 
-    constructor(data?: ISearchedPlaceDto) {
+    constructor(data?: ISearchedPlaceAndPhoto) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -3547,12 +3548,13 @@ export class SearchedPlaceDto implements ISearchedPlaceDto {
             this.placeId = data["placeId"];
             this.placeName = data["placeName"];
             this.searchCount = data["searchCount"];
+            this.photo = data["photo"];
         }
     }
 
-    static fromJS(data: any): SearchedPlaceDto {
+    static fromJS(data: any): SearchedPlaceAndPhoto {
         data = typeof data === 'object' ? data : {};
-        let result = new SearchedPlaceDto();
+        let result = new SearchedPlaceAndPhoto();
         result.init(data);
         return result;
     }
@@ -3562,21 +3564,23 @@ export class SearchedPlaceDto implements ISearchedPlaceDto {
         data["placeId"] = this.placeId;
         data["placeName"] = this.placeName;
         data["searchCount"] = this.searchCount;
+        data["photo"] = this.photo;
         return data; 
     }
 
-    clone(): SearchedPlaceDto {
+    clone(): SearchedPlaceAndPhoto {
         const json = this.toJSON();
-        let result = new SearchedPlaceDto();
+        let result = new SearchedPlaceAndPhoto();
         result.init(json);
         return result;
     }
 }
 
-export interface ISearchedPlaceDto {
-    placeId: string;
+export interface ISearchedPlaceAndPhoto {
+    placeId: string | undefined;
     placeName: string | undefined;
     searchCount: number | undefined;
+    photo: string | undefined;
 }
 
 export class ListResultDtoOfPlanDto implements IListResultDtoOfPlanDto {

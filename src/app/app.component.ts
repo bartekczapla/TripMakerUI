@@ -3,7 +3,7 @@ import { AppConsts } from '@shared/AppConsts';
 import { AppComponentBase } from '@shared/app-component-base';
 import {TranslateService} from '@ngx-translate/core';
 // import { SignalRAspNetCoreHelper } from '@shared/helpers/SignalRAspNetCoreHelper';
-
+import { setTheme } from 'ngx-bootstrap/utils';
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
@@ -17,6 +17,7 @@ export class AppComponent extends AppComponentBase implements OnInit, AfterViewI
 
     constructor(injector: Injector, translate: TranslateService) {
         super(injector);
+        setTheme('bs4'); // or 'bs4'
         translate.setDefaultLang('pl');
         translate.use('pl');
     }

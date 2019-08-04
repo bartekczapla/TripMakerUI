@@ -150,7 +150,6 @@ export function getRemoteServiceBaseUrl(): string {
     AppRoutingModule,
     BrowserModule,
     BrowserAnimationsModule,
-    BsDatepickerModule.forRoot(),
     MDBBootstrapModule,
     HttpClientModule,
     CommonModule,
