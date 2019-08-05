@@ -63,6 +63,7 @@ import { PlanElementComponent } from './plan/schedule/plan-element/plan-element.
 import { UserPlansComponent } from './user-plans/user-plans.component';
 import { UserPlanDetailsComponent } from './user-plans/user-plan-details/user-plan-details.component';
 import { ModalModule, BsDatepickerModule} from 'ngx-bootstrap';
+import { SafeHtml } from '@shared/directives/safe-resource.pipe';
 // export function HttpLoaderFactory(http: HttpClient) {
 //   return new TranslateHttpLoader(http);
 // }
@@ -94,6 +95,7 @@ export function appInitializerFactory(injector: Injector) {
 }
 
 export function getRemoteServiceBaseUrl(): string {
+  console.log(AppConsts.remoteServiceBaseUrl)
   return AppConsts.remoteServiceBaseUrl;
 }
 
@@ -134,7 +136,8 @@ export function getRemoteServiceBaseUrl(): string {
     HowItWorksComponent,
     PlanElementComponent,
     UserPlansComponent,
-    UserPlanDetailsComponent
+    UserPlanDetailsComponent,
+    SafeHtml
 
   ],
   imports: [
@@ -166,13 +169,13 @@ export function getRemoteServiceBaseUrl(): string {
     AppAuthService,
     AppRouteGuard,
     { provide: HTTP_INTERCEPTORS, useClass: AbpHttpInterceptor, multi: true },
-    // { provide: API_BASE_URL, useFactory: getRemoteServiceBaseUrl },
-    // {
-    //   provide: APP_INITIALIZER,
-    //   useFactory: appInitializerFactory,
-    //   deps: [Injector],
-    //   multi: true
-    // },
+    { provide: API_BASE_URL, useFactory: getRemoteServiceBaseUrl },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: appInitializerFactory,
+      deps: [Injector],
+      multi: true
+    },
     {
       provide: LOCALE_ID,
       useValue: 'pl'

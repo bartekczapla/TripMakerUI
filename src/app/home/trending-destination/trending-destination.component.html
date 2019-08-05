@@ -6,31 +6,31 @@
     <div class="row">
         <div class="col-sm-4">
             <ng-container *ngIf="!loaded">
-                <img src="https://placehold.it/150x80?text=X" class="img-responsive" style="width:100%" alt="Image">
+                <img class="place-photo-size"  src="https://placehold.it/150x80?text=..."  alt="Image">
             </ng-container>
             <ng-container *ngIf="loaded">
-                    <img *ngIf="!destinationA.photo" src="https://placehold.it/150x80?text=X" class="img-responsive" style="width:100%" alt="Image">
-                    <img *ngIf="destinationA.photo" src="data:image/png;base64, {{destinationA.photo}}" class="img-responsive" style="width:100%" alt="Image">
+                    <img class="place-photo-size"  *ngIf="!destinationA.photo" src="https://placehold.it/150x80?text=Brak zdjęcia"  alt="Image">
+                    <img class="place-photo-size"  *ngIf="destinationA.photo" [src]="'data:image/png;base64,'+destinationA.photo | safeHtml"  alt="Image">
                 <span class="how-it-works-title">{{destinationA?.placeName}} ({{destinationA?.searchCount}})</span>
             </ng-container>
         </div>
         <div class="col-sm-4">
             <ng-container *ngIf="!loaded">
-                <img src="https://placehold.it/150x80?text=X" class="img-responsive" style="width:100%" alt="Image">
+                <img class="place-photo-size"  src="https://placehold.it/150x80?text=..."  alt="Image">
             </ng-container>
             <ng-container *ngIf="loaded">
-                    <img *ngIf="!destinationB.photo" src="https://placehold.it/150x80?text=X" class="img-responsive" style="width:100%" alt="Image">
-                    <img *ngIf="destinationB.photo" src="data:image/png;base64, {{destinationB.photo}}" class="img-responsive" style="width:100%" alt="Image">
+                    <img class="place-photo-size"  *ngIf="!destinationB.photo" src="https://placehold.it/150x80?text=Brak zdjęcia"  alt="Image">
+                    <img class="place-photo-size"  *ngIf="destinationB.photo" [src]="'data:image/png;base64,'+destinationB.photo | safeHtml"  alt="Image">
                     <span class="how-it-works-title">{{destinationB?.placeName}} ({{destinationB?.searchCount}})</span>
             </ng-container>
         </div>
         <div class="col-sm-4">
             <ng-container *ngIf="!loaded">
-                <img src="https://placehold.it/150x80?text=X" class="img-responsive" style="width:100%" alt="Image">
+                <img class="place-photo-size"  src="https://placehold.it/150x80?text=..."  alt="Image">
             </ng-container>
             <ng-container *ngIf="loaded">              
-                    <img *ngIf="!destinationC.photo" src="https://placehold.it/150x80?text=X" class="img-responsive" style="width:100%" alt="Image">
-                    <img *ngIf="destinationC.photo" src="data:image/png;base64, {{destinationC.photo}}" class="img-responsive" style="width:100%" alt="Image">
+                    <img class="place-photo-size"  *ngIf="!destinationC.photo" src="https://placehold.it/150x80?text=Brak zdjęcia"  alt="Image">
+                    <img class="place-photo-size" *ngIf="destinationC.photo" [src]="'data:image/png;base64,'+destinationC.photo | safeHtml"  alt="Image">
                     <span class="how-it-works-title">{{destinationC?.placeName}} ({{destinationC?.searchCount}})</span>
             </ng-container>
         </div>

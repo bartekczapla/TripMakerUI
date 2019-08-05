@@ -61,9 +61,13 @@
 }
 
 .logo-font {
-  font-family: Papyrus, fantasy;
+  // font-family: Papyrus, fantasy;
   font-weight: 700;
   font-size: 20px;
+}
+
+.logo-font:hover {
+  text-decoration: none;
 }
 
 .navbar-inverse .navbar-nav>.open>a, .navbar-inverse .navbar-nav>.open>a:focus, .navbar-inverse .navbar-nav>.open>a:hover {

@@ -126,3 +126,12 @@ textarea:focus {
   font-size: 18px;
   color: #6c757d!important;
 }
+
+.place-photo-size {
+  height: 350px;
+  max-height: 350px;
+  width: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+}
