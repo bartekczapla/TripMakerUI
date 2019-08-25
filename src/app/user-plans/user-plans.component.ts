@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, Injector } from '@angular/core';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
-import { UserPlansServiceProxy, ListResultDtoOfPlanDto, UserPlansListDto, ListResultDtoOfUserPlansListDto } from '@shared/service-proxies/service-proxies';
+import { UserPlansServiceProxy, UserPlansListDto, ListResultDtoOfUserPlansListDto } from '@shared/service-proxies/service-proxies';
 import { AppComponentBase } from '@shared/app-component-base';
 import { PagedListingComponentBase, PagedRequestDto } from '@shared/paged-listing-component-base';
 import { TranslateService } from '@ngx-translate/core';
@@ -13,7 +13,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class UserPlansComponent extends PagedListingComponentBase<UserPlansListDto> {
 
   userPlans: UserPlansListDto[]=[];
-
+  loading=false;
 
   constructor(
     injector: Injector, private _userPlansService: UserPlansServiceProxy, 
@@ -45,9 +45,13 @@ export class UserPlansComponent extends PagedListingComponentBase<UserPlansListD
   }  
 
   loadUserPlans(){
+      this.loading=true;
       this._userPlansService.getAllUserPlansAsync()
           .subscribe((result:ListResultDtoOfUserPlansListDto)=>{
+              this.loading=false;
               this.userPlans=result.items;
+          }, error => {
+            this.loading=false;
           })
             
   }

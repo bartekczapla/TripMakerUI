@@ -2,7 +2,7 @@
     <div class="card login-card  " id="LoginArea" [@routerTransition]>
         <div #cardBody class="body">
             <form #registerForm="ngForm" method="post" novalidate (ngSubmit)="save()" autocomplete="off">
-                <h4 class="text-center p-b-20">{{'Register'|translate}}</h4>
+                <h4 class="text-center p-b-20">{{'Rejestracja'|translate}}</h4>
                 <input type="text" autofocus="autofocus" style="display:none" />
                 <div class="width-100">
                     <mat-form-field>
@@ -39,14 +39,14 @@
                 <div class="width-100">
                     <mat-form-field>
                         <mat-label>{{'Password'|translate}}</mat-label>
-                        <input matInput name="Password" type="password" required maxlength="32" autocomplete="off"
+                        <input matInput name="Password" type="password" required maxlength="32" autocomplete="new-password"
                             [(ngModel)]="model.password">
                     </mat-form-field>
                 </div>
 
                 <div class="row no-margins p-b-20 p-t-30">
                     <button id="RegisterButton" class="yellow-button width-100" [disabled]="!registerForm.form.valid"
-                        type="submit">{{'Submit'|translate}}</button>
+                        type="submit">{{'Zarejestruj'|translate}}</button>
                 </div>
             </form>
         </div>

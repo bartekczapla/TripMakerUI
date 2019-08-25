@@ -64,6 +64,7 @@ import { UserPlansComponent } from './user-plans/user-plans.component';
 import { UserPlanDetailsComponent } from './user-plans/user-plan-details/user-plan-details.component';
 import { ModalModule, BsDatepickerModule} from 'ngx-bootstrap';
 import { SafeHtml } from '@shared/directives/safe-resource.pipe';
+import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 // export function HttpLoaderFactory(http: HttpClient) {
 //   return new TranslateHttpLoader(http);
 // }
@@ -95,7 +96,6 @@ export function appInitializerFactory(injector: Injector) {
 }
 
 export function getRemoteServiceBaseUrl(): string {
-  console.log(AppConsts.remoteServiceBaseUrl)
   return AppConsts.remoteServiceBaseUrl;
 }
 
@@ -154,6 +154,7 @@ export function getRemoteServiceBaseUrl(): string {
     ServiceProxyModule,
     NgxPaginationModule,
     AngularMaterialModule,
+    TimepickerModule.forRoot(),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

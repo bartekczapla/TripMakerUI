@@ -3,7 +3,7 @@
         <a routerLink="/home">
             <i class="fa fa-map-signs yellow-theme"></i> <span class="yellow-theme logo-font ">TripMaker</span></a>
     </div>
-    <ul class="navbar-nav  mr-auto">
+    <!-- <ul class="navbar-nav  mr-auto">
         <li class="nav-item center" *ngIf="checkIfUserLogged()" [routerLinkActive]="['link-active']">
             <a [routerLink]="['/dashboard']">
                 <span class='glyphicon glyphicon-education'></span> Dashboard
@@ -14,7 +14,7 @@
                 <span class='glyphicon glyphicon-th-list'></span> Events
             </a>
         </li>
-    </ul>
+    </ul> -->
     <ul class="navbar-nav ml-auto">
         <li class="nav-item center" *ngIf="!checkIfUserLogged()" [routerLinkActive]="['link-active']">
             <a [routerLink]="['/login']">
@@ -40,7 +40,7 @@
                 </li>
             </ul>
         </li>
-        <li class="nav-item center" >
+        <!-- <li class="nav-item center" >
             <div>
                 <a class="navbar-item-color " (click)="setPolish($event)"><span
                         [ngClass]="{'active-language': isPolish }">PL</span></a>
@@ -49,7 +49,7 @@
                         [ngClass]="{'active-language': isEnglish }">EN</span></a>
             </div>
 
-        </li>
+        </li> -->
     </ul>
 
     <a href="javascript:void(0);" class="hamburger-icon white-color" (click)="toggleMenu()">

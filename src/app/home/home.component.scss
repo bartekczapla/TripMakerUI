@@ -83,21 +83,28 @@
 .tm-button {
   border-radius: 30px;
   background-color: #fed136;
-  color:#fff;
-  width: 180px;
-  height:40px;
-  font-size: 18px;
+  color: white;
+  width: 250px;
+  height: 55px;
+  font-weight: 600;
+  font-size: 22px;
   border: none;
-  outline: none;
 }
 
 .tm-button:hover {
   background-color: #ffdb58;
+  -webkit-transform: scale(1.02,1.02);
+  -moz-transform: scale(1.02,1.02);
+  color: #ffffff;
 }
 
 .tm-button:active {
   background-color: #e0bb36;
+  transform: scale(0.98,0.98);
+  -webkit-transform: scale(0.98,0.98);
+  -moz-transform: scale(0.98,0.98);
 }
+
 
 .top-home-header1 {
   font-weight: 700;

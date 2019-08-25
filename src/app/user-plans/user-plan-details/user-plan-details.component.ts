@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, Injector } from '@angular/core';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
-import { UserPlansServiceProxy, ListResultDtoOfPlanDto, UserPlansListDto, ListResultDtoOfUserPlansListDto, PlanDto } from '@shared/service-proxies/service-proxies';
+import { UserPlansServiceProxy,  PlanDto } from '@shared/service-proxies/service-proxies';
 import { AppComponentBase } from '@shared/app-component-base';
 import { PagedListingComponentBase, PagedRequestDto } from '@shared/paged-listing-component-base';
 import { TranslateService } from '@ngx-translate/core';

@@ -1,10 +1,9 @@
-import { Component, OnInit, ViewChild, Injector } from '@angular/core';
-import {FormComponent} from './form/form.component';
-import { appModuleAnimation } from '@shared/animations/routerTransition';
-import { FormParameters } from '@app/plan/form/models/form-parameters.interface';
+import { Component, Injector, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { ScheduleComponent } from '@app/plan/schedule/schedule.component';
-import { PlanDto, PlanServiceProxy } from '@shared/service-proxies/service-proxies';
+import { appModuleAnimation } from '@shared/animations/routerTransition';
 import { AppComponentBase } from '@shared/app-component-base';
+import { CreatePlanInput, PlanDto, PlanServiceProxy } from '@shared/service-proxies/service-proxies';
 import { finalize } from 'rxjs/operators';
 
 @Component({
@@ -17,12 +16,13 @@ export class PlanComponent extends AppComponentBase implements OnInit {
 
   isForm:boolean=true;
   loading:boolean=false;
-  parameters:FormParameters;
+  parameters:CreatePlanInput;
   plan: PlanDto;
+
   @ViewChild(ScheduleComponent) schedule: ScheduleComponent;
 
   constructor(
-    injector: Injector, private _planService: PlanServiceProxy, 
+    injector: Injector, private router: Router, private _planService: PlanServiceProxy, 
   ) {
       super(injector);
   }
@@ -30,23 +30,26 @@ export class PlanComponent extends AppComponentBase implements OnInit {
   ngOnInit() {
   }
   
-  generatePlan(params: FormParameters)
+  generatePlan(params: CreatePlanInput)
   {
     this.isForm=false;
     this.parameters=params;
-    this.getTestPlan();
+    this.createPlan();
   }
 
-
-  getTestPlan(){
+  createPlan() {
     this.loading=true;
-    this._planService.getTestPlanAsync()
+    this._planService.createAsync(this.parameters)
         .pipe(finalize(()=>{
           this.loading=false;
         }))
         .subscribe((result:PlanDto)=>{
           this.plan=result.clone();
+        }, error => {   
+            this.message.error('Ups...Formularz został wypełniony niepoprawnie. Sprobuj jeszcze raz!')
+            this.router.navigateByUrl('/home');
         })
   }
+
 
 }

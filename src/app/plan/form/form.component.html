@@ -1,4 +1,312 @@
-<mat-card>
+
+<style>
+
+.mat-form-custom {
+    min-width: 300px;
+    max-width: 300px;
+}
+
+
+
+</style>
+
+
+<mat-horizontal-stepper linear #stepper>
+  <mat-step class="step-card">
+      <ng-template matStepLabel>Czas i miejsce</ng-template>
+      <div class="step-card">
+          <div class="row no-margins pb-4 justify-content-space-around">
+              <div class="col align-self-center ">
+                    <span class="font-18">Dokąd się wybierasz?</span>
+              </div>
+              <div class="col">
+                <mat-form-field class="mat-form-custom">
+                        <mat-label>Miejsce</mat-label>
+                        <input matInput type="text" class="google-place-input" google-place (ngModelChange)="onPlaceChange($event)" (onSelect)="setAddress($event)">                 
+                </mat-form-field>                   
+              </div>
+          </div>
+          <div class="row no-margins justify-content-space-around">
+                <div class="col align-self-center ">
+                      <span class="font-18">Wybierz datę i godzinę rozpoczęcia:</span>
+                </div>
+                <div  class="col">
+                    <mat-form-field class="mat-form-custom">
+                            <input matInput [matDatepicker]="picker" [(ngModel)]="startDate" [min]="today" [placeholder]="'Początek podróży'"  (dateChange)="onStartDate($event)">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>                              
+                </div>
+            </div>
+            <div class="row no-margins pb-5 justify-content-space-around">
+                    <div class="col align-self-center ">
+                    </div>
+                    <div  class="col">
+                        <div style="max-width: 100px;">
+                             <timepicker [(ngModel)]="startTime" (ngModelChange)="onStartTime($event)"></timepicker>   
+                        </div>
+                                               
+                    </div>
+            </div>
+            <div class="row no-margins justify-content-space-around">
+                    <div class="col align-self-center ">
+                          <span class="font-18">Wybierz datę i godzinę zakończenia:</span>
+                    </div>
+                    <div  class="col">
+                        <mat-form-field class="mat-form-custom">
+                                <input matInput [matDatepicker]="picker2"  [(ngModel)]="endDate" [min]="startDate" [placeholder]="'Koniec podróży'" (dateChange)="onEndDate($event)">
+                                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                <mat-datepicker #picker2></mat-datepicker>
+                        </mat-form-field>                              
+                    </div>
+            </div>
+            <div class="row no-margins pb-5 justify-content-space-around">
+                    <div class="col align-self-center ">
+                    </div>
+                    <div  class="col">
+                        <div style="max-width: 100px;">
+                             <timepicker [(ngModel)]="endTime" (ngModelChange)="onEndTime($event)"></timepicker>   
+                        </div>
+                                               
+                    </div>
+            </div>
+            <div  class="row no-margins pb-4 justify-content-space-around">
+                    <div class="col align-self-center ">
+                          <span class="font-18">Czy masz zarezerwowane zakwaterowanie?</span>
+                    </div>
+                    <div  class="col">
+                            <mat-slide-toggle [(ngModel)]="parameters.hasAccomodationBooked" (change)="onHasAccomodation($event)"></mat-slide-toggle>                            
+                    </div>
+            </div>            
+            <div *ngIf="parameters.hasAccomodationBooked" class="row no-margins pb-4 justify-content-space-around">
+                    <div class="col align-self-center ">
+                          <span class="font-18">Gdzie masz zakwaterowanie?</span>
+                    </div>
+                    <div  class="col">
+                            <mat-form-field class="mat-form-custom">
+                                    <mat-label>Miejsce</mat-label>
+                                    <input id="accomodation" matInput type="text" class="google-place-input" google-place (change)="onPlaceChange($event)" (onSelect)="setAccomodation($event)">                 
+                            </mat-form-field>                          
+                    </div>
+            </div>
+        <div class="stepper-buttons-row-end">
+            <button class="next-button" mat-button matStepperNext>{{'Next'|translate}} <i class="fa fa-arrow-circle-right"></i></button>
+        </div>          
+      </div>
+  </mat-step>
+  <mat-step >
+      <ng-template matStepLabel>Przemieszczanie się</ng-template>
+      <div class="step-card">
+         <div class="row no-margins pb-4 justify-content-space-around">
+            <div class="col align-self-center ">
+                          <span class="font-18">Wybierz preferowane środki przemieszczania się:</span>
+             </div>
+             <div  class="col">
+                <mat-selection-list (selectionChange)="travelModesSelectionChange($event)" #travelModesListSelection>
+                        <mat-list-option [value]="mode.Value" *ngFor="let mode of travelModes">
+                            {{mode.Name | translate}}
+                        </mat-list-option>
+                </mat-selection-list>                       
+            </div>
+        </div>
+        <div *ngIf="parameters.preferedTravelModes.indexOf(1)>-1" class="row no-margins pb-4 justify-content-space-around">
+                <div class="col align-self-center ">
+                      <span class="font-18">Maksymalna ilość spaceru w km/dzień (0-bez znaczenia):</span>
+                </div>
+                <div  class="col">
+                        <mat-form-field class="mat-form-custom">
+                                <input matInput type="number" min="0" max="50" [(ngModel)]="parameters.maxWalkingKmsPerDay">                 
+                        </mat-form-field>                          
+                </div>
+        </div>
+        <div class="row no-margins pb-4 justify-content-space-around">
+                <div class="col align-self-center ">
+                              <span class="font-18">Do jakiej odległości mozesz zwiedzać?</span>
+                 </div>
+                 <div  class="col">
+                    <mat-form-field class="mat-form-custom">
+                            <mat-label>{{'Choose'|translate}}</mat-label>
+                            <mat-select panelClass="custom-select-panel" [(value)]="parameters.distanceTypePreference">
+                                <mat-option [value]="type.Value" *ngFor="let type of distancePreferences">{{type.Name | translate}}</mat-option>
+                            </mat-select>
+                    </mat-form-field>                    
+                </div>
+        </div>
+        <div class="stepper-buttons-row">
+            <button class="back-button" mat-button matStepperPrevious>< {{'Back'|translate}}</button>
+            <button class="next-button" mat-button matStepperNext>{{'Next'|translate}} <i class="fa fa-arrow-circle-right"></i></button>
+        </div>          
+      </div>
+
+
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Ogólne upodobania</ng-template>
+      <div class="step-card">
+        <div class="row no-margins pb-4 justify-content-space-around">
+                <div class="col align-self-center ">
+                              <span class="font-18">Jakie koszty podczas podróży preferujesz?</span>
+                 </div>
+                 <div  class="col">
+                    <mat-form-field class="mat-form-custom">
+                            <mat-label>{{'Choose'|translate}}</mat-label>
+                            <mat-select panelClass="custom-select-panel" [(value)]="parameters.pricePreference">
+                                <mat-option [value]="type.Value" *ngFor="let type of pricePreference">{{type.Name | translate}}</mat-option>
+                            </mat-select>
+                    </mat-form-field>                    
+                </div>
+        </div>
+        <div class="row no-margins pb-4 justify-content-space-around">
+         <div class="col align-self-center ">
+                              <span class="font-18">Jak chciałbyś jeść?</span>
+                 </div>
+                 <div  class="col">
+                    <mat-form-field class="mat-form-custom">
+                            <mat-label>{{'Choose'|translate}}</mat-label>
+                            <mat-select panelClass="custom-select-panel" [(value)]="parameters.foodPreference">
+                                <mat-option [value]="type.Value" *ngFor="let type of foodPreference">{{type.Name | translate}}</mat-option>
+                            </mat-select>
+                    </mat-form-field>                    
+                </div>
+        </div>
+        <div class="row no-margins pb-4 justify-content-space-around">
+                <div class="col align-self-center ">
+                            <span class="font-18">Ustal średni czas snu:</span>
+                </div>
+                <div  class="col">
+                        <mat-slider min="5" max="12" step="1" value="8" thumbLabel tickInterval="1" (change)="onAvergaeSleepChange($event)"></mat-slider>                    
+                </div>
+        </div> 
+         <div class="row no-margins pb-4 justify-content-space-around">
+                <div class="col align-self-center ">
+                              <span class="font-18">Ile czasu poświęcasz na element planu?</span>
+                 </div>
+                 <div  class="col">
+                    <mat-form-field class="mat-form-custom">
+                            <mat-label>{{'Choose'|translate}}</mat-label>
+                            <mat-select panelClass="custom-select-panel" [(value)]="parameters.atractionDurationPreference">
+                                <mat-option [value]="type.Value" *ngFor="let type of atractionDurationPreference">{{type.Name | translate}}</mat-option>
+                            </mat-select>
+                    </mat-form-field>                    
+                </div>
+        </div> 
+        <div class="row no-margins pb-4 justify-content-space-around">
+         <div class="col align-self-center ">
+                              <span class="font-18">Wolisz najpopularniejsze miejsca czy mniej znane?</span>
+                 </div>
+                 <div  class="col">
+                    <mat-form-field class="mat-form-custom">
+                            <mat-label>{{'Choose'|translate}}</mat-label>
+                            <mat-select panelClass="custom-select-panel" [(value)]="parameters.atractionPopularityPreference">
+                                <mat-option [value]="type.Value" *ngFor="let type of atractionPopularityPreference">{{type.Name | translate}}</mat-option>
+                            </mat-select>
+                    </mat-form-field>                    
+                </div>
+        </div>         
+        <div class="stepper-buttons-row">
+            <button class="back-button" mat-button matStepperPrevious>< {{'Back'|translate}}</button>
+            <button class="next-button" mat-button matStepperNext>{{'Next'|translate}} <i class="fa fa-arrow-circle-right"></i></button>
+        </div>          
+      </div>
+  </mat-step>
+  <mat-step>
+        <ng-template matStepLabel>Rodzaje atrakcji</ng-template>
+        <div class="step-card">
+            <div class="row no-margins pb-4 justify-content-space-around">
+                    <div class="col align-self-center ">
+                                <span class="font-18">Posegreguj atrakcje od najciekawszej:</span>
+                    </div>
+                    <div  class="col">                   
+                    </div>
+            </div> 
+            <div class="row no-margins pb-5 justify-content-space-around">
+                <div cdkDropList class="example-list" (cdkDropListDropped)="dropSortedPlanElements($event)">
+                    <div class="example-box" *ngFor="let planElement of sortedPlanElements" cdkDrag>{{planElement.Name}}</div>
+                </div> 
+            </div> 
+            <div class="row no-margins pb-4 pt-5 justify-content-space-around">
+                    <div class="col align-self-center ">
+                                <span class="font-18">Przenieś na prawo interesujące atrakcje:</span>
+                    </div>
+                    <div  class="col">                   
+                    </div>
+            </div>
+            <div class="row no-margins pb-4 justify-content-space-around">
+                <div  class="col"> 
+                        <div style="display:block;text-align: center; margin-bottom: 5px;">
+                                <span class="pick-header">Wszystkie</span>                          
+                        </div>
+                        <div
+                        cdkDropList
+                        #todoList="cdkDropList"
+                        [cdkDropListData]="allPlanElements"
+                        [cdkDropListConnectedTo]="[doneList]"
+                        class="pick-list"
+                        (cdkDropListDropped)="dropPreferedPlanElements($event)">
+                        <div class="pick-box" *ngFor="let item of allPlanElements" cdkDrag>{{item.Name}}</div>
+                      </div>                  
+                </div>
+                <div  class="col">   
+                    <div style="display:block;text-align: center; margin-bottom: 5px;">
+                        <span class="pick-header">Wybrane</span>                          
+                    </div>
+                    <div
+                    cdkDropList
+                    #doneList="cdkDropList"
+                    [cdkDropListData]="preferedPlanElements"
+                    [cdkDropListConnectedTo]="[todoList]"
+                    class="pick-list"
+                    (cdkDropListDropped)="dropPreferedPlanElements($event)">
+                    <div class="pick-box" *ngFor="let item of preferedPlanElements" cdkDrag>{{item.Name}}</div>
+                    </div>               
+                </div>
+            </div> 
+
+            <div class="stepper-buttons-row">
+            <button class="back-button" mat-button matStepperPrevious>< {{'Back'|translate}}</button>
+            <button class="next-button" mat-button matStepperNext>{{'Next'|translate}} <i class="fa fa-arrow-circle-right"></i></button>
+            </div>            
+        </div>
+
+ </mat-step>
+ <mat-step>
+        <ng-template matStepLabel>Podsumowanie</ng-template>
+        <div class="step-card">
+            <ng-container *ngIf="validate(false)">
+                <div class="row no-margins justify-content-center pb-4 pt-4">
+                    <span class="font-22 bold">Podsumowanie Twojego planu:</span>
+                </div>
+                <div class="row no-margins justify-content-center pb-1">
+                        <span class="font-20">Cel podróży: </span>     <span class="font-22 bold">{{parameters.placeName}}</span>
+                </div>
+                <div class="row no-margins justify-content-center pb-5">
+                        <span class="font-20">{{parameters.startDate.format('DD/MM/YYYY')}} - {{parameters.endDate.format('DD/MM/YYYY')}}</span>
+                </div>
+
+                <div class="row no-margins justify-content-center pb-5">
+                        <button class="save-button" (click)="createPlan()">{{'GetPlan'|translate}}</button>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="!validate(false)">
+                    <div class="row no-margins justify-content-center pb-3 pt-4">
+                            <span class=""><i class="far fa-sad-tear fa-7x"></i></span>
+                    </div>
+                    <div class="row no-margins justify-content-center pb-5 pt-2">
+                            <span class="font-20">Niestety formularz został niepoprawnie wypełniony. Popraw błędne elementy!</span>
+                    </div>                   
+                    <div class="row no-margins justify-content-center pt-3 pb-5">
+                            <button class="error-button" (click)="checkErrors()">Sprawdź błędy</button>
+                    </div>
+            </ng-container>       
+            <div class="stepper-buttons-row">
+                <button class="back-button" mat-button matStepperPrevious>< {{'Back'|translate}}</button>
+            </div>            
+        </div>
+ </mat-step>
+</mat-horizontal-stepper>
+
+
+<!-- <mat-card>
 
    <div class="row no-margins circles-container">
        <span class="circle" [ngClass]="{'filled-circle':formCounter>0}"></span>
@@ -64,7 +372,7 @@
         <button class="content-right next-button" *ngIf="formCounter!=3" (click)="changeCounter('up')" mat-raised-button color="primary">{{'Next'|translate}}</button>
         <button class="content-right" *ngIf="formCounter==1" (click)="save($event)" mat-fab color="basic">Generate</button>  
   </div>
-</mat-card>  
+</mat-card>   -->
 
 
 

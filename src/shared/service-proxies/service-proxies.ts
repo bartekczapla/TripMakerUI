@@ -695,121 +695,31 @@ export class PlanServiceProxy {
     }
 
     /**
-     * @param startDate (optional) 
-     * @param startTime (optional) 
-     * @param endDate (optional) 
-     * @param endTime (optional) 
-     * @param hasJourneyBooked (optional) 
-     * @param hasAccomodationBooked (optional) 
-     * @param planAccomodation_Lat (optional) 
-     * @param planAccomodation_Lng (optional) 
-     * @param planAccomodation_PlaceId (optional) 
-     * @param planAccomodation_PlaceName (optional) 
-     * @param planAccomodation_FormattedAddress (optional) 
-     * @param language (optional) 
+     * @param input (optional) 
      * @return Success
      */
-    getPlanAsync(placeName: string, placeId: string, startDate: moment.Moment | null | undefined, startTime: string | null | undefined, endDate: moment.Moment | null | undefined, endTime: string | null | undefined, hasJourneyBooked: boolean | null | undefined, hasAccomodationBooked: boolean | null | undefined, planAccomodation_Lat: number | null | undefined, planAccomodation_Lng: number | null | undefined, planAccomodation_PlaceId: string | null | undefined, planAccomodation_PlaceName: string | null | undefined, planAccomodation_FormattedAddress: string | null | undefined, language: Language | null | undefined): Observable<ListResultDtoOfPlanDto> {
-        let url_ = this.baseUrl + "/api/services/app/Plan/GetPlanAsync?";
-        if (placeName === undefined || placeName === null)
-            throw new Error("The parameter 'placeName' must be defined and cannot be null.");
-        else
-            url_ += "PlaceName=" + encodeURIComponent("" + placeName) + "&"; 
-        if (placeId === undefined || placeId === null)
-            throw new Error("The parameter 'placeId' must be defined and cannot be null.");
-        else
-            url_ += "PlaceId=" + encodeURIComponent("" + placeId) + "&"; 
-        if (startDate !== undefined)
-            url_ += "StartDate=" + encodeURIComponent(startDate ? "" + startDate.toJSON() : "") + "&"; 
-        if (startTime !== undefined)
-            url_ += "StartTime=" + encodeURIComponent("" + startTime) + "&"; 
-        if (endDate !== undefined)
-            url_ += "EndDate=" + encodeURIComponent(endDate ? "" + endDate.toJSON() : "") + "&"; 
-        if (endTime !== undefined)
-            url_ += "EndTime=" + encodeURIComponent("" + endTime) + "&"; 
-        if (hasJourneyBooked !== undefined)
-            url_ += "HasJourneyBooked=" + encodeURIComponent("" + hasJourneyBooked) + "&"; 
-        if (hasAccomodationBooked !== undefined)
-            url_ += "HasAccomodationBooked=" + encodeURIComponent("" + hasAccomodationBooked) + "&"; 
-        if (planAccomodation_Lat !== undefined)
-            url_ += "PlanAccomodation.Lat=" + encodeURIComponent("" + planAccomodation_Lat) + "&"; 
-        if (planAccomodation_Lng !== undefined)
-            url_ += "PlanAccomodation.Lng=" + encodeURIComponent("" + planAccomodation_Lng) + "&"; 
-        if (planAccomodation_PlaceId !== undefined)
-            url_ += "PlanAccomodation.PlaceId=" + encodeURIComponent("" + planAccomodation_PlaceId) + "&"; 
-        if (planAccomodation_PlaceName !== undefined)
-            url_ += "PlanAccomodation.PlaceName=" + encodeURIComponent("" + planAccomodation_PlaceName) + "&"; 
-        if (planAccomodation_FormattedAddress !== undefined)
-            url_ += "PlanAccomodation.FormattedAddress=" + encodeURIComponent("" + planAccomodation_FormattedAddress) + "&"; 
-        if (language !== undefined)
-            url_ += "Language=" + encodeURIComponent("" + language) + "&"; 
+    createAsync(input: CreatePlanInput | null | undefined): Observable<PlanDto> {
+        let url_ = this.baseUrl + "/api/services/app/Plan/CreateAsync";
         url_ = url_.replace(/[?&]$/, "");
 
+        const content_ = JSON.stringify(input);
+
         let options_ : any = {
+            body: content_,
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
+                "Content-Type": "application/json", 
                 "Accept": "application/json"
             })
         };
 
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetPlanAsync(response_);
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreateAsync(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processGetPlanAsync(<any>response_);
-                } catch (e) {
-                    return <Observable<ListResultDtoOfPlanDto>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<ListResultDtoOfPlanDto>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processGetPlanAsync(response: HttpResponseBase): Observable<ListResultDtoOfPlanDto> {
-        const status = response.status;
-        const responseBlob = 
-            response instanceof HttpResponse ? response.body : 
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 ? ListResultDtoOfPlanDto.fromJS(resultData200) : new ListResultDtoOfPlanDto();
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<ListResultDtoOfPlanDto>(<any>null);
-    }
-
-    /**
-     * @return Success
-     */
-    getTestPlanAsync(): Observable<PlanDto> {
-        let url_ = this.baseUrl + "/api/services/app/Plan/GetTestPlanAsync";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "application/json"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetTestPlanAsync(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetTestPlanAsync(<any>response_);
+                    return this.processCreateAsync(<any>response_);
                 } catch (e) {
                     return <Observable<PlanDto>><any>_observableThrow(e);
                 }
@@ -818,61 +728,7 @@ export class PlanServiceProxy {
         }));
     }
 
-    protected processGetTestPlanAsync(response: HttpResponseBase): Observable<PlanDto> {
-        const status = response.status;
-        const responseBlob = 
-            response instanceof HttpResponse ? response.body : 
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 ? PlanDto.fromJS(resultData200) : new PlanDto();
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<PlanDto>(<any>null);
-    }
-
-    /**
-     * @param planId (optional) 
-     * @return Success
-     */
-    getTestPlanByIdAsync(planId: number | null | undefined): Observable<PlanDto> {
-        let url_ = this.baseUrl + "/api/services/app/Plan/GetTestPlanByIdAsync?";
-        if (planId !== undefined)
-            url_ += "planId=" + encodeURIComponent("" + planId) + "&"; 
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "application/json"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetTestPlanByIdAsync(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetTestPlanByIdAsync(<any>response_);
-                } catch (e) {
-                    return <Observable<PlanDto>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<PlanDto>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processGetTestPlanByIdAsync(response: HttpResponseBase): Observable<PlanDto> {
+    protected processCreateAsync(response: HttpResponseBase): Observable<PlanDto> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -3559,55 +3415,147 @@ export interface ISearchedPlaceAndPhoto {
     photo: string | undefined;
 }
 
-export class ListResultDtoOfPlanDto implements IListResultDtoOfPlanDto {
-    items: PlanDto[] | undefined;
+export class CreatePlanInput implements ICreatePlanInput {
+    placeName: string;
+    placeId: string;
+    startDate: moment.Moment | undefined;
+    startTime: string | undefined;
+    endDate: moment.Moment | undefined;
+    endTime: string | undefined;
+    hasAccomodationBooked: boolean | undefined;
+    accomodationId: string | undefined;
+    language: CreatePlanInputLanguage | undefined;
+    preferedTravelModes: PreferedTravelModes[] | undefined;
+    maxWalkingKmsPerDay: number | undefined;
+    distanceTypePreference: CreatePlanInputDistanceTypePreference | undefined;
+    pricePreference: CreatePlanInputPricePreference | undefined;
+    foodPreference: CreatePlanInputFoodPreference | undefined;
+    averageSleep: number | undefined;
+    atractionPopularityPreference: CreatePlanInputAtractionPopularityPreference | undefined;
+    atractionDurationPreference: CreatePlanInputAtractionDurationPreference | undefined;
+    sortedPlanElements: SortedPlanElements[];
+    preferedPlanElements: PreferedPlanElements[];
 
-    constructor(data?: IListResultDtoOfPlanDto) {
+    constructor(data?: ICreatePlanInput) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
                     (<any>this)[property] = (<any>data)[property];
             }
         }
+        if (!data) {
+            this.sortedPlanElements = [];
+            this.preferedPlanElements = [];
+        }
     }
 
     init(data?: any) {
         if (data) {
-            if (data["items"] && data["items"].constructor === Array) {
-                this.items = [];
-                for (let item of data["items"])
-                    this.items.push(PlanDto.fromJS(item));
+            this.placeName = data["placeName"];
+            this.placeId = data["placeId"];
+            this.startDate = data["startDate"] ? moment(data["startDate"].toString()) : <any>undefined;
+            this.startTime = data["startTime"];
+            this.endDate = data["endDate"] ? moment(data["endDate"].toString()) : <any>undefined;
+            this.endTime = data["endTime"];
+            this.hasAccomodationBooked = data["hasAccomodationBooked"];
+            this.accomodationId = data["accomodationId"];
+            this.language = data["language"];
+            if (data["preferedTravelModes"] && data["preferedTravelModes"].constructor === Array) {
+                this.preferedTravelModes = [];
+                for (let item of data["preferedTravelModes"])
+                    this.preferedTravelModes.push(item);
+            }
+            this.maxWalkingKmsPerDay = data["maxWalkingKmsPerDay"];
+            this.distanceTypePreference = data["distanceTypePreference"];
+            this.pricePreference = data["pricePreference"];
+            this.foodPreference = data["foodPreference"];
+            this.averageSleep = data["averageSleep"];
+            this.atractionPopularityPreference = data["atractionPopularityPreference"];
+            this.atractionDurationPreference = data["atractionDurationPreference"];
+            if (data["sortedPlanElements"] && data["sortedPlanElements"].constructor === Array) {
+                this.sortedPlanElements = [];
+                for (let item of data["sortedPlanElements"])
+                    this.sortedPlanElements.push(item);
+            }
+            if (data["preferedPlanElements"] && data["preferedPlanElements"].constructor === Array) {
+                this.preferedPlanElements = [];
+                for (let item of data["preferedPlanElements"])
+                    this.preferedPlanElements.push(item);
             }
         }
     }
 
-    static fromJS(data: any): ListResultDtoOfPlanDto {
+    static fromJS(data: any): CreatePlanInput {
         data = typeof data === 'object' ? data : {};
-        let result = new ListResultDtoOfPlanDto();
+        let result = new CreatePlanInput();
         result.init(data);
         return result;
     }
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        if (this.items && this.items.constructor === Array) {
-            data["items"] = [];
-            for (let item of this.items)
-                data["items"].push(item.toJSON());
+        data["placeName"] = this.placeName;
+        data["placeId"] = this.placeId;
+        data["startDate"] = this.startDate ? this.startDate.toISOString() : <any>undefined;
+        data["startTime"] = this.startTime;
+        data["endDate"] = this.endDate ? this.endDate.toISOString() : <any>undefined;
+        data["endTime"] = this.endTime;
+        data["hasAccomodationBooked"] = this.hasAccomodationBooked;
+        data["accomodationId"] = this.accomodationId;
+        data["language"] = this.language;
+        if (this.preferedTravelModes && this.preferedTravelModes.constructor === Array) {
+            data["preferedTravelModes"] = [];
+            for (let item of this.preferedTravelModes)
+                data["preferedTravelModes"].push(item);
+        }
+        data["maxWalkingKmsPerDay"] = this.maxWalkingKmsPerDay;
+        data["distanceTypePreference"] = this.distanceTypePreference;
+        data["pricePreference"] = this.pricePreference;
+        data["foodPreference"] = this.foodPreference;
+        data["averageSleep"] = this.averageSleep;
+        data["atractionPopularityPreference"] = this.atractionPopularityPreference;
+        data["atractionDurationPreference"] = this.atractionDurationPreference;
+        if (this.sortedPlanElements && this.sortedPlanElements.constructor === Array) {
+            data["sortedPlanElements"] = [];
+            for (let item of this.sortedPlanElements)
+                data["sortedPlanElements"].push(item);
+        }
+        if (this.preferedPlanElements && this.preferedPlanElements.constructor === Array) {
+            data["preferedPlanElements"] = [];
+            for (let item of this.preferedPlanElements)
+                data["preferedPlanElements"].push(item);
         }
         return data; 
     }
 
-    clone(): ListResultDtoOfPlanDto {
+    clone(): CreatePlanInput {
         const json = this.toJSON();
-        let result = new ListResultDtoOfPlanDto();
+        let result = new CreatePlanInput();
         result.init(json);
         return result;
     }
 }
 
-export interface IListResultDtoOfPlanDto {
-    items: PlanDto[] | undefined;
+export interface ICreatePlanInput {
+    placeName: string;
+    placeId: string;
+    startDate: moment.Moment | undefined;
+    startTime: string | undefined;
+    endDate: moment.Moment | undefined;
+    endTime: string | undefined;
+    hasAccomodationBooked: boolean | undefined;
+    accomodationId: string | undefined;
+    language: CreatePlanInputLanguage | undefined;
+    preferedTravelModes: PreferedTravelModes[] | undefined;
+    maxWalkingKmsPerDay: number | undefined;
+    distanceTypePreference: CreatePlanInputDistanceTypePreference | undefined;
+    pricePreference: CreatePlanInputPricePreference | undefined;
+    foodPreference: CreatePlanInputFoodPreference | undefined;
+    averageSleep: number | undefined;
+    atractionPopularityPreference: CreatePlanInputAtractionPopularityPreference | undefined;
+    atractionDurationPreference: CreatePlanInputAtractionDurationPreference | undefined;
+    sortedPlanElements: SortedPlanElements[];
+    preferedPlanElements: PreferedPlanElements[];
 }
 
 export class PlanDto implements IPlanDto {
@@ -5676,11 +5624,6 @@ export interface IUserPlansListDto {
     id: number | undefined;
 }
 
-export enum Language {
-    _0 = 0, 
-    _1 = 1, 
-}
-
 export enum State {
     _0 = 0, 
     _1 = 1, 
@@ -5690,6 +5633,78 @@ export enum IsTenantAvailableOutputState {
     _1 = 1, 
     _2 = 2, 
     _3 = 3, 
+}
+
+export enum CreatePlanInputLanguage {
+    _0 = 0, 
+    _1 = 1, 
+}
+
+export enum PreferedTravelModes {
+    _0 = 0, 
+    _1 = 1, 
+    _2 = 2, 
+    _3 = 3, 
+}
+
+export enum CreatePlanInputDistanceTypePreference {
+    _0 = 0, 
+    _1 = 1, 
+    _2 = 2, 
+    _3 = 3, 
+}
+
+export enum CreatePlanInputPricePreference {
+    _0 = 0, 
+    _1 = 1, 
+    _2 = 2, 
+}
+
+export enum CreatePlanInputFoodPreference {
+    _0 = 0, 
+    _1 = 1, 
+    _2 = 2, 
+}
+
+export enum CreatePlanInputAtractionPopularityPreference {
+    _0 = 0, 
+    _1 = 1, 
+    _2 = 2, 
+    _3 = 3, 
+}
+
+export enum CreatePlanInputAtractionDurationPreference {
+    _0 = 0, 
+    _1 = 1, 
+    _2 = 2, 
+}
+
+export enum SortedPlanElements {
+    _0 = 0, 
+    _1 = 1, 
+    _2 = 2, 
+    _3 = 3, 
+    _4 = 4, 
+    _5 = 5, 
+    _6 = 6, 
+    _7 = 7, 
+    _8 = 8, 
+    _9 = 9, 
+    _10 = 10, 
+}
+
+export enum PreferedPlanElements {
+    _0 = 0, 
+    _1 = 1, 
+    _2 = 2, 
+    _3 = 3, 
+    _4 = 4, 
+    _5 = 5, 
+    _6 = 6, 
+    _7 = 7, 
+    _8 = 8, 
+    _9 = 9, 
+    _10 = 10, 
 }
 
 export enum PlanFormDtoLanguage {
