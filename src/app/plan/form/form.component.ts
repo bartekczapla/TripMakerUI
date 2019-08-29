@@ -90,8 +90,9 @@ export class FormComponent extends AppComponentBase implements OnInit {
   endTime=new Date(0,0,0,20,0,0);
 
   today=new Date();
-  startDate=new Date();
-  endDate=new Date();
+  startDate:Date;
+  endDate:Date;
+  endDateMax:Date;
 
   public placeInfo: IGooglePlace;
 
@@ -103,8 +104,11 @@ export class FormComponent extends AppComponentBase implements OnInit {
 
 
   ngOnInit() {
-    this.parameters.startDate=moment(new Date());
-    this.parameters.endDate=moment(new Date());
+    this.startDate=new Date(this.today.setHours(0,0,0,0));
+    this.endDate=this.addDays(this.startDate,7);
+    this.endDateMax=this.addDays(this.startDate,14);
+    this.parameters.startDate=moment(this.startDate.toUTCString());
+    this.parameters.endDate=moment(this.endDate.toUTCString());
     this.parameters.hasAccomodationBooked=false;
     this.parameters.startTime='08:00';
     this.parameters.endTime='20:00';
@@ -114,6 +118,8 @@ export class FormComponent extends AppComponentBase implements OnInit {
   }
   onStartDate(event:MatDatepickerInputEvent<Date>) {
     this.parameters.startDate=moment(event.value);
+    this.endDateMax=this.addDays(this.startDate,14);
+
   }
   onStartTime(value:Date) {
     this.parameters.startTime=value.toLocaleTimeString();
@@ -235,9 +241,14 @@ export class FormComponent extends AppComponentBase implements OnInit {
       errorCount+=1;
       if(notify) this.notify.error('Brak zdefiniowanego miejsca zakwaterowania!');
     }
-    if(this.parameters.startDate.startOf('day').add(this.startTime.getHours(),'hour').add(this.startTime.getMinutes(),'minute').isAfter(this.parameters.endDate.startOf('day').add(this.endTime.getHours(),'hour').add(this.endTime.getMinutes(),'minute'))) {
+
+    if((this.startDate.getTime()+this.startTime.getTime()) > this.endDate.getTime()+this.endTime.getTime()) {
       errorCount+=1;
       if(notify) this.notify.error('Data początkowa nie może być później niż końcowa!');
+    }
+    if(this.endDate.getTime() > this.endDateMax.getTime()) {
+      errorCount+=1;
+      if(notify) this.notify.error('Plan może mieć maksymalnie 14 dni!');
     }
     if(!this.parameters.preferedTravelModes || this.parameters.preferedTravelModes.length === 0) {
       errorCount+=1;
@@ -251,7 +262,23 @@ export class FormComponent extends AppComponentBase implements OnInit {
       errorCount+=1;
       if(notify) this.notify.error('Nie wybrano tempa zwiedzania atrakcji!');
     }
+    if(!this.parameters.pricePreference) {
+      errorCount+=1;
+      if(notify) this.notify.error('Nie wybrano preferowanych kosztów podróży!');
+    }
+    if(!this.parameters.foodPreference) {
+      errorCount+=1;
+      if(notify) this.notify.error('Nie wybrano jedzeniowych preferencji!');
+    }
+    if(!this.parameters.atractionPopularityPreference) {
+      errorCount+=1;
+      if(notify) this.notify.error('Nie wybrano preferencji co do popularności miejsc!');
+    }
     return errorCount === 0;
+  }
+
+  compareDate(date1: moment.Moment, date2: moment.Moment) {
+
   }
 
   checkErrors() {
@@ -261,6 +288,14 @@ export class FormComponent extends AppComponentBase implements OnInit {
   createPlan(){
      console.log(this.parameters)
      //this.formSave.emit(this.parameters);
+   }
+
+   //HELPERS
+
+   addDays(oldDate: Date, days: number):Date {
+    var date = new Date(oldDate);
+    date.setDate(date.getDate() + days);
+    return date;
    }
 
 }
