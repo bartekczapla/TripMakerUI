@@ -56,6 +56,7 @@ export class ScheduleComponent implements OnInit   {
   }
 
   ngOnInit(): void {
+    console.log(this.plan.planAccomodation.formattedAddress);
     this.createBarDataSet();
     this.initGoogleMap();
     this.initDaysList();

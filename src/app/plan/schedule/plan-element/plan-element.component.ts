@@ -14,6 +14,7 @@ export class PlanElementComponent implements OnInit  {
  @Input() route: PlanRouteDto;
   hasRoute:boolean;
   minutes:string;
+
   ngOnInit(): void {
     this.hasRoute=this.route !== null && this.route !== undefined;
     if(this.hasRoute) {

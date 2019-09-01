@@ -16,17 +16,18 @@
                     <span class="font-28 bold">{{plan.planForm.endDate | date:'shortDate'}} {{formatTimeString(plan.planForm.endTime)}}</span>
                 </div>
 
-                <div *ngIf="plan.photo" class="row no-margins  justify-content-center">
+                <div *ngIf="plan.photo" class="row no-margins pb-2  justify-content-center">
                     <img class="place-photo-size" [src]="'data:image/png;base64,'+plan.photo | safeHtml"  alt="Image">
                 </div>
-                <div *ngIf="plan.address" class="row no-margins pb-2 justify-content-center" style="padding-top: 30px;">
+                <!-- <div *ngIf="plan.address" class="row no-margins pb-2 justify-content-center" style="padding-top: 30px;">
                     <span class="font-26 ">Adres:</span> 
                     <span  class="font-26 bold ml-2">{{plan.address}}</span>
-                </div>  
-                <div class="row no-margins pb-3 pt-4  justify-content-center">
-                        <span class="font-26 ">Zakwaterowanie:</span> 
-                        <span *ngIf="plan.accomodation" class="font-26 bold ml-3">{{plan.accomodation.PlaceName}}</span>
-                        <span *ngIf="!plan.accomodation" class="font-26 bold ml-2"><i class="far fa-minus-square"></i></span>
+                </div>   -->
+                <div class="row no-margins pb-3 pt-5  justify-content-center">
+                        <span class="font-26 mr-2">Zakwaterowanie:</span> 
+                        <span *ngIf="plan.planAccomodation" class="font-26 bold">{{plan.planAccomodation.placeName}}, </span>
+                        <span *ngIf="plan.planAccomodation" class="font-26 ml-3">{{plan.planAccomodation.formattedAddress}}</span>
+                        <span *ngIf="!plan.planAccomodation" class="font-26 bold ml-2"><i class="far fa-minus-square"></i></span>
                 </div>        
                     
                 <div *ngIf="plan.planFormWeightVector" class="row no-margins pb-3 justify-content-center" style="padding-top:50px;">
@@ -34,8 +35,7 @@
                             <span class="font-26 bold">Wektor wagowy planu:</span> 
                         </div>
                         <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
-                        [legend]="barChartLegend" [chartType]="barChartType" (chartHover)="chartHovered($event)"
-                        (chartClick)="chartClicked($event)"></canvas>
+                        [legend]="barChartLegend" [chartType]="barChartType"></canvas>
                 </div>
             </div>
 

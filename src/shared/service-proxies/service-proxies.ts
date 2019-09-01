@@ -3559,7 +3559,7 @@ export class PlanDto implements IPlanDto {
     rating: number | undefined;
     totalUserReviews: number | undefined;
     planForm: PlanFormDto | undefined;
-    accomodation: PlanAccomodationDto | undefined;
+    planAccomodation: PlanAccomodationDto | undefined;
     planFormWeightVector: PlanFormWeightVectorDto | undefined;
     elements: PlanElementDto[] | undefined;
     photo: string | undefined;
@@ -3584,7 +3584,7 @@ export class PlanDto implements IPlanDto {
             this.rating = data["rating"];
             this.totalUserReviews = data["totalUserReviews"];
             this.planForm = data["planForm"] ? PlanFormDto.fromJS(data["planForm"]) : <any>undefined;
-            this.accomodation = data["accomodation"] ? PlanAccomodationDto.fromJS(data["accomodation"]) : <any>undefined;
+            this.planAccomodation = data["planAccomodation"] ? PlanAccomodationDto.fromJS(data["planAccomodation"]) : <any>undefined;
             this.planFormWeightVector = data["planFormWeightVector"] ? PlanFormWeightVectorDto.fromJS(data["planFormWeightVector"]) : <any>undefined;
             if (data["elements"] && data["elements"].constructor === Array) {
                 this.elements = [];
@@ -3613,7 +3613,7 @@ export class PlanDto implements IPlanDto {
         data["rating"] = this.rating;
         data["totalUserReviews"] = this.totalUserReviews;
         data["planForm"] = this.planForm ? this.planForm.toJSON() : <any>undefined;
-        data["accomodation"] = this.accomodation ? this.accomodation.toJSON() : <any>undefined;
+        data["planAccomodation"] = this.planAccomodation ? this.planAccomodation.toJSON() : <any>undefined;
         data["planFormWeightVector"] = this.planFormWeightVector ? this.planFormWeightVector.toJSON() : <any>undefined;
         if (this.elements && this.elements.constructor === Array) {
             data["elements"] = [];
@@ -3642,7 +3642,7 @@ export interface IPlanDto {
     rating: number | undefined;
     totalUserReviews: number | undefined;
     planForm: PlanFormDto | undefined;
-    accomodation: PlanAccomodationDto | undefined;
+    planAccomodation: PlanAccomodationDto | undefined;
     planFormWeightVector: PlanFormWeightVectorDto | undefined;
     elements: PlanElementDto[] | undefined;
     photo: string | undefined;
