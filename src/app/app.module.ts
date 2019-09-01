@@ -66,6 +66,7 @@ import { ModalModule, BsDatepickerModule} from 'ngx-bootstrap';
 import { SafeHtml } from '@shared/directives/safe-resource.pipe';
 import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 import { ChartsModule } from 'ng2-charts';
+import { AgmCoreModule } from '@agm/core';
 
 // export function HttpLoaderFactory(http: HttpClient) {
 //   return new TranslateHttpLoader(http);
@@ -158,6 +159,9 @@ export function getRemoteServiceBaseUrl(): string {
     ServiceProxyModule,
     NgxPaginationModule,
     AngularMaterialModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyAqqm5ZiCGrQhtH4nWmAuUPLSWwOrzC978'
+    }),
     TimepickerModule.forRoot(),
     TranslateModule.forRoot({
       loader: {

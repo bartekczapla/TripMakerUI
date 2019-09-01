@@ -10,7 +10,8 @@ import {
   MatInputModule,
   MatDividerModule,
   MatTabsModule,
-  MatCheckboxModule
+  MatCheckboxModule,
+  MatBadgeModule
 } from '@angular/material';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CdkStepperModule } from '@angular/cdk/stepper';
@@ -35,7 +36,6 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import {DragDropModule} from '@angular/cdk/drag-drop'
-
 
 @NgModule({
   imports: [
@@ -73,7 +73,8 @@ import {DragDropModule} from '@angular/cdk/drag-drop'
     MatTableModule,
     MatSortModule,
     MatPaginatorModule,
-    DragDropModule
+    DragDropModule,
+    MatBadgeModule
   ],
   exports: [
     MatButtonModule,
@@ -110,7 +111,8 @@ import {DragDropModule} from '@angular/cdk/drag-drop'
     MatTableModule,
     MatSortModule,
     MatPaginatorModule,
-    DragDropModule
+    DragDropModule,
+    MatBadgeModule
   ]
 })
 export class AngularMaterialModule { }

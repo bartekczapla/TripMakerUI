@@ -65,8 +65,15 @@
 }
 
 .place-photo-size {
-    width: 70%;
+    // width: 70%;
     max-height: 600px;
     border-radius: 20px;
-    object-fit: cover;
+    // object-fit: cover;
+    width: 100%;
+    max-width: 1500px;
+    object-fit: fill;
+  }
+
+  .test{
+      color:#dcae09
   }

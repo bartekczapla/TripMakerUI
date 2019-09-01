@@ -1,54 +1,150 @@
-<div class="row no-margins">
-        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-6" [ngClass]="{'col-xl-offset-6  col-lg-offset-6  col-md-offset-6 col-sm-offset-6 col-xs-offset-6':even, 'left-element-border':even,'right-element-border':!even}">
-                <div class="element-box-container" [ngClass]="{'pull-right':!even}">
-                        <div class="element-text-container">
-                                <span class="bold font-16">{{element.start | date: 'HH:mm'}} - {{element.end | date: 'HH:mm'}}, </span>
-                                <span class="font-16">{{element.placeName}}</span>
+
+  <div class="element-container">
+        <mat-expansion-panel>
+        <mat-expansion-panel-header>
+        <mat-panel-title>
+                <span class="bold font-22">{{element.start | date: 'HH:mm'}} - {{element.end | date: 'HH:mm'}}</span>
+                <!-- <span class="font-16">{{element.placeName}}</span> -->
+        </mat-panel-title>
+        <mat-panel-description>
+                <span  matBadge="{{element.orderNo}}" matBadgeOverlap="false"  class="font-22">{{element.placeName}}</span> 
+        </mat-panel-description>
+        </mat-expansion-panel-header>
+                <div class="expansion-panel-content">
+                        <div class="row no-margins pb-3">
+                                <span class="element-infos-fonts  mr-3">Adres:</span>
+                                <span *ngIf="element.formattedAddress" class="element-infos-fonts  bold">{{element.formattedAddress}}</span>
+                                <span *ngIf="!element.formattedAddress" class="element-infos-fonts  bold">-</span>
                         </div>
-                        <div class="element-icon-container">
-                                <ng-container *ngIf="element.elementType==0">
-
-                                </ng-container>
-                                <ng-container *ngIf="element.elementType==1">
-                                        <i class="fas fa-utensils"></i>
-                                </ng-container>
-                                <ng-container *ngIf="element.elementType==2">
-                                        <i class="fas fa-bed"></i>
-                                </ng-container>
-                                <ng-container *ngIf="element.elementType==3">
-
-                                </ng-container>
-                                <ng-container *ngIf="element.elementType==4">
-                                        <i class="far fa-smile"></i>
-                                </ng-container>
-                                <ng-container *ngIf="element.elementType==5">
-                                        <i class="fas fa-futbol"></i>
-                                </ng-container>
-                                <ng-container *ngIf="element.elementType==6">
-                                        <i class="fas fa-book"></i>
-                                </ng-container>
-                                <ng-container *ngIf="element.elementType==7">
-                                        <i class="fas fa-landmark"></i>
-                                </ng-container>
-                                <ng-container *ngIf="element.elementType==8">
-                                        <i class="fas fa-cocktail"></i>
-                                </ng-container>
-                                <ng-container *ngIf="element.elementType==9">
-                                        <i class="fas fa-shopping-cart"></i>
-                                </ng-container>
-                                <ng-container *ngIf="element.elementType==10 ">
-                                        <i class="fas fa-walking"></i>
-                                </ng-container>
+                        <div class="row no-margins pb-3">
+                                <span class="element-infos-fonts  mr-3">Typ:</span>
+                                <span *ngIf="element.planElementTypes.length == 0" class="element-infos-fonts  bold">-</span>
+                                <span *ngIf="element.planElementTypes.length > 0" class="element-infos-fonts bold">
+                                        <ng-container *ngFor="let type of element.planElementTypes">
+                                                <ng-container *ngIf="type.elementType == 1"> Jedzenie </ng-container>
+                                                <ng-container *ngIf="type.elementType == 2"> Spanie </ng-container>
+                                                <ng-container *ngIf="type.elementType == 3"> Rozrywka </ng-container>
+                                                <ng-container *ngIf="type.elementType == 4"> Relaks </ng-container>
+                                                <ng-container *ngIf="type.elementType == 5"> Aktywność </ng-container>
+                                                <ng-container *ngIf="type.elementType == 6"> Kultura </ng-container>
+                                                <ng-container *ngIf="type.elementType == 7"> Zwiedzanie </ng-container>
+                                                <ng-container *ngIf="type.elementType == 8"> Imprezowanie </ng-container>
+                                                <ng-container *ngIf="type.elementType == 9"> Zakupy </ng-container>
+                                        </ng-container>
+                                        
+                                </span>
                         </div>
+                        <div class="row no-margins pb-3">
+                                <span class="element-infos-fonts  mr-3">Ocena:</span>
+                                <span *ngIf="element.rating" class="element-infos-fonts  bold">{{element.rating | number:'1.1'}} / 5.0</span>
+                                <span *ngIf="!element.rating" class="element-infos-fonts  bold">- / 5.0</span>
+                        </div>
+                        <div class="row no-margins pb-3">
+                                <span class="element-infos-fonts  mr-3">Ceny:</span>
+                                <span *ngIf="element.price" class="element-infos-fonts  bold">{{element.price}}/4</span>
+                                <span *ngIf="!element.price" class="element-infos-fonts  bold">brak danych</span>
+                        </div>
+                        <div class="row no-margins pb-3">
+                                <span class="element-infos-fonts  mr-3">Liczba opinii:</span>
+                                <span *ngIf="element.popularity" class="element-infos-fonts  bold">{{element.popularity}}/4</span>
+                                <span *ngIf="!element.popularity" class="element-infos-fonts  bold">brak danych</span>
+                        </div>
+                        <div class="row no-margins pb-3">
+                                <span class="element-infos-fonts mr-3">Ocena metodą SAW:</span>
+                                <span class="element-infos-fonts  bold">{{element.normalizedScore}}</span>
+                        </div>
+                        <!-- ROUTE -->   
+                        <ng-container *ngIf="hasRoute"> 
+                                <mat-divider class="pt-3 pb-3"></mat-divider>
+                                <div class="row no-margins pb-3">
+                                        <span class=" mr-1"><i class="fas fa-arrow-circle-down"></i></span>
+                                        <span class="element-infos-fonts">Trasa do następnego punktu:</span>
+                                </div>                               
+                                <div class="row no-margins pb-4">
+                                        <span class="element-infos-fonts mr-1">Czas:</span>
+                                        <span class="element-infos-fonts  bold mr-3">{{minutes}} minut</span>
+                                        <span class="element-infos-fonts mr-1">Dystans:</span>
+                                        <span class="element-infos-fonts  bold mr-3">{{route.distance}} metrów</span>
+                                        <span class="element-infos-fonts mr-1">Typ:</span>
+                                        <span class="element-infos-fonts  bold">
+                                                <ng-container *ngIf="route.travelMode ==0">Samochodem</ng-container>
+                                                <ng-container *ngIf="route.travelMode ==1">Pieszo</ng-container>
+                                                <ng-container *ngIf="route.travelMode ==2">Rowerem</ng-container>
+                                                <ng-container *ngIf="route.travelMode ==3">Komunikacją miejską</ng-container>
+                                        </span>
+                                </div>             
+             
+                                <ng-container *ngIf="route.steps.length > 0">
+                                        <div class="row no-margins pb-3">
+                                                <span class="element-infos-fonts mr-1">Wskazówki:</span>
+                                        </div>  
+                                        <ng-container *ngFor="let step of route.steps; let stepInd=index">
+                                                <div class="row no-margins pt-1 pb-2">
+                                                        <span class="element-infos-fonts mr-3">{{(stepInd+1)}}) </span>
+                                                        <span [innerHtml]="step.htmlInstruction" class="element-infos-fonts"></span>
+                                                </div>  
+                                        </ng-container>
 
-
+                                </ng-container>
+                        </ng-container>             
                 </div>
 
-        </div>
-        <!-- <div class="plan-element-container" [ngClass]="{'pull-right':even, 'left-element-border ':even, 'right-element-border':!even}">
-                <div>
-                {{element.orderNo}}.) {{element.start}} - {{element.placeName}} - {{element.elementType}}   
-                </div>
+        </mat-expansion-panel>          
+  </div>
 
-        </div>        -->
-</div>
+  <style>
+  
+  .element-container {
+         margin-top: 10px;
+         margin-bottom: 10px; 
+  }
+.expansion-panel-content{
+        margin-left: 50px;
+        margin-top: 15px;
+}
+
+.element-infos-fonts {
+        font-size: 20px;
+}
+
+  </style>
+
+<!-- <div class="row no-margins">
+        <span class="bold font-16">{{element.start | date: 'HH:mm'}} - {{element.end | date: 'HH:mm'}}, </span>
+        <span class="font-16">{{element.placeName}}</span>
+</div> -->
+<!-- <div class="element-icon-container">
+                <ng-container *ngIf="element.elementType==0">
+
+                </ng-container>
+                <ng-container *ngIf="element.elementType==1">
+                        <i class="fas fa-utensils"></i>
+                </ng-container>
+                <ng-container *ngIf="element.elementType==2">
+                        <i class="fas fa-bed"></i>
+                </ng-container>
+                <ng-container *ngIf="element.elementType==3">
+
+                </ng-container>
+                <ng-container *ngIf="element.elementType==4">
+                        <i class="far fa-smile"></i>
+                </ng-container>
+                <ng-container *ngIf="element.elementType==5">
+                        <i class="fas fa-futbol"></i>
+                </ng-container>
+                <ng-container *ngIf="element.elementType==6">
+                        <i class="fas fa-book"></i>
+                </ng-container>
+                <ng-container *ngIf="element.elementType==7">
+                        <i class="fas fa-landmark"></i>
+                </ng-container>
+                <ng-container *ngIf="element.elementType==8">
+                        <i class="fas fa-cocktail"></i>
+                </ng-container>
+                <ng-container *ngIf="element.elementType==9">
+                        <i class="fas fa-shopping-cart"></i>
+                </ng-container>
+                <ng-container *ngIf="element.elementType==10 ">
+                        <i class="fas fa-walking"></i>
+                </ng-container>
+        </div> -->
