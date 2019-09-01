@@ -7,6 +7,8 @@
                 <!-- <span class="font-16">{{element.placeName}}</span> -->
         </mat-panel-title>
         <mat-panel-description>
+                <ng-container *ngIf="isSleep"><span style="margin-right: 15px;"><i class="fas fa-bed fa-2x"></i></span></ng-container>
+                <ng-container *ngIf="isEating"><span style="margin-right: 15px;"><i class="fas fa-utensils fa-2x"></i></span></ng-container>
                 <span  matBadge="{{element.orderNo}}" matBadgeOverlap="false"  class="font-22">{{element.placeName}}</span> 
         </mat-panel-description>
         </mat-expansion-panel-header>

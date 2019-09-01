@@ -23,6 +23,7 @@ export class ScheduleComponent implements OnInit   {
   numberOfDays:number=0;
   daysOfTrip:Moment[]=[];
 
+
   public barChartOptions: ChartOptions = {
     responsive: true,
     scales: { xAxes: [{}], yAxes: [{}] },
@@ -56,7 +57,7 @@ export class ScheduleComponent implements OnInit   {
   }
 
   ngOnInit(): void {
-    console.log(this.plan.planAccomodation.formattedAddress);
+
     this.createBarDataSet();
     this.initGoogleMap();
     this.initDaysList();
