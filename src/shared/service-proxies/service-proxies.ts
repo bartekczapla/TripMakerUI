@@ -749,6 +749,57 @@ export class PlanServiceProxy {
         }
         return _observableOf<PlanDto>(<any>null);
     }
+
+    /**
+     * @return Success
+     */
+    getTestPlanAsync(): Observable<PlanDto> {
+        let url_ = this.baseUrl + "/api/services/app/Plan/GetTestPlanAsync";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetTestPlanAsync(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetTestPlanAsync(<any>response_);
+                } catch (e) {
+                    return <Observable<PlanDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<PlanDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetTestPlanAsync(response: HttpResponseBase): Observable<PlanDto> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? PlanDto.fromJS(resultData200) : new PlanDto();
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<PlanDto>(<any>null);
+    }
 }
 
 @Injectable()
@@ -1690,65 +1741,6 @@ export class TenantServiceProxy {
             }));
         }
         return _observableOf<TenantDto>(<any>null);
-    }
-}
-
-@Injectable()
-export class TestServiceProxy {
-    private http: HttpClient;
-    private baseUrl: string;
-    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
-
-    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
-        this.http = http;
-        this.baseUrl = baseUrl ? baseUrl : "";
-    }
-
-    /**
-     * @return Success
-     */
-    getTestAsync(): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/Test/GetTestAsync";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetTestAsync(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetTestAsync(<any>response_);
-                } catch (e) {
-                    return <Observable<void>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<void>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processGetTestAsync(response: HttpResponseBase): Observable<void> {
-        const status = response.status;
-        const responseBlob = 
-            response instanceof HttpResponse ? response.body : 
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return _observableOf<void>(<any>null);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<void>(<any>null);
     }
 }
 
@@ -3559,10 +3551,18 @@ export interface ICreatePlanInput {
 }
 
 export class PlanDto implements IPlanDto {
-    destination: string | undefined;
+    name: string | undefined;
+    latitude: number | undefined;
+    longitude: number | undefined;
+    address: string | undefined;
     planFormId: number | undefined;
+    rating: number | undefined;
+    totalUserReviews: number | undefined;
     planForm: PlanFormDto | undefined;
+    accomodation: PlanAccomodationDto | undefined;
+    planFormWeightVector: PlanFormWeightVectorDto | undefined;
     elements: PlanElementDto[] | undefined;
+    photo: string | undefined;
     id: number | undefined;
 
     constructor(data?: IPlanDto) {
@@ -3576,14 +3576,22 @@ export class PlanDto implements IPlanDto {
 
     init(data?: any) {
         if (data) {
-            this.destination = data["destination"];
+            this.name = data["name"];
+            this.latitude = data["latitude"];
+            this.longitude = data["longitude"];
+            this.address = data["address"];
             this.planFormId = data["planFormId"];
+            this.rating = data["rating"];
+            this.totalUserReviews = data["totalUserReviews"];
             this.planForm = data["planForm"] ? PlanFormDto.fromJS(data["planForm"]) : <any>undefined;
+            this.accomodation = data["accomodation"] ? PlanAccomodationDto.fromJS(data["accomodation"]) : <any>undefined;
+            this.planFormWeightVector = data["planFormWeightVector"] ? PlanFormWeightVectorDto.fromJS(data["planFormWeightVector"]) : <any>undefined;
             if (data["elements"] && data["elements"].constructor === Array) {
                 this.elements = [];
                 for (let item of data["elements"])
                     this.elements.push(PlanElementDto.fromJS(item));
             }
+            this.photo = data["photo"];
             this.id = data["id"];
         }
     }
@@ -3597,14 +3605,22 @@ export class PlanDto implements IPlanDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["destination"] = this.destination;
+        data["name"] = this.name;
+        data["latitude"] = this.latitude;
+        data["longitude"] = this.longitude;
+        data["address"] = this.address;
         data["planFormId"] = this.planFormId;
+        data["rating"] = this.rating;
+        data["totalUserReviews"] = this.totalUserReviews;
         data["planForm"] = this.planForm ? this.planForm.toJSON() : <any>undefined;
+        data["accomodation"] = this.accomodation ? this.accomodation.toJSON() : <any>undefined;
+        data["planFormWeightVector"] = this.planFormWeightVector ? this.planFormWeightVector.toJSON() : <any>undefined;
         if (this.elements && this.elements.constructor === Array) {
             data["elements"] = [];
             for (let item of this.elements)
                 data["elements"].push(item.toJSON());
         }
+        data["photo"] = this.photo;
         data["id"] = this.id;
         return data; 
     }
@@ -3618,10 +3634,18 @@ export class PlanDto implements IPlanDto {
 }
 
 export interface IPlanDto {
-    destination: string | undefined;
+    name: string | undefined;
+    latitude: number | undefined;
+    longitude: number | undefined;
+    address: string | undefined;
     planFormId: number | undefined;
+    rating: number | undefined;
+    totalUserReviews: number | undefined;
     planForm: PlanFormDto | undefined;
+    accomodation: PlanAccomodationDto | undefined;
+    planFormWeightVector: PlanFormWeightVectorDto | undefined;
     elements: PlanElementDto[] | undefined;
+    photo: string | undefined;
     id: number | undefined;
 }
 
@@ -3632,11 +3656,23 @@ export class PlanFormDto implements IPlanFormDto {
     startTime: string | undefined;
     endDate: moment.Moment | undefined;
     endTime: string | undefined;
-    hasJourneyBooked: boolean | undefined;
     hasAccomodationBooked: boolean | undefined;
+    accomodationId: string | undefined;
     language: PlanFormDtoLanguage | undefined;
     creationTime: moment.Moment | undefined;
-    accomodation: PlanAccomodationDto | undefined;
+    preferedTravelModes: PreferedTravelModes2[] | undefined;
+    preferedTravelModesString: string | undefined;
+    maxWalkingKmsPerDay: number | undefined;
+    distanceTypePreference: PlanFormDtoDistanceTypePreference | undefined;
+    pricePreference: PlanFormDtoPricePreference | undefined;
+    foodPreference: PlanFormDtoFoodPreference | undefined;
+    averageSleep: number | undefined;
+    atractionPopularityPreference: PlanFormDtoAtractionPopularityPreference | undefined;
+    atractionDurationPreference: PlanFormDtoAtractionDurationPreference | undefined;
+    sortedPlanElements: SortedPlanElements2[] | undefined;
+    sortedPlanElementsString: string | undefined;
+    preferedPlanElements: PreferedPlanElements2[] | undefined;
+    preferedPlanElementsString: string | undefined;
 
     constructor(data?: IPlanFormDto) {
         if (data) {
@@ -3655,11 +3691,35 @@ export class PlanFormDto implements IPlanFormDto {
             this.startTime = data["startTime"];
             this.endDate = data["endDate"] ? moment(data["endDate"].toString()) : <any>undefined;
             this.endTime = data["endTime"];
-            this.hasJourneyBooked = data["hasJourneyBooked"];
             this.hasAccomodationBooked = data["hasAccomodationBooked"];
+            this.accomodationId = data["accomodationId"];
             this.language = data["language"];
             this.creationTime = data["creationTime"] ? moment(data["creationTime"].toString()) : <any>undefined;
-            this.accomodation = data["accomodation"] ? PlanAccomodationDto.fromJS(data["accomodation"]) : <any>undefined;
+            if (data["preferedTravelModes"] && data["preferedTravelModes"].constructor === Array) {
+                this.preferedTravelModes = [];
+                for (let item of data["preferedTravelModes"])
+                    this.preferedTravelModes.push(item);
+            }
+            this.preferedTravelModesString = data["preferedTravelModesString"];
+            this.maxWalkingKmsPerDay = data["maxWalkingKmsPerDay"];
+            this.distanceTypePreference = data["distanceTypePreference"];
+            this.pricePreference = data["pricePreference"];
+            this.foodPreference = data["foodPreference"];
+            this.averageSleep = data["averageSleep"];
+            this.atractionPopularityPreference = data["atractionPopularityPreference"];
+            this.atractionDurationPreference = data["atractionDurationPreference"];
+            if (data["sortedPlanElements"] && data["sortedPlanElements"].constructor === Array) {
+                this.sortedPlanElements = [];
+                for (let item of data["sortedPlanElements"])
+                    this.sortedPlanElements.push(item);
+            }
+            this.sortedPlanElementsString = data["sortedPlanElementsString"];
+            if (data["preferedPlanElements"] && data["preferedPlanElements"].constructor === Array) {
+                this.preferedPlanElements = [];
+                for (let item of data["preferedPlanElements"])
+                    this.preferedPlanElements.push(item);
+            }
+            this.preferedPlanElementsString = data["preferedPlanElementsString"];
         }
     }
 
@@ -3678,11 +3738,35 @@ export class PlanFormDto implements IPlanFormDto {
         data["startTime"] = this.startTime;
         data["endDate"] = this.endDate ? this.endDate.toISOString() : <any>undefined;
         data["endTime"] = this.endTime;
-        data["hasJourneyBooked"] = this.hasJourneyBooked;
         data["hasAccomodationBooked"] = this.hasAccomodationBooked;
+        data["accomodationId"] = this.accomodationId;
         data["language"] = this.language;
         data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
-        data["accomodation"] = this.accomodation ? this.accomodation.toJSON() : <any>undefined;
+        if (this.preferedTravelModes && this.preferedTravelModes.constructor === Array) {
+            data["preferedTravelModes"] = [];
+            for (let item of this.preferedTravelModes)
+                data["preferedTravelModes"].push(item);
+        }
+        data["preferedTravelModesString"] = this.preferedTravelModesString;
+        data["maxWalkingKmsPerDay"] = this.maxWalkingKmsPerDay;
+        data["distanceTypePreference"] = this.distanceTypePreference;
+        data["pricePreference"] = this.pricePreference;
+        data["foodPreference"] = this.foodPreference;
+        data["averageSleep"] = this.averageSleep;
+        data["atractionPopularityPreference"] = this.atractionPopularityPreference;
+        data["atractionDurationPreference"] = this.atractionDurationPreference;
+        if (this.sortedPlanElements && this.sortedPlanElements.constructor === Array) {
+            data["sortedPlanElements"] = [];
+            for (let item of this.sortedPlanElements)
+                data["sortedPlanElements"].push(item);
+        }
+        data["sortedPlanElementsString"] = this.sortedPlanElementsString;
+        if (this.preferedPlanElements && this.preferedPlanElements.constructor === Array) {
+            data["preferedPlanElements"] = [];
+            for (let item of this.preferedPlanElements)
+                data["preferedPlanElements"].push(item);
+        }
+        data["preferedPlanElementsString"] = this.preferedPlanElementsString;
         return data; 
     }
 
@@ -3701,98 +3785,23 @@ export interface IPlanFormDto {
     startTime: string | undefined;
     endDate: moment.Moment | undefined;
     endTime: string | undefined;
-    hasJourneyBooked: boolean | undefined;
     hasAccomodationBooked: boolean | undefined;
+    accomodationId: string | undefined;
     language: PlanFormDtoLanguage | undefined;
     creationTime: moment.Moment | undefined;
-    accomodation: PlanAccomodationDto | undefined;
-}
-
-export class PlanElementDto implements IPlanElementDto {
-    placeName: string | undefined;
-    placeId: string | undefined;
-    lat: number | undefined;
-    lng: number | undefined;
-    orderNo: number | undefined;
-    start: moment.Moment | undefined;
-    end: moment.Moment | undefined;
-    elementType: PlanElementDtoElementType | undefined;
-    rating: number | undefined;
-    planId: number | undefined;
-    endingRoute: PlanRouteDto | undefined;
-    id: number | undefined;
-
-    constructor(data?: IPlanElementDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.placeName = data["placeName"];
-            this.placeId = data["placeId"];
-            this.lat = data["lat"];
-            this.lng = data["lng"];
-            this.orderNo = data["orderNo"];
-            this.start = data["start"] ? moment(data["start"].toString()) : <any>undefined;
-            this.end = data["end"] ? moment(data["end"].toString()) : <any>undefined;
-            this.elementType = data["elementType"];
-            this.rating = data["rating"];
-            this.planId = data["planId"];
-            this.endingRoute = data["endingRoute"] ? PlanRouteDto.fromJS(data["endingRoute"]) : <any>undefined;
-            this.id = data["id"];
-        }
-    }
-
-    static fromJS(data: any): PlanElementDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PlanElementDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["placeName"] = this.placeName;
-        data["placeId"] = this.placeId;
-        data["lat"] = this.lat;
-        data["lng"] = this.lng;
-        data["orderNo"] = this.orderNo;
-        data["start"] = this.start ? this.start.toISOString() : <any>undefined;
-        data["end"] = this.end ? this.end.toISOString() : <any>undefined;
-        data["elementType"] = this.elementType;
-        data["rating"] = this.rating;
-        data["planId"] = this.planId;
-        data["endingRoute"] = this.endingRoute ? this.endingRoute.toJSON() : <any>undefined;
-        data["id"] = this.id;
-        return data; 
-    }
-
-    clone(): PlanElementDto {
-        const json = this.toJSON();
-        let result = new PlanElementDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IPlanElementDto {
-    placeName: string | undefined;
-    placeId: string | undefined;
-    lat: number | undefined;
-    lng: number | undefined;
-    orderNo: number | undefined;
-    start: moment.Moment | undefined;
-    end: moment.Moment | undefined;
-    elementType: PlanElementDtoElementType | undefined;
-    rating: number | undefined;
-    planId: number | undefined;
-    endingRoute: PlanRouteDto | undefined;
-    id: number | undefined;
+    preferedTravelModes: PreferedTravelModes2[] | undefined;
+    preferedTravelModesString: string | undefined;
+    maxWalkingKmsPerDay: number | undefined;
+    distanceTypePreference: PlanFormDtoDistanceTypePreference | undefined;
+    pricePreference: PlanFormDtoPricePreference | undefined;
+    foodPreference: PlanFormDtoFoodPreference | undefined;
+    averageSleep: number | undefined;
+    atractionPopularityPreference: PlanFormDtoAtractionPopularityPreference | undefined;
+    atractionDurationPreference: PlanFormDtoAtractionDurationPreference | undefined;
+    sortedPlanElements: SortedPlanElements2[] | undefined;
+    sortedPlanElementsString: string | undefined;
+    preferedPlanElements: PreferedPlanElements2[] | undefined;
+    preferedPlanElementsString: string | undefined;
 }
 
 export class PlanAccomodationDto implements IPlanAccomodationDto {
@@ -3801,6 +3810,8 @@ export class PlanAccomodationDto implements IPlanAccomodationDto {
     placeId: string | undefined;
     placeName: string | undefined;
     formattedAddress: string | undefined;
+    rating: number | undefined;
+    totalUserReviews: number | undefined;
 
     constructor(data?: IPlanAccomodationDto) {
         if (data) {
@@ -3818,6 +3829,8 @@ export class PlanAccomodationDto implements IPlanAccomodationDto {
             this.placeId = data["placeId"];
             this.placeName = data["placeName"];
             this.formattedAddress = data["formattedAddress"];
+            this.rating = data["rating"];
+            this.totalUserReviews = data["totalUserReviews"];
         }
     }
 
@@ -3835,6 +3848,8 @@ export class PlanAccomodationDto implements IPlanAccomodationDto {
         data["placeId"] = this.placeId;
         data["placeName"] = this.placeName;
         data["formattedAddress"] = this.formattedAddress;
+        data["rating"] = this.rating;
+        data["totalUserReviews"] = this.totalUserReviews;
         return data; 
     }
 
@@ -3852,11 +3867,322 @@ export interface IPlanAccomodationDto {
     placeId: string | undefined;
     placeName: string | undefined;
     formattedAddress: string | undefined;
+    rating: number | undefined;
+    totalUserReviews: number | undefined;
+}
+
+export class PlanFormWeightVectorDto implements IPlanFormWeightVectorDto {
+    price: number | undefined;
+    rating: number | undefined;
+    distance: number | undefined;
+    popularity: number | undefined;
+    entertainment: number | undefined;
+    relax: number | undefined;
+    activity: number | undefined;
+    culture: number | undefined;
+    sightseeing: number | undefined;
+    partying: number | undefined;
+    shopping: number | undefined;
+
+    constructor(data?: IPlanFormWeightVectorDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.price = data["price"];
+            this.rating = data["rating"];
+            this.distance = data["distance"];
+            this.popularity = data["popularity"];
+            this.entertainment = data["entertainment"];
+            this.relax = data["relax"];
+            this.activity = data["activity"];
+            this.culture = data["culture"];
+            this.sightseeing = data["sightseeing"];
+            this.partying = data["partying"];
+            this.shopping = data["shopping"];
+        }
+    }
+
+    static fromJS(data: any): PlanFormWeightVectorDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PlanFormWeightVectorDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["price"] = this.price;
+        data["rating"] = this.rating;
+        data["distance"] = this.distance;
+        data["popularity"] = this.popularity;
+        data["entertainment"] = this.entertainment;
+        data["relax"] = this.relax;
+        data["activity"] = this.activity;
+        data["culture"] = this.culture;
+        data["sightseeing"] = this.sightseeing;
+        data["partying"] = this.partying;
+        data["shopping"] = this.shopping;
+        return data; 
+    }
+
+    clone(): PlanFormWeightVectorDto {
+        const json = this.toJSON();
+        let result = new PlanFormWeightVectorDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IPlanFormWeightVectorDto {
+    price: number | undefined;
+    rating: number | undefined;
+    distance: number | undefined;
+    popularity: number | undefined;
+    entertainment: number | undefined;
+    relax: number | undefined;
+    activity: number | undefined;
+    culture: number | undefined;
+    sightseeing: number | undefined;
+    partying: number | undefined;
+    shopping: number | undefined;
+}
+
+export class PlanElementDto implements IPlanElementDto {
+    placeName: string | undefined;
+    placeId: string | undefined;
+    formattedAddress: string | undefined;
+    lat: number | undefined;
+    lng: number | undefined;
+    orderNo: number | undefined;
+    start: moment.Moment | undefined;
+    end: moment.Moment | undefined;
+    planElementTypes: PlanElementyTypeEntityDto[] | undefined;
+    openingHours: PlanElementOpeningHourEntityDto[] | undefined;
+    rating: number | undefined;
+    price: number | undefined;
+    planId: number | undefined;
+    popularity: number | undefined;
+    endingRoute: PlanRouteDto | undefined;
+    scorePosition: number | undefined;
+    normalizedScore: number | undefined;
+    id: number | undefined;
+
+    constructor(data?: IPlanElementDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.placeName = data["placeName"];
+            this.placeId = data["placeId"];
+            this.formattedAddress = data["formattedAddress"];
+            this.lat = data["lat"];
+            this.lng = data["lng"];
+            this.orderNo = data["orderNo"];
+            this.start = data["start"] ? moment(data["start"].toString()) : <any>undefined;
+            this.end = data["end"] ? moment(data["end"].toString()) : <any>undefined;
+            if (data["planElementTypes"] && data["planElementTypes"].constructor === Array) {
+                this.planElementTypes = [];
+                for (let item of data["planElementTypes"])
+                    this.planElementTypes.push(PlanElementyTypeEntityDto.fromJS(item));
+            }
+            if (data["openingHours"] && data["openingHours"].constructor === Array) {
+                this.openingHours = [];
+                for (let item of data["openingHours"])
+                    this.openingHours.push(PlanElementOpeningHourEntityDto.fromJS(item));
+            }
+            this.rating = data["rating"];
+            this.price = data["price"];
+            this.planId = data["planId"];
+            this.popularity = data["popularity"];
+            this.endingRoute = data["endingRoute"] ? PlanRouteDto.fromJS(data["endingRoute"]) : <any>undefined;
+            this.scorePosition = data["scorePosition"];
+            this.normalizedScore = data["normalizedScore"];
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): PlanElementDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PlanElementDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["placeName"] = this.placeName;
+        data["placeId"] = this.placeId;
+        data["formattedAddress"] = this.formattedAddress;
+        data["lat"] = this.lat;
+        data["lng"] = this.lng;
+        data["orderNo"] = this.orderNo;
+        data["start"] = this.start ? this.start.toISOString() : <any>undefined;
+        data["end"] = this.end ? this.end.toISOString() : <any>undefined;
+        if (this.planElementTypes && this.planElementTypes.constructor === Array) {
+            data["planElementTypes"] = [];
+            for (let item of this.planElementTypes)
+                data["planElementTypes"].push(item.toJSON());
+        }
+        if (this.openingHours && this.openingHours.constructor === Array) {
+            data["openingHours"] = [];
+            for (let item of this.openingHours)
+                data["openingHours"].push(item.toJSON());
+        }
+        data["rating"] = this.rating;
+        data["price"] = this.price;
+        data["planId"] = this.planId;
+        data["popularity"] = this.popularity;
+        data["endingRoute"] = this.endingRoute ? this.endingRoute.toJSON() : <any>undefined;
+        data["scorePosition"] = this.scorePosition;
+        data["normalizedScore"] = this.normalizedScore;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): PlanElementDto {
+        const json = this.toJSON();
+        let result = new PlanElementDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IPlanElementDto {
+    placeName: string | undefined;
+    placeId: string | undefined;
+    formattedAddress: string | undefined;
+    lat: number | undefined;
+    lng: number | undefined;
+    orderNo: number | undefined;
+    start: moment.Moment | undefined;
+    end: moment.Moment | undefined;
+    planElementTypes: PlanElementyTypeEntityDto[] | undefined;
+    openingHours: PlanElementOpeningHourEntityDto[] | undefined;
+    rating: number | undefined;
+    price: number | undefined;
+    planId: number | undefined;
+    popularity: number | undefined;
+    endingRoute: PlanRouteDto | undefined;
+    scorePosition: number | undefined;
+    normalizedScore: number | undefined;
+    id: number | undefined;
+}
+
+export class PlanElementyTypeEntityDto implements IPlanElementyTypeEntityDto {
+    elementType: PlanElementyTypeEntityDtoElementType | undefined;
+
+    constructor(data?: IPlanElementyTypeEntityDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.elementType = data["elementType"];
+        }
+    }
+
+    static fromJS(data: any): PlanElementyTypeEntityDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PlanElementyTypeEntityDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["elementType"] = this.elementType;
+        return data; 
+    }
+
+    clone(): PlanElementyTypeEntityDto {
+        const json = this.toJSON();
+        let result = new PlanElementyTypeEntityDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IPlanElementyTypeEntityDto {
+    elementType: PlanElementyTypeEntityDtoElementType | undefined;
+}
+
+export class PlanElementOpeningHourEntityDto implements IPlanElementOpeningHourEntityDto {
+    dayOpen: number | undefined;
+    dayClose: number | undefined;
+    open: string | undefined;
+    close: string | undefined;
+
+    constructor(data?: IPlanElementOpeningHourEntityDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.dayOpen = data["dayOpen"];
+            this.dayClose = data["dayClose"];
+            this.open = data["open"];
+            this.close = data["close"];
+        }
+    }
+
+    static fromJS(data: any): PlanElementOpeningHourEntityDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PlanElementOpeningHourEntityDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["dayOpen"] = this.dayOpen;
+        data["dayClose"] = this.dayClose;
+        data["open"] = this.open;
+        data["close"] = this.close;
+        return data; 
+    }
+
+    clone(): PlanElementOpeningHourEntityDto {
+        const json = this.toJSON();
+        let result = new PlanElementOpeningHourEntityDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IPlanElementOpeningHourEntityDto {
+    dayOpen: number | undefined;
+    dayClose: number | undefined;
+    open: string | undefined;
+    close: string | undefined;
 }
 
 export class PlanRouteDto implements IPlanRouteDto {
     distance: number | undefined;
     duration: number | undefined;
+    travelMode: PlanRouteDtoTravelMode | undefined;
     steps: PlanRouteStepDto[] | undefined;
 
     constructor(data?: IPlanRouteDto) {
@@ -3872,6 +4198,7 @@ export class PlanRouteDto implements IPlanRouteDto {
         if (data) {
             this.distance = data["distance"];
             this.duration = data["duration"];
+            this.travelMode = data["travelMode"];
             if (data["steps"] && data["steps"].constructor === Array) {
                 this.steps = [];
                 for (let item of data["steps"])
@@ -3891,6 +4218,7 @@ export class PlanRouteDto implements IPlanRouteDto {
         data = typeof data === 'object' ? data : {};
         data["distance"] = this.distance;
         data["duration"] = this.duration;
+        data["travelMode"] = this.travelMode;
         if (this.steps && this.steps.constructor === Array) {
             data["steps"] = [];
             for (let item of this.steps)
@@ -3910,6 +4238,7 @@ export class PlanRouteDto implements IPlanRouteDto {
 export interface IPlanRouteDto {
     distance: number | undefined;
     duration: number | undefined;
+    travelMode: PlanRouteDtoTravelMode | undefined;
     steps: PlanRouteStepDto[] | undefined;
 }
 
@@ -5539,8 +5868,8 @@ export class UserPlansListDto implements IUserPlansListDto {
     startTime: string | undefined;
     endDate: moment.Moment | undefined;
     endTime: string | undefined;
-    hasJourneyBooked: boolean | undefined;
     hasAccomodationBooked: boolean | undefined;
+    accomodationName: string | undefined;
     language: UserPlansListDtoLanguage | undefined;
     creationTime: moment.Moment | undefined;
     id: number | undefined;
@@ -5565,8 +5894,8 @@ export class UserPlansListDto implements IUserPlansListDto {
             this.startTime = data["startTime"];
             this.endDate = data["endDate"] ? moment(data["endDate"].toString()) : <any>undefined;
             this.endTime = data["endTime"];
-            this.hasJourneyBooked = data["hasJourneyBooked"];
             this.hasAccomodationBooked = data["hasAccomodationBooked"];
+            this.accomodationName = data["accomodationName"];
             this.language = data["language"];
             this.creationTime = data["creationTime"] ? moment(data["creationTime"].toString()) : <any>undefined;
             this.id = data["id"];
@@ -5591,8 +5920,8 @@ export class UserPlansListDto implements IUserPlansListDto {
         data["startTime"] = this.startTime;
         data["endDate"] = this.endDate ? this.endDate.toISOString() : <any>undefined;
         data["endTime"] = this.endTime;
-        data["hasJourneyBooked"] = this.hasJourneyBooked;
         data["hasAccomodationBooked"] = this.hasAccomodationBooked;
+        data["accomodationName"] = this.accomodationName;
         data["language"] = this.language;
         data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
         data["id"] = this.id;
@@ -5617,8 +5946,8 @@ export interface IUserPlansListDto {
     startTime: string | undefined;
     endDate: moment.Moment | undefined;
     endTime: string | undefined;
-    hasJourneyBooked: boolean | undefined;
     hasAccomodationBooked: boolean | undefined;
+    accomodationName: string | undefined;
     language: UserPlansListDtoLanguage | undefined;
     creationTime: moment.Moment | undefined;
     id: number | undefined;
@@ -5712,7 +6041,46 @@ export enum PlanFormDtoLanguage {
     _1 = 1, 
 }
 
-export enum PlanElementDtoElementType {
+export enum PreferedTravelModes2 {
+    _0 = 0, 
+    _1 = 1, 
+    _2 = 2, 
+    _3 = 3, 
+}
+
+export enum PlanFormDtoDistanceTypePreference {
+    _0 = 0, 
+    _1 = 1, 
+    _2 = 2, 
+    _3 = 3, 
+}
+
+export enum PlanFormDtoPricePreference {
+    _0 = 0, 
+    _1 = 1, 
+    _2 = 2, 
+}
+
+export enum PlanFormDtoFoodPreference {
+    _0 = 0, 
+    _1 = 1, 
+    _2 = 2, 
+}
+
+export enum PlanFormDtoAtractionPopularityPreference {
+    _0 = 0, 
+    _1 = 1, 
+    _2 = 2, 
+    _3 = 3, 
+}
+
+export enum PlanFormDtoAtractionDurationPreference {
+    _0 = 0, 
+    _1 = 1, 
+    _2 = 2, 
+}
+
+export enum SortedPlanElements2 {
     _0 = 0, 
     _1 = 1, 
     _2 = 2, 
@@ -5724,6 +6092,41 @@ export enum PlanElementDtoElementType {
     _8 = 8, 
     _9 = 9, 
     _10 = 10, 
+}
+
+export enum PreferedPlanElements2 {
+    _0 = 0, 
+    _1 = 1, 
+    _2 = 2, 
+    _3 = 3, 
+    _4 = 4, 
+    _5 = 5, 
+    _6 = 6, 
+    _7 = 7, 
+    _8 = 8, 
+    _9 = 9, 
+    _10 = 10, 
+}
+
+export enum PlanElementyTypeEntityDtoElementType {
+    _0 = 0, 
+    _1 = 1, 
+    _2 = 2, 
+    _3 = 3, 
+    _4 = 4, 
+    _5 = 5, 
+    _6 = 6, 
+    _7 = 7, 
+    _8 = 8, 
+    _9 = 9, 
+    _10 = 10, 
+}
+
+export enum PlanRouteDtoTravelMode {
+    _0 = 0, 
+    _1 = 1, 
+    _2 = 2, 
+    _3 = 3, 
 }
 
 export enum PlanRouteStepDtoTravelMode {

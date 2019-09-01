@@ -2,10 +2,7 @@ import { Component, OnInit, Input, Injector } from '@angular/core';
 import { FormParameters } from '@app/plan/form/models/form-parameters.interface';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
 import { PlanServiceProxy, PlanDto,  } from '@shared/service-proxies/service-proxies';
-import { PagedListingComponentBase, PagedRequestDto } from '@shared/paged-listing-component-base';
-import { AppComponentBase } from '@shared/app-component-base';
 import { Moment } from 'moment';
-
 @Component({
   selector: 'app-schedule',
   templateUrl: './schedule.component.html',
@@ -20,9 +17,48 @@ export class ScheduleComponent implements OnInit   {
   loading:boolean=false;
 
 
+  title = 'app';
+  public pieChartLabels:string[] = ["Pending", "InProgress", "OnHold", "Complete", "Cancelled"];
+  public pieChartData:number[] = [21, 39, 10, 14, 16];
+  public pieChartType:string = 'pie';
+  public pieChartOptions:any = {'backgroundColor': [
+               "#FF6384",
+            "#4BC0C0",
+            "#FFCE56",
+            "#E7E9ED",
+            "#36A2EB"
+            ]}
+
+  // ADD CHART OPTIONS. 
+  chartOptions = {
+    responsive: true    // THIS WILL MAKE THE CHART RESPONSIVE (VISIBLE IN ANY DEVICE).
+  }
+  labels =  ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+
+    // STATIC DATA FOR THE CHART IN JSON FORMAT.
+    chartData = [
+        {
+          label: '1st Year',
+          data: [21, 56, 4, 31, 45, 15, 57, 61, 9, 17, 24, 59] 
+        },
+        { 
+          label: '2nd Year',
+          data: [47, 9, 28, 54, 77, 51, 24]
+        }
+      ];
+    
+      // CHART COLOR.
+      colors = [
+        { // 1st Year.
+          backgroundColor: 'rgba(77,83,96,0.2)'
+        },
+        { // 2nd Year.
+          backgroundColor: 'rgba(30, 169, 224, 0.8)'
+        }
+      ]
   constructor()
   {
-      
+
   }
 
   ngOnInit(): void {

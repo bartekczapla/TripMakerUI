@@ -195,3 +195,21 @@
 a:hover {
     text-decoration: none;
 }
+
+.mat-tab-label, .mat-tab-link {
+  font-size: 20px;
+}
+
+.mat-tab-header {
+  margin-bottom: 30px;
+}
+
+.mat-tab-label-active {
+  font-weight: 600;
+  color:#403C39;
+
+}
+
+.mat-tab-header {
+  border: none;
+}

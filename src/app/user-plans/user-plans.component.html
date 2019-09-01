@@ -28,11 +28,19 @@
                             <div class="pt-2 pb-3 justify-content-center">
                                 <img class="place-photo-size"  *ngIf="!userPlan.photo" src="https://placehold.it/150x80?text=Brak zdjęcia"  alt="Image">
                                 <img class="place-photo-size"  *ngIf="userPlan.photo" [src]="'data:image/png;base64,'+userPlan.photo | safeHtml"  alt="Image">
-                            </div>                      
+                            </div>                     
                             <div class="pb-30">
+                                <div class="row no-margins pb-2">
+                                        <!-- plan.planForm.hasAccomodationBooked -->
+                                        <span class="font-16 mr-1">Zakwaterowanie:</span>    
+                                        <ng-container *ngIf="userPlan.hasAccomodationBooked"><span class="font-16 bold ">{{userPlan.accomodationName}}</span>  </ng-container>
+                                        <ng-container *ngIf="!userPlan.hasAccomodationBooked"><span class="ml-1" style="vertical-align: text-top;"><i class="far fa-minus-square"></i></span></ng-container>                        
+                                           
+                                </div>
+                                <div class="row no-margins">
                                     <span class="font-16 mr-1">{{'CreationDate' | translate}}:</span>                               
-                                    <span class="font-16 bold ">{{userPlan.creationTime | date:'short'}}</span>
-                                    
+                                    <span class="font-16 bold ">{{userPlan.creationTime | date:'short'}}</span>                                    
+                                </div>                                   
                             </div>
                             <div class="row no-margins justify-content-end">                          
                                     <button class="yellow-button" [routerLink]="['/user-plans', userPlan.id]">{{'Show'|translate}} <i class="fa fa-arrow-circle-right"></i></button>                          

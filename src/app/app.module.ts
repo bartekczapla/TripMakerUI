@@ -65,6 +65,8 @@ import { UserPlanDetailsComponent } from './user-plans/user-plan-details/user-pl
 import { ModalModule, BsDatepickerModule} from 'ngx-bootstrap';
 import { SafeHtml } from '@shared/directives/safe-resource.pipe';
 import { TimepickerModule } from 'ngx-bootstrap/timepicker';
+import { ChartsModule } from 'ng2-charts';
+
 // export function HttpLoaderFactory(http: HttpClient) {
 //   return new TranslateHttpLoader(http);
 // }
@@ -147,10 +149,12 @@ export function getRemoteServiceBaseUrl(): string {
     BrowserAnimationsModule,
     HttpClientModule,
     CommonModule,
+    ChartsModule,
     FormsModule,
     JsonpModule,
     ModalModule.forRoot(),
     AbpModule,
+    ChartsModule,
     ServiceProxyModule,
     NgxPaginationModule,
     AngularMaterialModule,

@@ -15,11 +15,14 @@ export class UserPlansComponent extends PagedListingComponentBase<UserPlansListD
   userPlans: UserPlansListDto[]=[];
   loading=false;
 
+
   constructor(
     injector: Injector, private _userPlansService: UserPlansServiceProxy, 
     //private translate:TranslateService
   ) {
       super(injector);
+
+
   }
 
 

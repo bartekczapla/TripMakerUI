@@ -59,8 +59,10 @@ isMobileMenu=false;
       }
 
       getUserName():string {
-          //return this.appSession.user.name+' '+this.appSession.user.surname;
-          return 'admin admin';
+          if(this.checkIfUserLogged())
+            return this.appSession.user.name+' '+this.appSession.user.surname;
+          else 
+            return '';
       }
 
       logout(): void {
