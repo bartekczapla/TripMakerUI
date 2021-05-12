@@ -44,7 +44,7 @@
     "block-ui": "^2.70.1",
     "bootstrap": "^4.3.1",
     "bootstrap-select": "^1.13.10",
-    "chart.js": "^2.8.0",
+    "chart.js": "^2.9.4",
     "core-js": "^2.6.9",
     "famfamfam-flags": "^1.0.0",
     "flot": "^0.8.3",
